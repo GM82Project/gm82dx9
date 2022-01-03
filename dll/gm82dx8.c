@@ -1,8 +1,6 @@
 #define GMREAL __declspec(dllexport) double __cdecl
 #define GMSTR __declspec(dllexport) char* __cdecl
 #define _USE_MATH_DEFINES
-#define _WIN32_WINNT 0x0601
-#include <windows.h>
 #include <math.h>
 #include "C:\DXSDK\include\d3d8.h"
 #include "C:\DXSDK\include\d3dx8.h"
@@ -21,9 +19,53 @@ typedef struct {
 IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
 static D3DVIEWPORT8 viewport;
 
-GMREAL __gm82dx8_setpointsize(double size) {
+GMREAL __gm82dx8_cleardepth() {
+    ((void (*)())0x563a8c)(); //clear depth buffer
+    return 1;
+}
+
+GMREAL __gm82dx8_setfullscreen(double hz) {
+    int z = (int)hz;
+    
+    *(int*)0x85af74 = 0;  //multisample off
+    *(int*)0x85af7c = 3;  //swap effect copy
+    *(int*)0x85b3a8 = !z; //windowed mode
+    *(int*)0x85b3b8 = z;  //refresh rate
+    
+    ((void (*)())0x61f9f4)(); //display_reset()
+
+    return 1;
+}
+
+GMREAL __gm82dx8_resize_backbuffer(double width, double height) {
+    int iwidth = width;
+    int iheight = height;
+    const void *fun = (void*)0x61fbc0; //YoYo_resize_backbuffer
+    __asm {
+        mov eax, iwidth
+        mov edx, iheight
+        call fun
+    }
+    return 0;
+}
+
+GMREAL __gm82dx8_setpointscale(double size,double scaling,double minscale,double maxscale,double sprite) {
     float ps = (float)size;
     IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE,*(DWORD *)&ps);
+    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSPRITEENABLE,(DWORD)sprite);
+    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALEENABLE,(DWORD)scaling);
+    if (scaling) {
+        float ps = (float)minscale;
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
+        ps = (float)maxscale;
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+        ps = 1.0f;
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALE_B,*(DWORD *)&ps);        
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALE_C,*(DWORD *)&ps); 
+    } else {
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+    }
     return 0;
 }
 
