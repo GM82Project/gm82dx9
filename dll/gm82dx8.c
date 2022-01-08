@@ -84,8 +84,8 @@ GMREAL __gm82dx8_setcolwrite(double red, double green, double blue, double alpha
 
 GMREAL __gm82dx8_set_fill_mode(double mode) {
     DWORD newmode=D3DFILL_POINT;
-    if (mode>=0.5) mode=D3DFILL_WIREFRAME;
-    if (mode>=1.5) mode=D3DFILL_SOLID;
+    if (mode>=0.5) newmodemode=D3DFILL_WIREFRAME;
+    if (mode>=1.5) newmodemode=D3DFILL_SOLID;
     IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FILLMODE,newmode);    
     return 0;
 }
