@@ -113,7 +113,7 @@
 
 #define dx8_vsync
     //only activate if vsyncable
-    if (room_speed==display_get_frequency()) {    
+    if (display_get_frequency() mod room_speed == 0) {    
         //we do timed wakeups every 1ms to check the time
         while (!__gm82dx8_waitvblank()) {
              __gm82dx8_sleep(1)
