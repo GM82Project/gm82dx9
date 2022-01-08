@@ -1,5 +1,19 @@
 #define __gm82dx8_init
     if (execute_string("return get_function_address('display_get_orientation')") <= 0) {
+        globalvar __gm82dx8_time;
+        __gm82dx8_time=__gm82dx8_time_now()
+        
+        if (variable_global_get("__gm82core_version")>134) {
+            //recent enough core extension: let's work together
+            object_event_add(core,ev_other,ev_animation_end,"dx8_vsync()")
+        } else {
+            //core extension not detected: let's do it ourselves
+            object_event_add(__gm82dx8_obj,ev_destroy,0,"instance_copy(0)")
+            object_event_add(__gm82dx8_obj,ev_other,ev_room_end,"persistent=true")
+            object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"dx8_vsync()")
+            object_set_persistent(__gm82dx8_obj,1)
+            room_instance_add(room_first,0,0,__gm82dx8_obj)
+        }
         return 0
     }
     show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
@@ -96,3 +110,27 @@
         )
     }
     
+
+#define dx8_vsync
+    //only activate if vsyncable
+    if (room_speed==display_get_frequency()) {    
+        //we do timed wakeups every 1ms to check the time
+        while (!__gm82dx8_waitvblank()) {
+             __gm82dx8_sleep(1)
+             if (__gm82dx8_time_now()-__gm82dx8_time>1000000/room_speed-2000) {
+                //Oh my fur and whiskers! I'm late, I'm late, I'm late!
+                break
+            }
+        }
+
+        //busywait for vblank
+        while (!__gm82dx8_waitvblank()) {/*òwó*/}
+        __gm82dx8_time=__gm82dx8_time_now()
+
+        //sync DWM
+        __gm82dx8_sleep(3)
+
+        //epic win
+    }
+
+

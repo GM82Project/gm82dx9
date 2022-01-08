@@ -2,6 +2,7 @@
 #define GMSTR __declspec(dllexport) char* __cdecl
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <windows.h>
 #include "C:\DXSDK\include\d3d8.h"
 #include "C:\DXSDK\include\d3dx8.h"
 
@@ -18,6 +19,8 @@ typedef struct {
 
 IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
 static D3DVIEWPORT8 viewport;
+static D3DRASTER_STATUS raster_status;
+D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
 
 GMREAL __gm82dx8_cleardepth() {
     ((void (*)())0x563a8c)(); //clear depth buffer
@@ -100,11 +103,39 @@ GMREAL __gm82dx8_setviewport(double x, double y, double width, double height) {
 }
 
 GMREAL __gm82dx8_setzscale(double znear, double zfar) {
-    
     IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
     viewport.MinZ=(float)znear;
     viewport.MaxZ=(float)zfar;
     IDirect3DDevice8_SetViewport(*d3d8_device,&viewport);
     
+    return 0;
+}
+
+///begin vsync shit
+
+ULONGLONG resolution = 1000000, frequency = 1;
+
+GMREAL __gm82dx8_dll_init() {
+    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+    return 0;    
+}
+
+GMREAL __gm82dx8_time_now() {
+    ULONGLONG now;
+    if (QueryPerformanceCounter((LARGE_INTEGER*)&now)) {
+        return (double)(now*resolution/frequency);
+    } else {
+        return -1.0;
+    }
+}
+
+GMREAL __gm82dx8_waitvblank() {    
+    IDirect3DDevice8_GetRasterStatus(*d3d8_device,&raster_status);
+    if (raster_status.InVBlank) return 1;
+    return 0;    
+}
+
+GMREAL __gm82dx8_sleep(double ms) {
+    SleepEx((DWORD)ms,TRUE);
     return 0;
 }
