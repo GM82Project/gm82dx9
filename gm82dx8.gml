@@ -32,6 +32,13 @@
     return __s
 
 
+#define dx8_surface_discard
+    ///dx8_surface_discard(id)
+    if (surface_exists(argument0)) {
+        surface_free(argument0)
+    }
+
+
 #define dx8_surface_disengage
     ///dx8_surface_disengage()
     if (variable_global_get("__gm82core_appsurf_interop")) {
