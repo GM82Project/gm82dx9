@@ -1,8 +1,24 @@
 #define __gm82dx8_init
+    globalvar __gm82dx8_time,__gm82dx8_vpatched;
+    __gm82dx8_time=__gm82dx8_time_now()
     if (execute_string("return get_function_address('display_get_orientation')") <= 0) {
-        globalvar __gm82dx8_time;
-        __gm82dx8_time=__gm82dx8_time_now()
-        
+        return 0
+    }
+    show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
+    return 1
+
+
+#define dx8_enable_vpatch
+    if (!__gm82dx8_vpatched) {
+        __gm82dx8_vpatched=true
+        /*if (gamemaker_version==800) {
+            //vpatch mode for 8.0
+            object_event_add(__gm82dx8_obj,ev_destroy,0,"instance_copy(0)")
+            object_event_add(__gm82dx8_obj,ev_other,ev_room_end,"persistent=true")
+            object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"dx8_vsync_8()")
+            object_set_persistent(__gm82dx8_obj,1)
+            room_instance_add(room_first,0,0,__gm82dx8_obj)
+        } else*/
         if (variable_global_get("__gm82core_version")>134) {
             //recent enough core extension: let's work together
             object_event_add(core,ev_other,ev_animation_end,"dx8_vsync()")
@@ -14,10 +30,7 @@
             object_set_persistent(__gm82dx8_obj,1)
             room_instance_add(room_first,0,0,__gm82dx8_obj)
         }
-        return 0
     }
-    show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
-    return 1
 
 
 #define dx8_set_alphablend
