@@ -1,36 +1,27 @@
 #define __gm82dx8_init
-    globalvar __gm82dx8_time,__gm82dx8_vpatched;
-    __gm82dx8_time=__gm82dx8_time_now()
+    globalvar __gm82dx8_time;__gm82dx8_time=__gm82dx8_time_now()
+    globalvar __gm82dx8_vsync_enabled;__gm82dx8_vsync_enabled=__gm82dx8_not_xp()
+    
+    if (__gm82dx8_checkstart()) exit
+    
     if (execute_string("return get_function_address('display_get_orientation')") <= 0) {
-        return 0
-    }
-    show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
-    return 1
-
-
-#define dx8_enable_vpatch
-    if (!__gm82dx8_vpatched) {
-        __gm82dx8_vpatched=true
-        /*if (gamemaker_version==800) {
-            //vpatch mode for 8.0
-            object_event_add(__gm82dx8_obj,ev_destroy,0,"instance_copy(0)")
-            object_event_add(__gm82dx8_obj,ev_other,ev_room_end,"persistent=true")
-            object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"dx8_vsync_8()")
-            object_set_persistent(__gm82dx8_obj,1)
-            room_instance_add(room_first,0,0,__gm82dx8_obj)
-        } else*/
         if (variable_global_get("__gm82core_version")>134) {
             //recent enough core extension: let's work together
-            object_event_add(core,ev_other,ev_animation_end,"dx8_vsync()")
+            object_event_add(core,ev_other,ev_animation_end,"__gm82dx8_vsync()")
         } else {
             //core extension not detected: let's do it ourselves
             object_event_add(__gm82dx8_obj,ev_destroy,0,"instance_copy(0)")
             object_event_add(__gm82dx8_obj,ev_other,ev_room_end,"persistent=true")
-            object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"dx8_vsync()")
+            object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"__gm82dx8_vsync()")
             object_set_persistent(__gm82dx8_obj,1)
             room_instance_add(room_first,0,0,__gm82dx8_obj)
         }
-    }
+    } else show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
+
+
+#define dx8_set_vsync
+    ///dx8_set_vsync(enable)
+    __gm82dx8_vsync_enabled=!!argument0 && __gm82dx8_not_xp()
 
 
 #define dx8_set_alphablend
@@ -124,9 +115,12 @@
     }
     
 
-#define dx8_vsync
+#define __gm82dx8_vsync
     //only activate if vsyncable
-    if (display_get_frequency() mod room_speed == 0) {    
+    var freq;freq=display_get_frequency()/room_speed
+    
+    if (abs(freq-round(freq))<0.03 && __gm82dx8_vsync_enabled) {
+        set_synchronization(false)
         //we do timed wakeups every 1ms to check the time
         while (!__gm82dx8_waitvblank()) {
              __gm82dx8_sleep(1)
@@ -141,7 +135,7 @@
         __gm82dx8_time=__gm82dx8_time_now()
 
         //sync DWM
-        __gm82dx8_sleep(3)
+        __gm82dx8_sync_dwm()
 
         //epic win
     }

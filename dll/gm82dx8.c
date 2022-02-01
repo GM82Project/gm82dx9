@@ -3,11 +3,26 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <windows.h>
+#include <versionhelpers.h>
 #include "C:\DXSDK\include\d3d8.h"
 #include "C:\DXSDK\include\d3dx8.h"
 
 #pragma comment(lib, "d3d8.lib")
 #pragma comment(lib, "d3dx8.lib")
+
+static int has_started = 0;
+
+GMREAL __gm82dx8_checkstart() {
+    if (has_started) return 1;
+    has_started = 1;
+    return 0;
+}
+
+typedef int (__cdecl *DLL_FUNC)(int*); 
+static int isdwm = 0;
+static HINSTANCE dwm_dll = 0;
+static DLL_FUNC DwmIsCompositionEnabled = 0;
+static DLL_FUNC DwmFlush = 0;
 
 typedef struct {
     int is_string;
@@ -18,6 +33,7 @@ typedef struct {
 }GMVAL;
 
 IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
+IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
 static D3DVIEWPORT8 viewport;
 static D3DRASTER_STATUS raster_status;
 D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
@@ -115,8 +131,30 @@ GMREAL __gm82dx8_setzscale(double znear, double zfar) {
 
 ULONGLONG resolution = 1000000, frequency = 1;
 
+GMREAL __gm82dx8_not_xp() {
+    return IsWindowsVistaOrGreater();
+}
+
 GMREAL __gm82dx8_dll_init() {
     QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+    
+    if (IsWindows8OrGreater()) {
+        dwm_dll = LoadLibrary(TEXT("dwmapi.dll")); 
+        DwmFlush = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmFlush");
+        isdwm = 1;
+    } else if (IsWindowsVistaOrGreater()) {
+        //DWM is possible. let's load it and see if it's enabled:
+        dwm_dll = LoadLibrary(TEXT("dwmapi.dll")); 
+        
+        int enabled;
+        DwmIsCompositionEnabled = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmIsCompositionEnabled");        
+        (DwmIsCompositionEnabled)(&enabled);        
+        if (enabled) {
+            //DWM exists and is enabled.
+            DwmFlush = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmFlush");
+            isdwm = 1;
+        }
+    }
     return 0;    
 }
 
@@ -137,5 +175,11 @@ GMREAL __gm82dx8_waitvblank() {
 
 GMREAL __gm82dx8_sleep(double ms) {
     SleepEx((DWORD)ms,TRUE);
+    return 0;
+}
+
+GMREAL __gm82dx8_sync_dwm() {
+    if (isdwm) (DwmFlush)(0);
+    else SleepEx(2,TRUE);
     return 0;
 }
