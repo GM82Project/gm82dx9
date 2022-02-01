@@ -18,7 +18,7 @@ GMREAL __gm82dx8_checkstart() {
     return 0;
 }
 
-typedef int (__cdecl *DLL_FUNC)(int*); 
+typedef int (__cdecl *DLL_FUNC)(); 
 static int isdwm = 0;
 static HINSTANCE dwm_dll = 0;
 static DLL_FUNC DwmIsCompositionEnabled = 0;
@@ -179,7 +179,7 @@ GMREAL __gm82dx8_sleep(double ms) {
 }
 
 GMREAL __gm82dx8_sync_dwm() {
-    if (isdwm) (DwmFlush)(0);
+    if (isdwm) (DwmFlush)();
     else SleepEx(2,TRUE);
     return 0;
 }
