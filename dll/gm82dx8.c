@@ -138,7 +138,8 @@ GMREAL __gm82dx8_not_xp() {
 GMREAL __gm82dx8_dll_init() {
     QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
     
-    if (IsWindows8OrGreater()) {
+    //this seems to cause issues with dwm-grab screen recorders
+    /*if (IsWindows8OrGreater()) {
         dwm_dll = LoadLibrary(TEXT("dwmapi.dll")); 
         DwmFlush = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmFlush");
         isdwm = 1;
@@ -154,7 +155,7 @@ GMREAL __gm82dx8_dll_init() {
             DwmFlush = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmFlush");
             isdwm = 1;
         }
-    }
+    }*/
     return 0;    
 }
 
