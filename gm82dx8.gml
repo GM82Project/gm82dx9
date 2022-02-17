@@ -1,6 +1,7 @@
 #define __gm82dx8_init
     globalvar __gm82dx8_time;__gm82dx8_time=__gm82dx8_time_now()
     globalvar __gm82dx8_vsync_enabled;__gm82dx8_vsync_enabled=__gm82dx8_not_xp()
+    globalvar __gm82dx8_vpatched;__gm82dx8_vpatched=false
     
     if (__gm82dx8_checkstart()) exit
     
@@ -8,11 +9,13 @@
         if (variable_global_get("__gm82core_version")>134) {
             //recent enough core extension: let's work together
             object_event_add(core,ev_other,ev_animation_end,"__gm82dx8_vsync()")
+            object_event_add(core,ev_other,ev_game_start,"if (variable_global_exists('__gm82vpatch_time')) __gm82dx8_vpatched=true")
         } else {
             //core extension not detected: let's do it ourselves
             object_event_add(__gm82dx8_obj,ev_destroy,0,"instance_copy(0)")
             object_event_add(__gm82dx8_obj,ev_other,ev_room_end,"persistent=true")
             object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"__gm82dx8_vsync()")
+            object_event_add(__gm82dx8_obj,ev_other,ev_game_start,"if (variable_global_exists('__gm82vpatch_time')) __gm82dx8_vpatched=true")
             object_set_persistent(__gm82dx8_obj,1)
             room_instance_add(room_first,0,0,__gm82dx8_obj)
         }
@@ -150,7 +153,7 @@
     //only activate if vsyncable
     var freq;freq=display_get_frequency()/room_speed
     
-    if (abs(freq-round(freq))<0.03 && __gm82dx8_vsync_enabled) {
+    if (abs(freq-round(freq))<0.03 && __gm82dx8_vsync_enabled && !__gm82dx8_vpatched) {
         set_synchronization(false)
         //we do timed wakeups every 1ms to check the time
         while (!__gm82dx8_waitvblank()) {
