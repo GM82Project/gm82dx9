@@ -114,6 +114,12 @@ GMREAL dx8_set_cull_mode(double mode) {
     return 0;
 }
 
+GMREAL dx8_set_zbias(double bias) {
+    DWORD newbias=max(0.0,min(16.0,round(bias)));
+    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_ZBIAS,newbias);    
+    return 0;
+}
+
 GMREAL __gm82dx8_setviewport(double x, double y, double width, double height) {
     IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
     viewport.X=(DWORD)x;
