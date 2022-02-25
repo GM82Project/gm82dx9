@@ -28,7 +28,7 @@
 
 
 #define dx8_set_alphablend
-    ///dx8_enable_alphablend(enable)
+    ///dx8_set_alphablend(enable)
     YoYo_EnableAlphaBlend(argument0)
 
 
@@ -101,6 +101,21 @@
     }    
 
 
+#define dx8_set_fullscreen_ext
+    ///dx8_set_fullscreen_ext(enabled)
+    //exclusive fullscreen
+    //warning: buggy    
+    if (argument0 ^ window_get_fullscreen()) {
+        if (window_get_fullscreen()) {
+            __gm82dx8_setfullscreen(0)
+            window_set_fullscreen(0)
+        } else {
+            window_set_fullscreen(1)
+            __gm82dx8_setfullscreen(display_get_frequency())
+        }
+    }
+
+
 #define dx8_reset_projection
     ///dx8_reset_projection()
     if (view_enabled)
@@ -108,25 +123,9 @@
     else
         d3d_set_projection_ortho(0,0,room_width,room_height,0)
 
-    
-#define dx8_set_fullscreen_ext
-    ///dx8_set_exclusive_fullscreen(enabled)
-    if (argument0 ^ window_get_fullscreen()) {
-        if (window_get_fullscreen()) {
-            __gm82dx8_setfullscreen(0)
-            window_set_fullscreen(0)
-            return 1
-        } else {
-            window_set_fullscreen(1)
-            __gm82dx8_setfullscreen(display_get_frequency())
-            return 1
-        }
-    }    
-    return 0
-
 
 #define dx8_projection_simple
-    ///dx8_set_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax)
+    ///dx8_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax)
     var __xfrom,__yfrom,__zfrom;
 
     if (argument5<=0) {
