@@ -7,8 +7,8 @@
 #include "C:\DXSDK\include\d3d8.h"
 #include "C:\DXSDK\include\d3dx8.h"
 
-#pragma comment(lib, "d3d8.lib")
-#pragma comment(lib, "d3dx8.lib")
+#pragma comment(lib, "C:\\DXSDK\\lib\\d3d8.lib")
+#pragma comment(lib, "C:\\DXSDK\\lib\\d3dx8.lib")
 
 static int has_started = 0;
 
@@ -57,8 +57,8 @@ GMREAL __gm82dx8_setfullscreen(double hz) {
 }
 
 GMREAL __gm82dx8_resize_backbuffer(double width, double height) {
-    int iwidth = width;
-    int iheight = height;
+    int iwidth = (int)round(width);
+    int iheight = (int)round(height);
     const void *fun = (void*)0x61fbc0; //YoYo_resize_backbuffer
     __asm {
         mov eax, iwidth
@@ -115,7 +115,7 @@ GMREAL dx8_set_cull_mode(double mode) {
 }
 
 GMREAL dx8_set_zbias(double bias) {
-    DWORD newbias=max(0.0,min(16.0,round(bias)));
+    DWORD newbias=(DWORD)round(max(0.0,min(16.0,bias)));
     IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_ZBIAS,newbias);    
     return 0;
 }
