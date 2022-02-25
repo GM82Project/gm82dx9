@@ -1,30 +1,75 @@
 #define __gm82dx8_init
-    globalvar __gm82dx8_time;__gm82dx8_time=__gm82dx8_time_now()
-    globalvar __gm82dx8_vsync_enabled;__gm82dx8_vsync_enabled=__gm82dx8_not_xp()
-    globalvar __gm82dx8_vpatched;__gm82dx8_vpatched=false
-    
     if (__gm82dx8_checkstart()) exit
     
+    globalvar __gm82dx8_time;           __gm82dx8_time=__gm82dx8_time_now()
+    globalvar __gm82dx8_vsync_enabled;
+    globalvar __gm82dx8_vpatched;       __gm82dx8_vpatched=false
+    globalvar __gm82dx8_controller;     __gm82dx8_controller=__gm82dx8_obj
+    globalvar __gm82dx8_appsurfcompose; __gm82dx8_appsurfcompose=noone
+    globalvar __gm82dx8_not_xp;
+    globalvar __gm82dx8_resw,__gm82dx8_resh;
+    
+    //check for gm 8.1.141
     if (execute_string("return get_function_address('display_get_orientation')") <= 0) {
         if (variable_global_get("__gm82core_version")>134) {
-            //recent enough core extension: let's work together
-            object_event_add(core,ev_other,ev_animation_end,"__gm82dx8_vsync()")
-            object_event_add(core,ev_other,ev_game_start,"if (variable_global_exists('__gm82vpatch_time')) __gm82dx8_vpatched=true")
+            //recent enough core extension: we can work together
+            __gm82dx8_controller=core
         } else {
             //core extension not detected: let's do it ourselves
             object_event_add(__gm82dx8_obj,ev_destroy,0,"instance_copy(0)")
             object_event_add(__gm82dx8_obj,ev_other,ev_room_end,"persistent=true")
-            object_event_add(__gm82dx8_obj,ev_other,ev_animation_end,"__gm82dx8_vsync()")
-            object_event_add(__gm82dx8_obj,ev_other,ev_game_start,"if (variable_global_exists('__gm82vpatch_time')) __gm82dx8_vpatched=true")
             object_set_persistent(__gm82dx8_obj,1)
             room_instance_add(room_first,0,0,__gm82dx8_obj)
         }
-    } else show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
+        object_event_add(__gm82dx8_controller,ev_other,ev_game_start,"
+            //set a variable to prevent conflicts with the gm82vpatch extension
+            if (variable_global_exists('__gm82vpatch_time')) __gm82dx8_vpatched=true
+        ")
+        //set target to appsurf at end step, to catch view setup and all draw events
+        object_event_add(__gm82dx8_controller,ev_step,ev_step_end,"__gm82dx8_prepare()")
+        //finally after all draw events, compose the window
+        object_event_add(__gm82dx8_controller,ev_other,ev_animation_end,"__gm82dx8_compose()")  
+        //ignore first room frame
+        object_event_add(__gm82dx8_controller,ev_other,ev_room_start,"if (__gm82dx8_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
+        object_event_add(__gm82dx8_controller,ev_alarm,0,"if (__gm82dx8_appsurfcompose!=noone) set_automatic_draw(true)")
+        
+        __gm82dx8_isntxp=__gm82dx8_not_xp()
+        __gm82dx8_vsync_enabled=__gm82dx8_isntxp
+    } else {
+        //we say 8.2 even though it only technically needs 8.1 because why would you use 8.1
+        show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
+    }
 
 
 #define dx8_set_vsync
     ///dx8_set_vsync(enable)
-    __gm82dx8_vsync_enabled=!!argument0 && __gm82dx8_not_xp()
+    __gm82dx8_vsync_enabled=!!argument0 && __gm82dx8_isntxp
+
+
+#define __gm82dx8_vsync
+    //only activate if vsyncable
+    var freq;freq=display_get_frequency()/room_speed
+    
+    if (abs(freq-round(freq))<0.03 && __gm82dx8_vsync_enabled && !__gm82dx8_vpatched) {
+        set_synchronization(false)
+        //we do timed wakeups every 1ms to check the time
+        while (!__gm82dx8_waitvblank()) {
+             __gm82dx8_sleep(1)
+             if (__gm82dx8_time_now()-__gm82dx8_time>1000000/room_speed-2000) {
+                //Oh my fur and whiskers! I'm late, I'm late, I'm late!
+                break
+            }
+        }
+
+        //busywait for vblank
+        while (!__gm82dx8_waitvblank()) {/*òwó*/}
+        __gm82dx8_time=__gm82dx8_time_now()
+
+        //sync DWM
+        __gm82dx8_sync_dwm()
+
+        //epic win
+    }
 
 
 #define dx8_set_alphablend
@@ -93,8 +138,8 @@
 
 #define dx8_surface_disengage
     ///dx8_surface_disengage()
-    if (variable_global_get("__gm82core_appsurf_interop")) {
-        dx8_surface_engage(application_surface,core.__resw,core.__resh)
+    if (__gm82dx8_appsurfcompose!=noone) {
+        application_surface=dx8_surface_engage(application_surface,__gm82dx8_resw,__gm82dx8_resh)
     } else {
         surface_reset_target()
         dx8_reset_projection()
@@ -148,29 +193,82 @@
     }
     
 
-#define __gm82dx8_vsync
-    //only activate if vsyncable
-    var freq;freq=display_get_frequency()/room_speed
-    
-    if (abs(freq-round(freq))<0.03 && __gm82dx8_vsync_enabled && !__gm82dx8_vpatched) {
-        set_synchronization(false)
-        //we do timed wakeups every 1ms to check the time
-        while (!__gm82dx8_waitvblank()) {
-             __gm82dx8_sleep(1)
-             if (__gm82dx8_time_now()-__gm82dx8_time>1000000/room_speed-2000) {
-                //Oh my fur and whiskers! I'm late, I'm late, I'm late!
-                break
-            }
-        }
+#define application_surface_enable
+    ///application_surface_enable(postdraw script id)
+    //envelope engine v5
+    //renex 2021
 
-        //busywait for vblank
-        while (!__gm82dx8_waitvblank()) {/*òwó*/}
-        __gm82dx8_time=__gm82dx8_time_now()
-
-        //sync DWM
-        __gm82dx8_sync_dwm()
-
-        //epic win
+    if (is_string(argument0)) {
+        show_error("application_surface_enable() requires a valid script id (not in quotes)",1)
+    } else if (!script_exists(argument0)) {
+        show_error("application_surface_enable() was given a nonexisting script id",1)
+    } else {
+        __gm82dx8_appsurfcompose=argument0
+        __gm82dx8_resw=window_get_region_width()
+        __gm82dx8_resh=window_get_region_height()
+        globalvar application_surface;
+        application_surface=dx8_surface_engage(application_surface,__gm82dx8_resw,__gm82dx8_resh)
     }
 
 
+#define application_surface_disable
+    ///application_surface_disable()
+    if (__gm82dx8_appsurfcompose!=noone) {
+        __gm82dx8_appsurfcompose=noone
+        dx8_surface_discard(application_surface)
+        application_surface=noone
+    }
+
+
+#define application_surface_is_enabled
+    ///application_surface_is_enabled()
+    return __gm82dx8_appsurfcompose!=noone
+
+
+#define application_surface_resize
+    ///application_surface_resize(width,height)
+    if (__gm82dx8_appsurfcompose!=noone) {
+        dx8_surface_discard(application_surface)
+        __gm82dx8_resw=argument0
+        __gm82dx8_resh=argument1
+        application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
+    }
+
+
+#define application_surface_get_width
+    ///application_surface_get_width()
+    return __gm82dx8_resw
+
+
+#define application_surface_get_height
+    ///application_surface_is_enabled()
+    return __gm82dx8_resh
+
+
+#define __gm82dx8_prepare
+    if (__gm82dx8_appsurfcompose!=noone) {
+        if (!surface_exists(application_surface)) {
+            application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
+        } else {
+            __gm82dx8_resw=surface_get_width(application_surface)
+            __gm82dx8_resh=surface_get_height(application_surface)
+        }
+        surface_set_target(application_surface)
+    }
+
+
+#define __gm82dx8_compose
+    if (__gm82dx8_appsurfcompose!=noone) {
+        d3d_set_depth(0)      
+        if (!surface_exists(application_surface)) {
+            application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
+        } else {
+            dx8_make_opaque()
+        }
+        surface_reset_target()        
+        d3d_set_projection_ortho(0,0,__gm82dx8_resw,__gm82dx8_resh,0)
+        script_execute(__gm82dx8_appsurfcompose)
+    }
+    __gm82dx8_vsync()
+//
+//
