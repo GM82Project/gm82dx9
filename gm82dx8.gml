@@ -6,7 +6,7 @@
     globalvar __gm82dx8_vpatched;       __gm82dx8_vpatched=false
     globalvar __gm82dx8_controller;     __gm82dx8_controller=__gm82dx8_obj
     globalvar __gm82dx8_appsurfcompose; __gm82dx8_appsurfcompose=noone
-    globalvar __gm82dx8_not_xp;
+    globalvar __gm82dx8_isntxp;
     globalvar __gm82dx8_resw,__gm82dx8_resh;
     
     //check for gm 8.1.141
