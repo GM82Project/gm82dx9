@@ -91,7 +91,7 @@
         surface_set_target(__surface)
     }
 
-    
+
 #define dx8_surface_ensure
     ///dx8_surface_ensure(id,width,height)
     var __s;__s=argument0
@@ -117,11 +117,12 @@
         return noone
     }
     
-    if (dx8_get_free_video_memory()<__rw*__rh*8) {
+    var __vram;__vram=(__rw*__rh*8)/1048576
+    if (dx8_get_free_video_memory()<__vram) {
         show_error(
             "Error creating surface of dimensions "+string(__rw)+"x"+string(__rh)+":"
             +chr($0d)+chr($0a)+chr($0d)+chr($0a)
-            +"There is not enough available video memory."
+            +"There is not enough available video memory ("+string(__vram)+"MB)."
             ,1
         )
         return noone
