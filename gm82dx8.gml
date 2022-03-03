@@ -86,15 +86,45 @@
 
 #define dx8_surface_engage
     ///dx8_surface_engage(id,width,height)
+    var __surface;__surface=dx8_surface_ensure(argument0,argument1,argument2)
+    if (__surface!=noone) {
+        surface_set_target(__surface)
+    }
+
+    
+#define dx8_surface_ensure
+    ///dx8_surface_ensure(id,width,height)
     var __s;__s=argument0
     var __rw;__rw=round(argument1)
     var __rh;__rh=round(argument2)
     
     if (surface_exists(__s)) {
         if (surface_get_width(__s)==__rw && surface_get_height(__s)==__rh) {
-            surface_set_target(__s)
             return __s
         }
+    }
+    
+    var __mw;__mw=dx8_texture_get_max_width()
+    var __mh;__mh=dx8_texture_get_max_height()
+    
+    if (__rw>__mw || __rh>__mh) {
+        show_error(
+            "Error creating surface of dimensions "+string(__rw)+"x"+string(__rh)+":"
+            +chr($0d)+chr($0a)+chr($0d)+chr($0a)
+            +"Maximum texture size allowed is "+string(__mw)+"x"+string(__mh)+"."
+            ,1
+        )
+        return noone
+    }
+    
+    if (dx8_get_free_video_memory()<__rw*__rh*8) {
+        show_error(
+            "Error creating surface of dimensions "+string(__rw)+"x"+string(__rh)+":"
+            +chr($0d)+chr($0a)+chr($0d)+chr($0a)
+            +"There is not enough available video memory."
+            ,1
+        )
+        return noone
     }
     
     __s=surface_create(__rw,__rh)
@@ -102,20 +132,18 @@
         var __sw;__sw=surface_get_width(__s)
         var __sh;__sh=surface_get_height(__s)
         if (__sw==__rw && __sh==__rh) {
-            surface_set_target(__s)
             return __s
         }
         
         var __str;
         if (__rw>4096 || __rh>4096) __str="Your graphics card may not support very large textures."
-        else if (__rw<16 || __rh<16) __str="Your graphics card may not support textures smaller than 8x8."
-        else if (__rw != __rh) __str="Your graphics card may not support non-square textures."
+        else if (__rw<16 || __rh<16) __str="Your graphics card may not support very small textures."
         else __str="Your graphics card may not support the requested dimensions."
         
         show_error(
             "Error creating surface of dimensions "+string(argument1)+"x"+string(argument2)+":"
             +chr($0d)+chr($0a)+chr($0d)+chr($0a)
-            +"Resulting DX8 surface was actually "+string(__sw)+"x"+string(__sh)+". "+__str
+            +"Returned DX8 surface was actually "+string(__sw)+"x"+string(__sh)+". "+__str
             ,1
         )
         return noone

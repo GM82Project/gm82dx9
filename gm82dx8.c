@@ -37,6 +37,7 @@ IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
 static D3DVIEWPORT8 viewport;
 static D3DRASTER_STATUS raster_status;
 D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
+D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
 GMREAL __gm82dx8_cleardepth() {
     ((void (*)())0x563a8c)(); //clear depth buffer
@@ -197,4 +198,15 @@ GMREAL __gm82dx8_sync_dwm() {
     if (isdwm) (DwmFlush)();
     else SleepEx(2,TRUE);
     return 0;
+}
+
+GMREAL __gm82dx8_getvideomem() {
+    return (double)(IDirect3DDevice8_GetAvailableTextureMem(*d3d8_device)/1048576);
+}
+
+GMREAL __gm82dx8_getmaxwidth() {
+    return (double)d3d8_caps->MaxTextureWidth;
+}
+GMREAL __gm82dx8_getmaxheight() {
+    return (double)d3d8_caps->MaxTextureHeight;
 }
