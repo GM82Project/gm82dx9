@@ -90,6 +90,7 @@
     if (__surface!=noone) {
         surface_set_target(__surface)
     }
+    return __surface
 
 
 #define dx8_surface_ensure
