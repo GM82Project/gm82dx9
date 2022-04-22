@@ -10,6 +10,6 @@ del *.obj
 del *.exp
 del *.lib
 
-build_gex.py gm82dx8.ged
+build_gex.py gm82dx8.gej
 
 pause

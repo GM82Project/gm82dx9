@@ -300,5 +300,14 @@
         script_execute(__gm82dx8_appsurfcompose)
     }
     __gm82dx8_vsync()
+
+
+#define fog_trick
+    ///fog_trick(color,amount)
+    ///fog_trick()
+
+    if (argument_count==2) {
+        d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
+    } else d3d_set_fog(0,0,0,0)
 //
 //

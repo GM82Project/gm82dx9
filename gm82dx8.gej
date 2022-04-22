@@ -1,0 +1,604 @@
+{
+	"name": "Game Maker 8.2 DirectX8",
+	"folder": "gm82",
+	"version": "1.1.1",
+	"author": "renex && floogle",
+	"date": "22/04/2022",
+	"license": "Free to use, also for commercial games.",
+	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
+	"helpfile": "",
+	"hidden": false,
+	"dependencies": [],
+	"files": [
+		{
+			"filename": "gm82dx8.dll",
+			"origname": "C:\\Stuff\\github\\gm82dx8\\gm82dx8.dll",
+			"kind": 1,
+			"init": "__gm82dx8_dll_init",
+			"final": "",
+			"functions": [
+				{
+					"name": "d3d_clear_depth",
+					"extname": "__gm82dx8_cleardepth",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_clear_depth_buffer",
+					"extname": "__gm82dx8_cleardepth",
+					"calltype": 12,
+					"helpline": "dx8_clear_depth_buffer()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_get_free_video_memory",
+					"extname": "__gm82dx8_getvideomem",
+					"calltype": 12,
+					"helpline": "dx8_get_free_video_memory()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_resize_buffer",
+					"extname": "__gm82dx8_resize_backbuffer",
+					"calltype": 12,
+					"helpline": "dx8_resize_buffer(w,h)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_clip_region",
+					"extname": "__gm82dx8_setviewport",
+					"calltype": 12,
+					"helpline": "dx8_set_clip_region(x,y,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_color_mask",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_set_color_mask(red,green,blue,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_cull_mode",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_set_cull_mode(mode)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_depth_scale",
+					"extname": "__gm82dx8_setzscale",
+					"calltype": 12,
+					"helpline": "dx8_set_depth_scale(near,far)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_fill_mode",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_set_fill_mode(mode)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_point_options",
+					"extname": "__gm82dx8_setpointscale",
+					"calltype": 12,
+					"helpline": "dx8_set_point_options(size,scaled,minscale,maxscale,spritemode)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_zbias",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_set_zbias(bias)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_texture_get_max_height",
+					"extname": "__gm82dx8_getmaxheight",
+					"calltype": 12,
+					"helpline": "dx8_texture_get_max_height()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_texture_get_max_width",
+					"extname": "__gm82dx8_getmaxwidth",
+					"calltype": 12,
+					"helpline": "dx8_texture_get_max_width()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "window_resize_buffer",
+					"extname": "__gm82dx8_resize_backbuffer",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_checkstart",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_dll_init",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_not_xp",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_setfullscreen",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_sleep",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_sync_dwm",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_time_now",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_waitvblank",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				}
+			],
+			"constants": [
+				{
+					"name": "cull_clockwise",
+					"value": "1",
+					"hidden": false
+				},
+				{
+					"name": "cull_counterclockwise",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "cull_none",
+					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "fill_normal",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "fill_points",
+					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "fill_wireframe",
+					"value": "1",
+					"hidden": false
+				},
+				{
+					"name": "__gm82dx8_obj",
+					"value": "object_add()",
+					"hidden": true
+				}
+			]
+		},
+		{
+			"filename": "gm82dx8.gml",
+			"origname": "C:\\Stuff\\github\\gm82dx8\\gm82dx8.gml",
+			"kind": 2,
+			"init": "__gm82dx8_init",
+			"final": "",
+			"functions": [
+				{
+					"name": "application_surface_disable",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_disable()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_enable",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_enable(postdraw script id)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_get_height",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_get_height()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_get_width",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_get_width()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_is_enabled",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_is_enabled()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_resize",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_resize(width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_reset_projection",
+					"extname": "dx8_reset_projection",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_projection_simple",
+					"extname": "dx8_projection_simple",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "draw_enable_alphablend",
+					"extname": "dx8_set_alphablend",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "draw_make_opaque",
+					"extname": "dx8_make_opaque",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_make_opaque",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_make_opaque()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_projection_simple",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_reset_projection",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_reset_projection()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_alphablend",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_set_alphablend(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_fullscreen_ext",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_set_fullscreen_ext(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_set_vsync",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_set_vsync(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_discard",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_surface_discard(id)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_disengage",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_surface_disengage()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_engage",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_surface_engage(id,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_ensure",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_surface_ensure(id,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_disengage",
+					"extname": "dx8_surface_disengage",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_engage",
+					"extname": "dx8_surface_engage",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "window_set_exclusive_fullscreen",
+					"extname": "dx8_set_fullscreen_ext",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_compose",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_init",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_prepare",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_vsync",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "fog_trick",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "fog_trick([color,amount])",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				}
+			],
+			"constants": []
+		}
+	]
+}
