@@ -1,43 +1,26 @@
-#define GMREAL __declspec(dllexport) double __cdecl
-#define GMSTR __declspec(dllexport) char* __cdecl
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <windows.h>
-#include <versionhelpers.h>
-#include "C:\DXSDK\include\d3d8.h"
-#include "C:\DXSDK\include\d3dx8.h"
+#include "gm82dx8.h"
 
-#pragma comment(lib, "C:\\DXSDK\\lib\\d3d8.lib")
-#pragma comment(lib, "C:\\DXSDK\\lib\\d3dx8.lib")
+int has_started = 0;
 
-static int has_started = 0;
+int isdwm = 0;
+HINSTANCE dwm_dll = 0;
+DLL_FUNC DwmIsCompositionEnabled = 0;
+DLL_FUNC DwmFlush = 0;
+
+D3DVIEWPORT8 viewport;
+D3DRASTER_STATUS raster_status;
+D3DMATRIX world_matrix,matrix;
+
+IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
+IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
+D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
+D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
 GMREAL __gm82dx8_checkstart() {
     if (has_started) return 1;
     has_started = 1;
     return 0;
 }
-
-typedef int (__cdecl *DLL_FUNC)(); 
-static int isdwm = 0;
-static HINSTANCE dwm_dll = 0;
-static DLL_FUNC DwmIsCompositionEnabled = 0;
-static DLL_FUNC DwmFlush = 0;
-
-typedef struct {
-    int is_string;
-    int padding;    
-    double real;    
-    char* string;
-    int padding2;    
-}GMVAL;
-
-IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
-IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
-static D3DVIEWPORT8 viewport;
-static D3DRASTER_STATUS raster_status;
-D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
-D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
 GMREAL __gm82dx8_cleardepth() {
     ((void (*)())0x563a8c)(); //clear depth buffer

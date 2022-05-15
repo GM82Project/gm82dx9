@@ -1,9 +1,9 @@
 {
 	"name": "Game Maker 8.2 DirectX8",
 	"folder": "gm82",
-	"version": "1.1.1",
+	"version": "1.2",
 	"author": "renex && floogle",
-	"date": "22/04/2022",
+	"date": "15/05/2022",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
 	"helpfile": "",
@@ -248,6 +248,507 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xyzt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xyzt(rx,ry,rz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yxzt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yxzt(ry,rx,rz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zxyt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zxyt(rz,rx,ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xzyt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xzyt(rx,rz,ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yzxt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yzxt(ry,rz,rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zyxt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zyxt(rz,ry,rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xyt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xyt(rx,ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xzt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xzt(rx,rz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yzt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yzt(ry,rz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zyt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zyt(rz,ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zxt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zxt(rz,rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yxt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yxt(ry,rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xt(rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yt(ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zt(rz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xyzst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xyzst(rx,ry,rz,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yxzst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yxzst(ry,rx,rz,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zxyst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zxyst(rz,rx,ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xzyst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xzyst(rx,rz,ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yzxst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yzxst(ry,rz,rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zyxst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zyxst(rz,ry,rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xyst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xyst(rx,ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xzst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xzst(rx,rz,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yzst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yzst(ry,rz,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zyst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zyst(rz,ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zxst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zxst(rz,rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yxst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yxst(ry,rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_xst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_xst(rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_yst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_yst(ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_zst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_transform_zst(rz,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				}
 			],
