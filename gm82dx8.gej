@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.2",
 	"author": "renex && floogle",
-	"date": "15/05/2022",
+	"date": "18/05/2022",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
 	"helpfile": "",
@@ -749,6 +749,42 @@
 						2,
 						2
 					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_get_viewport_x",
+					"extname": "__gm82dx8_getviewportx",
+					"calltype": 12,
+					"helpline": "dx8_get_viewport_x()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_get_viewport_y",
+					"extname": "__gm82dx8_getviewporty",
+					"calltype": 12,
+					"helpline": "dx8_get_viewport_y()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_get_viewport_w",
+					"extname": "__gm82dx8_getviewportw",
+					"calltype": 12,
+					"helpline": "dx8_get_viewport_w()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_get_viewport_h",
+					"extname": "__gm82dx8_getviewporth",
+					"calltype": 12,
+					"helpline": "dx8_get_viewport_h()",
+					"hidden": false,
+					"argtypes": [],
 					"returntype": 2
 				}
 			],

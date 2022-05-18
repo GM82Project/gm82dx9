@@ -116,6 +116,26 @@ GMREAL __gm82dx8_setviewport(double x, double y, double width, double height) {
     return 0;
 }
 
+GMREAL __gm82dx8_getviewportx() {
+    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    return (double)viewport.X;
+}
+
+GMREAL __gm82dx8_getviewporty() {
+    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    return (double)viewport.Y;
+}
+
+GMREAL __gm82dx8_getviewportw() {
+    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    return (double)viewport.Width;
+}
+
+GMREAL __gm82dx8_getviewporth() {
+    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    return (double)viewport.Height;
+}
+
 GMREAL __gm82dx8_setzscale(double znear, double zfar) {
     IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
     viewport.MinZ=(float)znear;
