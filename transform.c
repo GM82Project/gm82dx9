@@ -1,274 +1,98 @@
 #include "gm82dx8.h"
 
-GMREAL dx8_transform_xyzt(double rx, double ry, double rz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yxzt(double ry, double rx, double rz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zxyt(double rz, double rx, double ry, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_xzyt(double rx, double rz, double ry, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yzxt(double ry, double rz, double rx, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zyxt(double rz, double ry, double rx, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
+// Glossary:
+//   C: rotation component (either x, y or z)
+//   CC: 2 rotation components (different components in any order)
+//   CCC: 3 rotation components (different components in any order)
+//   S: scaling
+//   T: translation
+
+// Define these so we can use lowercase letters for
+// D3DXMatrixRotationC (C being X, Y or Z)
+#define rotx D3DXMatrixRotationX
+#define roty D3DXMatrixRotationY
+#define rotz D3DXMatrixRotationZ
+
+// Function Parameter list
+#define C_PARM(c) double r ## c
+#define CC_PARM(c1, c2) C_PARM(c1), C_PARM(c2)
+#define CCC_PARM(c1, c2, c3) CC_PARM(c1, c2), C_PARM(c3)
+#define S_PARM double sx, double sy, double sz
+#define T_PARM double x, double y, double z
+
+// Matrix multiplication
+#define C_MUL(c)                                                    \
+    D3DXMatrixMultiply(&world_matrix,&world_matrix,                 \
+                       rot ## c (&matrix,(float)r ## c/-180*M_PI))
+#define CC_MUL(c1, c2) C_MUL(c1); C_MUL(c2)
+#define CCC_MUL(c1, c2, c3) C_MUL(c1); C_MUL(c2); C_MUL(c3)
+#define S_MUL                                                                       \
+    D3DXMatrixMultiply(&world_matrix,&world_matrix,                                 \
+                       D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz))
+#define T_MUL                                                                       \
+    D3DXMatrixMultiply(&world_matrix,&world_matrix,                                 \
+                       D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z))
+
+// Start of function
+#define FUNC_START {                                                                \
+    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix)
+
+// End of function
+#define FUNC_END                                                                    \
+    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix); \
+    return 0;                                                                       \
 }
 
-GMREAL dx8_transform_xyt(double rx, double ry, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_xzt(double rx, double rz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yzt(double ry, double rz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zyt(double rz, double ry, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zxt(double rz, double rx, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yxt(double ry, double rx, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
+// Function definition macros
+#define CT_FUNC(c)                                      \
+    GMREAL dx8_transform_ ## c ## t(C_PARM(c), T_PARM)  \
+        FUNC_START; C_MUL(c); T_MUL; FUNC_END
+#define CST_FUNC(c)                                             \
+    GMREAL dx8_transform_ ## c ## st(C_PARM(c), S_PARM, T_PARM) \
+        FUNC_START; C_MUL(c); S_MUL; T_MUL; FUNC_END
+#define CCT_FUNC(c1, c2)                                            \
+    GMREAL dx8_transform_ ## c1 ## c2 ## t(CC_PARM(c1, c2), T_PARM) \
+        FUNC_START; CC_MUL(c1, c2); T_MUL; FUNC_END
+#define CCST_FUNC(c1, c2)                                                       \
+    GMREAL dx8_transform_ ## c1 ## c2 ## st(CC_PARM(c1, c2), S_PARM, T_PARM)    \
+        FUNC_START; CC_MUL(c1, c2); S_MUL; T_MUL; FUNC_END
+#define CCCT_FUNC(c1, c2, c3)                                                   \
+    GMREAL dx8_transform_ ## c1 ## c2 ## c3 ## t(CCC_PARM(c1, c2, c3), T_PARM)  \
+        FUNC_START; CCC_MUL(c1, c2, c3); T_MUL; FUNC_END
+#define CCCST_FUNC(c1, c2, c3)                                                          \
+    GMREAL dx8_transform_ ## c1 ## c2 ## c3 ## st(CCC_PARM(c1, c2, c3), S_PARM, T_PARM) \
+        FUNC_START; CCC_MUL(c1, c2, c3); S_MUL; T_MUL; FUNC_END
 
-GMREAL dx8_transform_xt(double rx, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
+// Actual function definitions
+CCCT_FUNC(x, y, z)
+CCCT_FUNC(y, x, z)
+CCCT_FUNC(z, x, y)
+CCCT_FUNC(x, z, y)
+CCCT_FUNC(y, z, x)
+CCCT_FUNC(z, y, x)
+CCT_FUNC(x, y)
+CCT_FUNC(x, z)
+CCT_FUNC(y, z)
+CCT_FUNC(z, y)
+CCT_FUNC(z, x)
+CCT_FUNC(y, x)
+CT_FUNC(x)
+CT_FUNC(y)
+CT_FUNC(z)
 
-GMREAL dx8_transform_yt(double ry, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-
-GMREAL dx8_transform_zt(double rz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-
-//now with scaling!
-
-GMREAL dx8_transform_xyzst(double rx, double ry, double rz, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yxzst(double ry, double rx, double rz, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zxyst(double rz, double rx, double ry, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_xzyst(double rx, double rz, double ry, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yzxst(double ry, double rz, double rx, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zyxst(double rz, double ry, double rx, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-
-GMREAL dx8_transform_xyst(double rx, double ry, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_xzst(double rx, double rz, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yzst(double ry, double rz, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zyst(double rz, double ry, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_zxst(double rz, double rx, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-GMREAL dx8_transform_yxst(double ry, double rx, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-
-GMREAL dx8_transform_xst(double rx, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationX(&matrix,(float)rx/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-
-GMREAL dx8_transform_yst(double ry, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationY(&matrix,(float)ry/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
-
-GMREAL dx8_transform_zst(double rz, double sx, double sy, double sz, double x, double y, double z) {
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixRotationZ(&matrix,(float)rz/-180*M_PI));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixScaling(&matrix,(float)sx,(float)sy,(float)sz));
-    D3DXMatrixMultiply(&world_matrix,&world_matrix,D3DXMatrixTranslation(&matrix,(float)x,(float)y,(float)z));    
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    return 0;
-}
+// "now with scaling!" ~ renex, 2022
+CCCST_FUNC(x, y, z)
+CCCST_FUNC(y, x, z)
+CCCST_FUNC(z, x, y)
+CCCST_FUNC(x, z, y)
+CCCST_FUNC(y, z, x)
+CCCST_FUNC(z, y, x)
+CCST_FUNC(x, y)
+CCST_FUNC(x, z)
+CCST_FUNC(y, z)
+CCST_FUNC(z, y)
+CCST_FUNC(z, x)
+CCST_FUNC(y, x)
+CST_FUNC(x)
+CST_FUNC(y)
+CST_FUNC(z)
