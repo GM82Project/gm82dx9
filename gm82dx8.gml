@@ -200,19 +200,29 @@
 
 
 #define dx8_projection_simple
-    ///dx8_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax)
+    ///dx8_projection_simple(x,y,w,h,tilt,dollyzoom,depthmin,depthfocus,depthmax,spin)
     var __xfrom,__yfrom,__zfrom;
 
     if (argument5<=0) {
         // ¯\_(º_o)_/¯
         d3d_set_projection_ortho(argument0,argument1,argument2,argument3,argument4)
+        __xfrom=argument0+argument2/2
+        __yfrom=argument1+argument3/2    
+        
+        d3d_set_projection(
+            __xfrom-lengthdir_x(1,argument9),__yfrom,-lengthdir_y(1,argument9),
+            __xfrom,__yfrom,0,
+            -lengthdir_x(1,-argument4+90),-lengthdir_y(1,-argument4+90),0
+        )
     } else {
         __xfrom=argument0+argument2/2
         __yfrom=argument1+argument3/2    
         __zfrom=min(-tan(degtorad(90*(1-argument5)))*argument3/2,argument6-argument7)
 
         d3d_set_projection_ext(
-            __xfrom,__yfrom,__zfrom+argument7,                           //from
+            __xfrom+lengthdir_x(__zfrom,argument9),                      //xfrom
+            __yfrom,                                                     //yfrom
+            argument7+lengthdir_y(__zfrom,argument9),                    //zfrom
             __xfrom,__yfrom,argument7,                                   //to
             lengthdir_x(1,-argument4+90),lengthdir_y(1,-argument4+90),0, //up
             -point_direction(__zfrom,0,0,argument3/2)*2,                 //angle
