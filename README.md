@@ -1,6 +1,8 @@
 # gm82dx8
 This extension aims to extend your control over the DirectX8 interface Game Maker 8.2 uses for rendering.
 
+Contains contributions by Floogle and Lovey01.
+
 ## What this enables
 
 - vpatch for stable framerates when room speed % monitor Hz
