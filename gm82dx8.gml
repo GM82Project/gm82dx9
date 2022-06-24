@@ -119,11 +119,12 @@
     }
     
     var __vram;__vram=(__rw*__rh*8)/1048576
-    if (dx8_get_free_video_memory()<__vram) {
+    var __freemem;__freemem=dx8_get_free_video_memory()
+    if (__freemem<__vram) {
         show_error(
             "Error creating surface of dimensions "+string(__rw)+"x"+string(__rh)+":"
             +chr($0d)+chr($0a)+chr($0d)+chr($0a)
-            +"There is not enough available video memory ("+string(__vram)+"MB)."
+            +"There is not enough available video memory (needs "+string(__vram)+"MB, had "+string(__freemem)+"MB)."
             ,1
         )
         return noone

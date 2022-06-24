@@ -145,6 +145,17 @@ GMREAL __gm82dx8_setzscale(double znear, double zfar) {
     return 0;
 }
 
+GMREAL __gm82dx8_getvideomem() {
+    return (double)(IDirect3DDevice8_GetAvailableTextureMem(*d3d8_device)/1048576);
+}
+
+GMREAL __gm82dx8_getmaxwidth() {
+    return (double)d3d8_caps->MaxTextureWidth;
+}
+GMREAL __gm82dx8_getmaxheight() {
+    return (double)d3d8_caps->MaxTextureHeight;
+}
+
 ///begin vsync shit
 
 ULONGLONG resolution = 1000000, frequency = 1;
@@ -201,15 +212,4 @@ GMREAL __gm82dx8_sync_dwm() {
     if (isdwm) (DwmFlush)();
     else SleepEx(2,TRUE);
     return 0;
-}
-
-GMREAL __gm82dx8_getvideomem() {
-    return (double)(IDirect3DDevice8_GetAvailableTextureMem(*d3d8_device)/1048576);
-}
-
-GMREAL __gm82dx8_getmaxwidth() {
-    return (double)d3d8_caps->MaxTextureWidth;
-}
-GMREAL __gm82dx8_getmaxheight() {
-    return (double)d3d8_caps->MaxTextureHeight;
 }
