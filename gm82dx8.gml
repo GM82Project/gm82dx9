@@ -8,6 +8,7 @@
     globalvar __gm82dx8_appsurfcompose; __gm82dx8_appsurfcompose=noone
     globalvar __gm82dx8_isntxp;
     globalvar __gm82dx8_resw,__gm82dx8_resh;
+    globalvar dx8_transform_vertex;
     
     //check for gm 8.1.141
     if (execute_string("return get_function_address('display_get_orientation')") <= 0) {
@@ -322,5 +323,13 @@
     if (argument_count==2) {
         d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
     } else d3d_set_fog(0,0,0,0)
+
+
+#define dx8_transform_vertex
+    ///dx8_transform_vertex(x,y,z)
+    dx8_transform_vertex[0]=__gm82dx8_transformvertex(argument0,argument1,argument2)
+    dx8_transform_vertex[1]=__gm82dx8_getvertexy()
+    dx8_transform_vertex[2]=__gm82dx8_getvertexz()
+
 //
 //

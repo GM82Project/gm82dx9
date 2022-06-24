@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.2",
 	"author": "renex && floogle",
-	"date": "24/05/2022",
+	"date": "24/06/2022",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
 	"helpfile": "",
@@ -786,6 +786,37 @@
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_transformvertex",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_getvertexy",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_getvertexz",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
 				}
 			],
 			"constants": [
@@ -1134,6 +1165,19 @@
 					"helpline": "fog_trick([color,amount])",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "dx8_transform_vertex",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_transform_vertex(x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				}
 			],

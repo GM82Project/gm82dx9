@@ -10,6 +10,7 @@ DLL_FUNC DwmFlush = 0;
 D3DVIEWPORT8 viewport;
 D3DRASTER_STATUS raster_status;
 D3DMATRIX world_matrix,matrix;
+D3DXVECTOR3 vertex;
 
 IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
 IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
@@ -154,6 +155,21 @@ GMREAL __gm82dx8_getmaxwidth() {
 }
 GMREAL __gm82dx8_getmaxheight() {
     return (double)d3d8_caps->MaxTextureHeight;
+}
+
+GMREAL __gm82dx8_transformvertex(double inx, double iny, double inz) {
+    vertex.x=(float)inx;
+    vertex.y=(float)iny;
+    vertex.z=(float)inz;
+    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
+    D3DXVec3TransformCoord(&vertex,&vertex,&world_matrix);
+    return (double)vertex.x;
+}
+GMREAL __gm82dx8_getvertexy() {
+    return (double)vertex.y;
+}
+GMREAL __gm82dx8_getvertexz() {
+    return (double)vertex.z;
 }
 
 ///begin vsync shit

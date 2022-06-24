@@ -38,5 +38,6 @@ extern D3DRASTER_STATUS raster_status;
 extern D3DMATRIX world_matrix,matrix;
 extern D3DPRESENT_PARAMETERS* d3d8_present;
 extern D3DCAPS8* d3d8_caps;
+extern D3DXVECTOR3 vertex;
 
 #endif
