@@ -12,7 +12,7 @@
 	"files": [
 		{
 			"filename": "gm82dx8.dll",
-			"origname": "C:\\Stuff\\github\\gm82dx8\\gm82dx8.dll",
+			"origname": "build/Release/gm82dx8.dll",
 			"kind": 1,
 			"init": "__gm82dx8_dll_init",
 			"final": "",
@@ -859,7 +859,7 @@
 		},
 		{
 			"filename": "gm82dx8.gml",
-			"origname": "C:\\Stuff\\github\\gm82dx8\\gm82dx8.gml",
+			"origname": "gm82dx8.gml",
 			"kind": 2,
 			"init": "__gm82dx8_init",
 			"final": "",

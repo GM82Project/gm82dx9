@@ -9,8 +9,8 @@ DLL_FUNC DwmFlush = 0;
 
 D3DVIEWPORT8 viewport;
 D3DRASTER_STATUS raster_status;
-D3DMATRIX world_matrix,matrix;
-D3DXVECTOR3 vertex;
+XMMATRIX world_matrix,matrix;
+XMVECTOR vertex;
 
 IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
 IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
@@ -158,18 +158,16 @@ GMREAL __gm82dx8_getmaxheight() {
 }
 
 GMREAL __gm82dx8_transformvertex(double inx, double iny, double inz) {
-    vertex.x=(float)inx;
-    vertex.y=(float)iny;
-    vertex.z=(float)inz;
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),&world_matrix);
-    D3DXVec3TransformCoord(&vertex,&vertex,&world_matrix);
-    return (double)vertex.x;
+	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
+    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
+    vertex = XMVector3TransformCoord(in_vec,world_matrix);
+    return (double)XMVectorGetX(vertex);
 }
 GMREAL __gm82dx8_getvertexy() {
-    return (double)vertex.y;
+    return (double)XMVectorGetY(vertex);
 }
 GMREAL __gm82dx8_getvertexz() {
-    return (double)vertex.z;
+    return (double)XMVectorGetZ(vertex);
 }
 
 ///begin vsync shit
