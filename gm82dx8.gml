@@ -1,4 +1,9 @@
 #define __gm82dx8_init
+    if (__gm82dx8_dllcheck()!=820) {
+        show_error('GM8.2 DirectX8 Extension failed to link DLL.',1)
+        exit
+    }
+    
     if (__gm82dx8_checkstart()) exit
     
     globalvar __gm82dx8_time;           __gm82dx8_time=__gm82dx8_time_now()

@@ -17,6 +17,10 @@ IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
 D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
 D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
+GMREAL __gm82dx8_dllcheck() {
+    return 820;
+}
+
 GMREAL __gm82dx8_checkstart() {
     if (has_started) return 1;
     has_started = 1;
