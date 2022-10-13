@@ -47,11 +47,6 @@
     }
 
 
-#define dx8_set_vsync
-    ///dx8_set_vsync(enable)
-    __gm82dx8_vsync_enabled=!!argument0 && __gm82dx8_isntxp
-
-
 #define __gm82dx8_vsync
     //only activate if vsyncable
     var freq;freq=display_get_frequency()/room_speed
@@ -78,6 +73,38 @@
     }
 
 
+#define __gm82dx8_prepare
+    if (__gm82dx8_appsurfcompose!=noone) {
+        if (!surface_exists(application_surface)) {
+            application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
+        } else {
+            __gm82dx8_resw=surface_get_width(application_surface)
+            __gm82dx8_resh=surface_get_height(application_surface)
+        }
+        surface_set_target(application_surface)
+    }
+
+
+#define __gm82dx8_compose
+    if (__gm82dx8_appsurfcompose!=noone) {
+        d3d_set_depth(0)      
+        if (!surface_exists(application_surface)) {
+            application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
+        } else {
+            dx8_make_opaque()
+        }
+        surface_reset_target()        
+        d3d_set_projection_ortho(0,0,__gm82dx8_resw,__gm82dx8_resh,0)
+        script_execute(__gm82dx8_appsurfcompose)
+    }
+    __gm82dx8_vsync()
+
+
+#define dx8_set_vsync
+    ///dx8_set_vsync(enable)
+    __gm82dx8_vsync_enabled=!!argument0 && __gm82dx8_isntxp
+    
+    
 #define dx8_set_alphablend
     ///dx8_set_alphablend(enable)
     YoYo_EnableAlphaBlend(argument0)
@@ -242,6 +269,22 @@
     }
     
 
+#define dx8_transform_vertex
+    ///dx8_transform_vertex(x,y,z)
+    dx8_transform_vertex[0]=__gm82dx8_transformvertex(argument0,argument1,argument2)
+    dx8_transform_vertex[1]=__gm82dx8_getvertexy()
+    dx8_transform_vertex[2]=__gm82dx8_getvertexz()
+
+
+#define fog_trick
+    ///fog_trick(color,amount)
+    ///fog_trick()
+
+    if (argument_count==2) {
+        d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
+    } else d3d_set_fog(0,0,0,0)
+
+
 #define application_surface_enable
     ///application_surface_enable(postdraw script id)
     //envelope engine v5
@@ -293,48 +336,6 @@
     ///application_surface_is_enabled()
     return __gm82dx8_resh
 
-
-#define __gm82dx8_prepare
-    if (__gm82dx8_appsurfcompose!=noone) {
-        if (!surface_exists(application_surface)) {
-            application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
-        } else {
-            __gm82dx8_resw=surface_get_width(application_surface)
-            __gm82dx8_resh=surface_get_height(application_surface)
-        }
-        surface_set_target(application_surface)
-    }
-
-
-#define __gm82dx8_compose
-    if (__gm82dx8_appsurfcompose!=noone) {
-        d3d_set_depth(0)      
-        if (!surface_exists(application_surface)) {
-            application_surface=surface_create(__gm82dx8_resw,__gm82dx8_resh)
-        } else {
-            dx8_make_opaque()
-        }
-        surface_reset_target()        
-        d3d_set_projection_ortho(0,0,__gm82dx8_resw,__gm82dx8_resh,0)
-        script_execute(__gm82dx8_appsurfcompose)
-    }
-    __gm82dx8_vsync()
-
-
-#define fog_trick
-    ///fog_trick(color,amount)
-    ///fog_trick()
-
-    if (argument_count==2) {
-        d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
-    } else d3d_set_fog(0,0,0,0)
-
-
-#define dx8_transform_vertex
-    ///dx8_transform_vertex(x,y,z)
-    dx8_transform_vertex[0]=__gm82dx8_transformvertex(argument0,argument1,argument2)
-    dx8_transform_vertex[1]=__gm82dx8_getvertexy()
-    dx8_transform_vertex[2]=__gm82dx8_getvertexz()
 
 //
 //
