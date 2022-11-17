@@ -157,6 +157,37 @@ GMREAL __gm82dx8_getvertexz() {
     return (double)XMVectorGetZ(vertex);
 }
 
+DWORD gm_col_to_dx8(double color) {
+    int col=(int)round(color);
+    return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
+}
+
+GMREAL __gm82dx8_setrangefog(double type,double color,double start,double end) {
+    
+    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGENABLE,(DWORD)type);
+    
+    if (type>0) {
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGCOLOR,gm_col_to_dx8(color));
+        
+        float f_start=(float)start;
+        float f_end=(float)end;
+        if (type<2) {
+            //pixel fog
+            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGTABLEMODE,D3DFOG_LINEAR);
+            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGVERTEXMODE,D3DFOG_NONE);
+        } else {
+            //vertex fog
+            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGTABLEMODE,D3DFOG_NONE);
+            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGVERTEXMODE,D3DFOG_LINEAR);
+        }        
+        
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGSTART,*(DWORD *)(&f_start));
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGEND,*(DWORD *)(&f_end));
+        
+        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_RANGEFOGENABLE,(type==2));
+    }
+    return 0;
+}
 ///begin vsync shit
 
 ULONGLONG resolution = 1000000, frequency = 1;
