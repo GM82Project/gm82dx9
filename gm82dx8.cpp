@@ -17,6 +17,15 @@ IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
 D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
 D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
+create_c_function(void,runner_display_reset,0x61f9f4);
+create_c_function(void,runner_clear_depth,0x563a8c);
+
+int* dx8_present_param_ms = (int*)0x85af74;
+int* dx8_present_param_swap = (int*)0x85af7c;
+int* dx8_present_param_window = (int*)0x85b3a8;
+int* dx8_present_param_hz = (int*)0x85b3b8;
+int* dx8_backbuffer_format = (int*)0x85b394;
+
 GMREAL dx8_set_color_mask(double red, double green, double blue, double alpha) {
     UINT mask = 0;
     if (alpha>=0.5) mask += D3DCOLORWRITEENABLE_ALPHA;
@@ -55,18 +64,18 @@ GMREAL __gm82dx8_checkstart() {
     return 0;
 }
 GMREAL __gm82dx8_cleardepth() {
-    ((void (*)())0x563a8c)(); //clear depth buffer
+    runner_clear_depth();
     return 1;
 }
 GMREAL __gm82dx8_setfullscreen(double hz) {
     int z = (int)hz;
     
-    *(int*)0x85af74 = 0;  //multisample off
-    *(int*)0x85af7c = 3;  //swap effect copy
-    *(int*)0x85b3a8 = !z; //windowed mode
-    *(int*)0x85b3b8 = z;  //refresh rate
+    *dx8_present_param_ms = 0;  //multisample off
+    *dx8_present_param_swap = 3;  //swap effect copy
+    *dx8_present_param_window = !z; //windowed mode
+    *dx8_present_param_hz = z;  //refresh rate
     
-    ((void (*)())0x61f9f4)(); //display_reset()
+    runner_display_reset();
 
     return 1;
 }
@@ -188,6 +197,8 @@ GMREAL __gm82dx8_setrangefog(double type,double color,double start,double end) {
     }
     return 0;
 }
+
+
 ///begin vsync shit
 
 ULONGLONG resolution = 1000000, frequency = 1;

@@ -3,6 +3,10 @@
 
 #define GMREAL extern "C" __declspec(dllexport) double __cdecl
 #define GMSTR extern "C" __declspec(dllexport) char* __cdecl
+
+#define create_c_function(rettype, name, addr, ...)\
+    rettype (*name)(__VA_ARGS__) = (rettype(*)(__VA_ARGS__))addr;
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <windows.h>
