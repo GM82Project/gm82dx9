@@ -1,9 +1,9 @@
 {
 	"name": "Game Maker 8.2 DirectX8",
 	"folder": "gm82",
-	"version": "1.2",
+	"version": "1.3",
 	"author": "renex && floogle",
-	"date": "17/11/2022",
+	"date": "11/01/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
 	"helpfile": "",
@@ -840,6 +840,17 @@
 					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
+				},
+				{
+					"name": "__gm82dx8_setalphabuffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
 				}
 			],
 			"constants": [
@@ -902,65 +913,6 @@
 			"init": "__gm82dx8_init",
 			"final": "",
 			"functions": [
-				{
-					"name": "application_surface_disable",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "application_surface_disable()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "application_surface_enable",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "application_surface_enable(postdraw script id)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "application_surface_get_height",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "application_surface_get_height()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "application_surface_get_width",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "application_surface_get_width()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "application_surface_is_enabled",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "application_surface_is_enabled()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "application_surface_resize",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "application_surface_resize(width,height)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
 				{
 					"name": "d3d_reset_projection",
 					"extname": "dx8_reset_projection",
@@ -1082,52 +1034,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_surface_discard",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_surface_discard(id)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_disengage",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_surface_disengage()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_engage",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_surface_engage(id,width,height)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_ensure",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_surface_ensure(id,width,height)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "dx8_transform_vertex",
 					"extname": "",
 					"calltype": 2,
@@ -1147,28 +1053,6 @@
 					"helpline": "fog_trick([color,amount])",
 					"hidden": false,
 					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "surface_disengage",
-					"extname": "dx8_surface_disengage",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "surface_engage",
-					"extname": "dx8_surface_engage",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
 					"returntype": 2
 				},
 				{
@@ -1220,6 +1104,195 @@
 				}
 			],
 			"constants": []
+		},
+		{
+			"filename": "surfaces.gml",
+			"origname": "C:\\Stuff\\github\\gm82dx8\\surfaces.gml",
+			"kind": 2,
+			"init": "",
+			"final": "",
+			"functions": [
+				{
+					"name": "application_surface_disable",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_disable()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_enable",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_enable(postdraw script id)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_get_height",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_get_height()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_get_width",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_get_width()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_is_enabled",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_is_enabled()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "application_surface_resize",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "application_surface_resize(width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_discard",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_disengage",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_engage",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_surface_ensure",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_disengage",
+					"extname": "dx8_surface_disengage",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_engage",
+					"extname": "dx8_surface_engage",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_forget",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_forget(name)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_get",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_get(name,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_reset",
+					"extname": "dx8_surface_disengage",
+					"calltype": 2,
+					"helpline": "surface_reset()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_set",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_set(name,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				}
+			],
+			"constants": [
+				{
+					"name": "__gm82dx8_surfmap",
+					"value": "ds_map_create()",
+					"hidden": true
+				}
+			]
 		}
 	]
 }
