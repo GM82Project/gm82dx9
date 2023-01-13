@@ -99,58 +99,58 @@
 
 #define surface_get
     ///(name,width,height)
-    var s,name,w,h,key;
+    var __s,__name,__w,__h,__key;
 
-    name=argument0
-    w=argument1
-    h=argument2
+    __name=argument0
+    __w=argument1
+    __h=argument2
 
-    s=ds_map_find_value(__gm82dx8_surfmap,name)
-    if (s) {
-        if (!surface_exists(s-1)) {
+    __s=ds_map_find_value(__gm82dx8_surfmap,__name)
+    if (__s) {
+        if (!surface_exists(__s-1)) {
             //clear map & surfaces
-            key=ds_map_find_first(__gm82dx8_surfmap)
+            __key=ds_map_find_first(__gm82dx8_surfmap)
             repeat (ds_map_size(__gm82dx8_surfmap)) {
-                s=ds_map_find_value(__gm82dx8_surfmap,key)
-                if (surface_exists(s-1)) surface_free(s-1)
-                key=ds_map_find_next(__gm82dx8_surfmap,key)
+                __s=ds_map_find_value(__gm82dx8_surfmap,__key)
+                if (surface_exists(__s-1)) surface_free(__s-1)
+                __key=ds_map_find_next(__gm82dx8_surfmap,__key)
             }
             ds_map_clear(__gm82dx8_surfmap)
-            s=0
+            __s=0
         }
     }
 
-    if (!s) {
+    if (!__s) {
         //create surf
-        s=surface_create(w,h)+1
-        ds_map_add(__gm82dx8_surfmap,name,s)
+        __s=surface_create(__w,__h)+1
+        ds_map_add(__gm82dx8_surfmap,__name,__s)
     }
 
-    return s-1
+    return __s-1
 
 
 #define surface_set
     ///(name,width,height)
-    var s;
+    var __s;
 
-    s=surface_get(argument0,argument1,argument2)
+    __s=surface_get(argument0,argument1,argument2)
 
-    surface_set_target(s)
+    surface_set_target(__s)
 
-    return s
+    return __s
 
 
 #define surface_forget
     ///(name)
-    var s,name;
+    var __s,__name;
 
-    name=argument0
+    __name=argument0
 
-    s=ds_map_find_value(__gm82dx8_surfmap,name)
+    __s=ds_map_find_value(__gm82dx8_surfmap,__name)
 
-    if (s!=0) {
-        if (surface_exists(s-1)) surface_free(s-1)
-        ds_map_delete(__gm82dx8_surfmap,name)
+    if (__s!=0) {
+        if (surface_exists(__s-1)) surface_free(__s-1)
+        ds_map_delete(__gm82dx8_surfmap,__name)
     }
 
 
