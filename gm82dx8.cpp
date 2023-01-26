@@ -9,11 +9,10 @@ DLL_FUNC DwmFlush = 0;
 
 D3DVIEWPORT8 viewport;
 D3DRASTER_STATUS raster_status;
-XMMATRIX world_matrix,matrix;
+XMMATRIX world_matrix;
 XMVECTOR vertex;
 
 IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
-IDirect3DDevice8** d3d8_device_8 = (IDirect3DDevice8**)0x58d388;
 D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
 D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
@@ -22,9 +21,6 @@ create_c_function(void,runner_clear_depth,0x563a8c);
 
 int* dx8_present_param_ms = (int*)0x85af74;
 int* dx8_present_param_swap = (int*)0x85af7c;
-int* dx8_present_param_window = (int*)0x85b3a8;
-int* dx8_present_param_hz = (int*)0x85b3b8;
-int* dx8_backbuffer_format = (int*)0x85b394;
 
 GMREAL dx8_set_color_mask(double red, double green, double blue, double alpha) {
     UINT mask = 0;
@@ -32,26 +28,26 @@ GMREAL dx8_set_color_mask(double red, double green, double blue, double alpha) {
     if (red>=0.5) mask += D3DCOLORWRITEENABLE_RED;
     if (green>=0.5) mask += D3DCOLORWRITEENABLE_GREEN;
     if (blue>=0.5) mask += D3DCOLORWRITEENABLE_BLUE;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_COLORWRITEENABLE,*(DWORD *)&mask);
+    (*d3d8_device)->SetRenderState(D3DRS_COLORWRITEENABLE,*(DWORD *)&mask);
     return 0;
 }
 GMREAL dx8_set_fill_mode(double mode) {
     DWORD newmode=D3DFILL_POINT;
     if (mode>=0.5) newmode=D3DFILL_WIREFRAME;
     if (mode>=1.5) newmode=D3DFILL_SOLID;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FILLMODE,newmode);    
+    (*d3d8_device)->SetRenderState(D3DRS_FILLMODE,newmode);    
     return 0;
 }
 GMREAL dx8_set_cull_mode(double mode) {
     DWORD newmode=D3DCULL_NONE;
     if (mode>=0.5) newmode=D3DCULL_CW;
     if (mode>=1.5) newmode=D3DCULL_CCW;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_CULLMODE,newmode);    
+    (*d3d8_device)->SetRenderState(D3DRS_CULLMODE,newmode);    
     return 0;
 }
 GMREAL dx8_set_zbias(double bias) {
     DWORD newbias=(DWORD)round(max(0.0,min(16.0,bias)));
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_ZBIAS,newbias);    
+    (*d3d8_device)->SetRenderState(D3DRS_ZBIAS,newbias);    
     return 0;
 }
 
@@ -72,8 +68,8 @@ GMREAL __gm82dx8_setfullscreen(double hz) {
     
     *dx8_present_param_ms = 0;  //multisample off
     *dx8_present_param_swap = 3;  //swap effect copy
-    *dx8_present_param_window = !z; //windowed mode
-    *dx8_present_param_hz = z;  //refresh rate
+    d3d8_present->Windowed = !z; //windowed mode
+    d3d8_present->FullScreen_RefreshRateInHz = z; //refresh rate
     
     runner_display_reset();
 
@@ -92,60 +88,60 @@ GMREAL __gm82dx8_resize_backbuffer(double width, double height) {
 }
 GMREAL __gm82dx8_setpointscale(double size,double scaling,double minscale,double maxscale,double sprite) {
     float ps = (float)size;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE,*(DWORD *)&ps);
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSPRITEENABLE,(DWORD)sprite);
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALEENABLE,(DWORD)scaling);
+    (*d3d8_device)->SetRenderState(D3DRS_POINTSIZE,*(DWORD *)&ps);
+    (*d3d8_device)->SetRenderState(D3DRS_POINTSPRITEENABLE,(DWORD)sprite);
+    (*d3d8_device)->SetRenderState(D3DRS_POINTSCALEENABLE,(DWORD)scaling);
     if (scaling) {
         float ps = (float)minscale;
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
+        (*d3d8_device)->SetRenderState(D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
         ps = (float)maxscale;
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+        (*d3d8_device)->SetRenderState(D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
         ps = 1.0f;
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALE_B,*(DWORD *)&ps);        
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALE_C,*(DWORD *)&ps); 
+        (*d3d8_device)->SetRenderState(D3DRS_POINTSCALE_B,*(DWORD *)&ps);        
+        (*d3d8_device)->SetRenderState(D3DRS_POINTSCALE_C,*(DWORD *)&ps); 
     } else {
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+        (*d3d8_device)->SetRenderState(D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
+        (*d3d8_device)->SetRenderState(D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
     }
     return 0;
 }
 GMREAL __gm82dx8_setviewport(double x, double y, double width, double height) {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->GetViewport(&viewport);
     viewport.X=(DWORD)x;
     viewport.Y=(DWORD)y;
     viewport.Width=(DWORD)width;
     viewport.Height=(DWORD)height;
     
-    IDirect3DDevice8_SetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->SetViewport(&viewport);
     
     return 0;
 }
 GMREAL __gm82dx8_getviewportx() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->GetViewport(&viewport);
     return (double)viewport.X;
 }
 GMREAL __gm82dx8_getviewporty() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->GetViewport(&viewport);
     return (double)viewport.Y;
 }
 GMREAL __gm82dx8_getviewportw() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->GetViewport(&viewport);
     return (double)viewport.Width;
 }
 GMREAL __gm82dx8_getviewporth() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->GetViewport(&viewport);
     return (double)viewport.Height;
 }
 GMREAL __gm82dx8_setzscale(double znear, double zfar) {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->GetViewport(&viewport);
     viewport.MinZ=(float)znear;
     viewport.MaxZ=(float)zfar;
-    IDirect3DDevice8_SetViewport(*d3d8_device,&viewport);
+    (*d3d8_device)->SetViewport(&viewport);
     
     return 0;
 }
 GMREAL __gm82dx8_getvideomem() {
-    return (double)(IDirect3DDevice8_GetAvailableTextureMem(*d3d8_device)/1048576);
+    return (double)((*d3d8_device)->GetAvailableTextureMem()/1048576);
 }
 GMREAL __gm82dx8_getmaxwidth() {
     return (double)d3d8_caps->MaxTextureWidth;
@@ -155,7 +151,7 @@ GMREAL __gm82dx8_getmaxheight() {
 }
 GMREAL __gm82dx8_transformvertex(double inx, double iny, double inz) {
 	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
+    (*d3d8_device)->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
     vertex = XMVector3TransformCoord(in_vec,world_matrix);
     return (double)XMVectorGetX(vertex);
 }
@@ -173,27 +169,27 @@ DWORD gm_col_to_dx8(double color) {
 
 GMREAL __gm82dx8_setrangefog(double type,double color,double start,double end) {
     
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGENABLE,(DWORD)type);
+    (*d3d8_device)->SetRenderState(D3DRS_FOGENABLE,(DWORD)type);
     
     if (type>0) {
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGCOLOR,gm_col_to_dx8(color));
+        (*d3d8_device)->SetRenderState(D3DRS_FOGCOLOR,gm_col_to_dx8(color));
         
         float f_start=(float)start;
         float f_end=(float)end;
         if (type<2) {
             //pixel fog
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGTABLEMODE,D3DFOG_LINEAR);
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGVERTEXMODE,D3DFOG_NONE);
+            (*d3d8_device)->SetRenderState(D3DRS_FOGTABLEMODE,D3DFOG_LINEAR);
+            (*d3d8_device)->SetRenderState(D3DRS_FOGVERTEXMODE,D3DFOG_NONE);
         } else {
             //vertex fog
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGTABLEMODE,D3DFOG_NONE);
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGVERTEXMODE,D3DFOG_LINEAR);
+            (*d3d8_device)->SetRenderState(D3DRS_FOGTABLEMODE,D3DFOG_NONE);
+            (*d3d8_device)->SetRenderState(D3DRS_FOGVERTEXMODE,D3DFOG_LINEAR);
         }        
         
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGSTART,*(DWORD *)(&f_start));
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGEND,*(DWORD *)(&f_end));
+        (*d3d8_device)->SetRenderState(D3DRS_FOGSTART,*(DWORD *)(&f_start));
+        (*d3d8_device)->SetRenderState(D3DRS_FOGEND,*(DWORD *)(&f_end));
         
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_RANGEFOGENABLE,(type==2));
+        (*d3d8_device)->SetRenderState(D3DRS_RANGEFOGENABLE,(type==2));
     }
     return 0;
 }
@@ -238,7 +234,7 @@ GMREAL __gm82dx8_time_now() {
     }
 }
 GMREAL __gm82dx8_waitvblank() {    
-    IDirect3DDevice8_GetRasterStatus(*d3d8_device,&raster_status);
+    (*d3d8_device)->GetRasterStatus(&raster_status);
     if (raster_status.InVBlank) return 1;
     return 0;    
 }

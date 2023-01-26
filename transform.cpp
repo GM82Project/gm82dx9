@@ -35,11 +35,11 @@
 
 // Start of function
 #define FUNC_START {                                                                \
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix))
+    (*d3d8_device)->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix))
 
 // End of function
 #define FUNC_END                                                                    \
-    IDirect3DDevice8_SetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix)); \
+    (*d3d8_device)->SetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix)); \
     return 0;                                                                       \
 }
 
