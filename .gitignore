@@ -2,3 +2,5 @@ build
 *.gex
 *.dll
 todo.txt
+.idea
+cmake-build-*
