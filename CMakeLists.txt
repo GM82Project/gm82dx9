@@ -1,13 +1,19 @@
 cmake_minimum_required(VERSION 3.19)
 project(gm82dx8 CXX)
 
+set(CMAKE_CXX_STANDARD 20)
+
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS "/O2 /GS- /W2 /WX")
 endif()
 
-add_library(gm82dx8 SHARED gm82dx8.cpp transform.cpp)
+include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Include")
+link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86")
+
+add_library(gm82dx8 SHARED gm82dx8.cpp transform.cpp shaders.cpp inject.cpp)
+target_link_libraries(gm82dx8 d3d9 d3dx9 dxerr legacy_stdio_definitions)
 
 option(INSTALL_GEX "Install the generated .gex" OFF)
 

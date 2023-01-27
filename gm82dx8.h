@@ -11,7 +11,7 @@
 #include <math.h>
 #include <windows.h>
 #include <versionhelpers.h>
-#include "d3d8/d3d8.h"
+#include "d3d9.h"
 #include "DirectXMath/DirectXMath.h"
 
 using namespace DirectX;
@@ -31,13 +31,15 @@ extern HINSTANCE dwm_dll;
 extern DLL_FUNC DwmIsCompositionEnabled;
 extern DLL_FUNC DwmFlush;
 
-extern IDirect3DDevice8** d3d8_device;
-extern IDirect3DDevice8** d3d8_device_8;
-extern D3DVIEWPORT8 viewport;
+extern IDirect3DDevice9** d3d8_device;
+extern IDirect3DDevice9** d3d8_device_8;
+extern D3DVIEWPORT9 viewport;
 extern D3DRASTER_STATUS raster_status;
 extern XMMATRIX world_matrix,matrix;
-extern D3DPRESENT_PARAMETERS* d3d8_present;
-extern D3DCAPS8* d3d8_caps;
+extern D3DPRESENT_PARAMETERS d3d_parameters;
+extern D3DCAPS9 d3d_caps;
 extern XMVECTOR vertex;
+
+HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
 
 #endif

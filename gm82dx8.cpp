@@ -7,14 +7,13 @@ HINSTANCE dwm_dll = 0;
 DLL_FUNC DwmIsCompositionEnabled = 0;
 DLL_FUNC DwmFlush = 0;
 
-D3DVIEWPORT8 viewport;
+D3DVIEWPORT9 viewport;
 D3DRASTER_STATUS raster_status;
 XMMATRIX world_matrix;
 XMVECTOR vertex;
 
-IDirect3DDevice8** d3d8_device = (IDirect3DDevice8**)0x6886a8;
+IDirect3DDevice9** d3d8_device = (IDirect3DDevice9**)0x6886a8;
 D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
-D3DCAPS8* d3d8_caps = (D3DCAPS8*)0x85aea0;
 
 create_c_function(void,runner_display_reset,0x61f9f4);
 create_c_function(void,runner_clear_depth,0x563a8c);
@@ -47,7 +46,7 @@ GMREAL dx8_set_cull_mode(double mode) {
 }
 GMREAL dx8_set_zbias(double bias) {
     DWORD newbias=(DWORD)round(max(0.0,min(16.0,bias)));
-    (*d3d8_device)->SetRenderState(D3DRS_ZBIAS,newbias);    
+    (*d3d8_device)->SetRenderState(D3DRS_DEPTHBIAS,newbias);
     return 0;
 }
 
@@ -68,8 +67,8 @@ GMREAL __gm82dx8_setfullscreen(double hz) {
     
     *dx8_present_param_ms = 0;  //multisample off
     *dx8_present_param_swap = 3;  //swap effect copy
-    d3d8_present->Windowed = !z; //windowed mode
-    d3d8_present->FullScreen_RefreshRateInHz = z; //refresh rate
+    d3d_parameters.Windowed = !z; //windowed mode
+    d3d_parameters.FullScreen_RefreshRateInHz = z; //refresh rate
     
     runner_display_reset();
 
@@ -144,10 +143,10 @@ GMREAL __gm82dx8_getvideomem() {
     return (double)((*d3d8_device)->GetAvailableTextureMem()/1048576);
 }
 GMREAL __gm82dx8_getmaxwidth() {
-    return (double)d3d8_caps->MaxTextureWidth;
+    return (double)d3d_caps.MaxTextureWidth;
 }
 GMREAL __gm82dx8_getmaxheight() {
-    return (double)d3d8_caps->MaxTextureHeight;
+    return (double)d3d_caps.MaxTextureHeight;
 }
 GMREAL __gm82dx8_transformvertex(double inx, double iny, double inz) {
 	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
@@ -234,7 +233,7 @@ GMREAL __gm82dx8_time_now() {
     }
 }
 GMREAL __gm82dx8_waitvblank() {    
-    (*d3d8_device)->GetRasterStatus(&raster_status);
+    (*d3d8_device)->GetRasterStatus(0, &raster_status);
     if (raster_status.InVBlank) return 1;
     return 0;    
 }
@@ -248,9 +247,7 @@ GMREAL __gm82dx8_sync_dwm() {
     return 0;
 }
 GMREAL __gm82dx8_surface_set_depth(double id) {
-	IDirect3DSurface8* render_target;
-	if (FAILED((*d3d8_device)->GetRenderTarget(&render_target))) return -1;
-	if (FAILED((*d3d8_device)->SetRenderTarget(render_target, (*(IDirect3DSurface8***)0x84527c)[4+5*int(id)])))
+	if (FAILED((*d3d8_device)->SetDepthStencilSurface((*(IDirect3DSurface9***)0x84527c)[4+5*int(id)])))
 		return -1;
 	return 0;
 }
