@@ -109,6 +109,87 @@ GMREAL dx8_shader_vertex_reset() {
     return 0;
 }
 
+#define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
+    GMREAL dx8_shader_ ## st_lo ## _set_constant_1 ## ty_lo (double reg, double v1) { \
+        ty_name data[] = {(ty_name)v1};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
+        return 0;\
+    } \
+    GMREAL dx8_shader_ ## st_lo ## _set_constant_2 ## ty_lo (double reg, double v1, double v2) { \
+        ty_name data[] = {(ty_name)v1, (ty_name)v2};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);   \
+        return 0;\
+    } \
+    GMREAL dx8_shader_ ## st_lo ## _set_constant_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
+        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 3);   \
+        return 0;\
+    } \
+    GMREAL dx8_shader_ ## st_lo ## _set_constant_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
+        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 4);       \
+        return 0;\
+    } \
+    GMREAL dx8_shader_ ## st_lo ## _set_constant_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
+        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4, (ty_name)v5, (ty_name)v6, (ty_name)v7, (ty_name)v8};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 8);       \
+        return 0;\
+    }
+
+CONSTANT_FUNC(pixel,Pixel,float,f,F)
+CONSTANT_FUNC(vertex,Vertex,float,f,F)
+
+#define COPY_MATRIX(func,cons) \
+    GMREAL dx8_shader_vertex_copy_matrix_ ## func(double reg) { \
+        D3DMATRIX mat; \
+        (*d3d8_device)->GetTransform(cons, &mat); \
+        (*d3d8_device)->SetVertexShaderConstantF(reg, mat.m[0], 16); \
+        return 0;                  \
+    }
+
+COPY_MATRIX(w, D3DTS_WORLD)
+COPY_MATRIX(v, D3DTS_VIEW)
+COPY_MATRIX(p, D3DTS_PROJECTION)
+
+GMREAL dx8_shader_vertex_copy_matrix_wv(double reg) {
+    XMMATRIX world, view;
+    (*d3d8_device)->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
+    (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
+    world = DirectX::XMMatrixMultiply(world, view);
+    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 16);
+    return 0;
+}
+
+GMREAL dx8_shader_vertex_copy_matrix_wvp(double reg) {
+    XMMATRIX world, view, projection;
+    (*d3d8_device)->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
+    (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
+    (*d3d8_device)->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
+    world = DirectX::XMMatrixMultiply(DirectX::XMMatrixMultiply(world, view), projection);
+    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 16);
+    return 0;
+}
+
+GMREAL dx8_texture_set_stage(double stage, double tex_f) {
+    int tex = tex_f;
+    if (tex < 0) {
+        (*d3d8_device)->SetTexture(stage, nullptr);
+        return 0;
+    }
+    bool exists;
+    __asm {
+        mov eax, tex
+        mov edx, 0x620ff8
+        call edx
+        mov exists, al
+    }
+    if (exists) {
+        auto textures = (GMTexture**)0x85b3c4;
+        (*d3d8_device)->SetTexture(stage, (*textures)[tex].texture);
+    }
+    return 0;
+}
+
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf) {
     if (using_shader) {
 #define FVF(flags, name) \

@@ -862,6 +862,68 @@
 						2
 					],
 					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_create_file",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_create_file(fn)",
+					"hidden": false,
+					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_set(shader)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_reset",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_create_file",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_reset",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
 				}
 			],
 			"constants": [
