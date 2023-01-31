@@ -111,28 +111,28 @@ GMREAL dx8_shader_vertex_reset() {
 
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_1 ## ty_lo (double reg, double v1) { \
-        ty_name data[] = {(ty_name)v1};            \
+        ty_name data[] = {(ty_name)v1, 0, 0, 0};            \
         (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_2 ## ty_lo (double reg, double v1, double v2) { \
-        ty_name data[] = {(ty_name)v1, (ty_name)v2};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);   \
+        ty_name data[] = {(ty_name)v1, (ty_name)v2, 0, 0};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
-        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 3);   \
+        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, 0};            \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 4);       \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);       \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4, (ty_name)v5, (ty_name)v6, (ty_name)v7, (ty_name)v8};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 8);       \
+        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);       \
         return 0;\
     }
 
@@ -143,7 +143,7 @@ CONSTANT_FUNC(vertex,Vertex,float,f,F)
     GMREAL dx8_shader_vertex_copy_matrix_ ## func(double reg) { \
         D3DMATRIX mat; \
         (*d3d8_device)->GetTransform(cons, &mat); \
-        (*d3d8_device)->SetVertexShaderConstantF(reg, mat.m[0], 16); \
+        (*d3d8_device)->SetVertexShaderConstantF(reg, mat.m[0], 4); \
         return 0;                  \
     }
 
@@ -156,7 +156,7 @@ GMREAL dx8_shader_vertex_copy_matrix_wv(double reg) {
     (*d3d8_device)->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
     (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
     world = DirectX::XMMatrixMultiply(world, view);
-    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 16);
+    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
     return 0;
 }
 
@@ -166,7 +166,7 @@ GMREAL dx8_shader_vertex_copy_matrix_wvp(double reg) {
     (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
     (*d3d8_device)->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
     world = DirectX::XMMatrixMultiply(DirectX::XMMatrixMultiply(world, view), projection);
-    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 16);
+    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
     return 0;
 }
 
