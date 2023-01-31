@@ -924,6 +924,219 @@
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_set_constant_1f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_set_constant_1f(reg,val)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_set_constant_2f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_set_constant_2f(reg,v1,v2)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_set_constant_3f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_set_constant_3f(reg,v1,v2,v3)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_set_constant_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_set_constant_4f(reg,v1,v2,v3,v4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_set_constant_8f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_set_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_set_constant_1f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_set_constant_1f(reg,val)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_set_constant_2f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_set_constant_2f(reg,v1,v2)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_set_constant_3f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_set_constant_3f(reg,v1,v2,v3)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_set_constant_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_set_constant_4f(reg,v1,v2,v3,v4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_pixel_set_constant_8f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_pixel_set_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_texture_set_stage",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_texture_set_stage(stage,tex)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_copy_matrix_v",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_copy_matrix_v(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_copy_matrix_p",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_copy_matrix_p(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_copy_matrix_w",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_copy_matrix_w(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_copy_matrix_wv",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_copy_matrix_wv(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_vertex_copy_matrix_wvp",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_shader_vertex_copy_matrix_wvp(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
 				}
 			],
 			"constants": [

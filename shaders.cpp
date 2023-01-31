@@ -160,6 +160,15 @@ GMREAL dx8_shader_vertex_copy_matrix_wv(double reg) {
     return 0;
 }
 
+GMREAL dx8_shader_vertex_copy_matrix_vp(double reg) {
+    XMMATRIX view, projection;
+    (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
+    (*d3d8_device)->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
+    view = DirectX::XMMatrixMultiply(view, projection);
+    (*d3d8_device)->SetVertexShaderConstantF(reg, view.r->m128_f32, 4);
+    return 0;
+}
+
 GMREAL dx8_shader_vertex_copy_matrix_wvp(double reg) {
     XMMATRIX world, view, projection;
     (*d3d8_device)->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
