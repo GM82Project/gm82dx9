@@ -335,7 +335,7 @@ BOOL WINAPI DllMain(
     PATCH_SIMPLE(0x568acc, 0xb4); // GetTransform
 
     PATCH_SIMPLE(0x563b73, 0xe4); // SetRenderState
-    PATCH_SIMPLE(0x563b93, 0xe4); // SetRenderState
+    PATCH_SIMPLE(0x564793, 0xe4); // SetRenderState
     PATCH_SIMPLE(0x61e8d1, 0xe4); // SetRenderState
     PATCH_SIMPLE(0x61e8e3, 0xe4); // SetRenderState
     PATCH_SIMPLE(0x61e8f5, 0xe4); // SetRenderState
