@@ -154,6 +154,10 @@
     }
 
 
+#define dx8_surface_set_depth
+	if (surface_exists(argument0)) __gm82dx8_surface_set_depth(argument0)
+
+
 #define application_surface_enable
     ///application_surface_enable(postdraw script id)
     //envelope engine v5

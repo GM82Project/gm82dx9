@@ -251,3 +251,10 @@ GMREAL __gm82dx8_sync_dwm() {
     else SleepEx(2,TRUE);
     return 0;
 }
+GMREAL __gm82dx8_surface_set_depth(double id) {
+	IDirect3DSurface8* render_target;
+	if (FAILED((*d3d8_device)->GetRenderTarget(&render_target))) return -1;
+	if (FAILED((*d3d8_device)->SetRenderTarget(render_target, (*(IDirect3DSurface8***)0x84527c)[4+5*int(id)])))
+		return -1;
+	return 0;
+}
