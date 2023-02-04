@@ -1,5 +1,21 @@
 #include "gm82dx8.h"
 
+GMREAL dx8_transform_set_matrix(
+        double m_11, double m_12, double m_13, double m_14,
+        double m_21, double m_22, double m_23, double m_24,
+        double m_31, double m_32, double m_33, double m_34,
+        double m_41, double m_42, double m_43, double m_44) {
+    D3DMATRIX m;
+#define SET_MAT(n) m._ ## n = m_ ## n;
+    SET_MAT(11) SET_MAT(12) SET_MAT(13) SET_MAT(14)
+    SET_MAT(21) SET_MAT(22) SET_MAT(23) SET_MAT(24)
+    SET_MAT(31) SET_MAT(32) SET_MAT(33) SET_MAT(34)
+    SET_MAT(41) SET_MAT(42) SET_MAT(43) SET_MAT(44)
+#undef SET_MAT
+    (*d3d8_device)->SetTransform(D3DTS_WORLD, &m);
+    return 0;
+}
+
 // Glossary:
 //   C: rotation component (either x, y or z)
 //   CC: 2 rotation components (different components in any order)
