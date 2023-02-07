@@ -10,9 +10,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <windows.h>
+#include <stdio.h>
 #include <versionhelpers.h>
 #include "d3d8/d3d8.h"
+#include "C:/DXSDK/include/dxerr8.h"
 #include "DirectXMath/DirectXMath.h"
+
+#pragma comment(lib, "C:/DXSDK/lib/DxErr8.lib")
+#pragma comment(lib, "legacy_stdio_definitions.lib")
 
 using namespace DirectX;
 

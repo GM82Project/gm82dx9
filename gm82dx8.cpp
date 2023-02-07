@@ -1,11 +1,8 @@
 #include "gm82dx8.h"
 
-int has_started = 0;
+#define Device (*d3d8_device)
 
-int isdwm = 0;
-HINSTANCE dwm_dll = 0;
-DLL_FUNC DwmIsCompositionEnabled = 0;
-DLL_FUNC DwmFlush = 0;
+int has_started = 0;
 
 D3DVIEWPORT8 viewport;
 D3DRASTER_STATUS raster_status;
@@ -26,33 +23,84 @@ int* dx8_present_param_window = (int*)0x85b3a8;
 int* dx8_present_param_hz = (int*)0x85b3b8;
 int* dx8_backbuffer_format = (int*)0x85b394;
 
+DWORD gm_col_to_dx8(double color) {
+    int col=(int)round(color);
+    return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
+}
+IDirect3DSurface8* get_gm_surface_depthbuffer(double id) {
+    return (*(IDirect3DSurface8***)0x84527c)[4+5*int(id)];
+}
+bool __dx_vibe_check(char* func, HRESULT hr) {
+    if (hr==D3D_OK) return 0;
+    
+    char buf[1024];
+    snprintf(buf, 1024, "DirectX8 error in function %s:\n%s\n%s",func,DXGetErrorString8(hr),DXGetErrorDescription8(hr));
+    MessageBox(0, buf, "Warning", 0);
+    return 1;
+}
+
 GMREAL dx8_set_color_mask(double red, double green, double blue, double alpha) {
     UINT mask = 0;
     if (alpha>=0.5) mask += D3DCOLORWRITEENABLE_ALPHA;
     if (red>=0.5) mask += D3DCOLORWRITEENABLE_RED;
     if (green>=0.5) mask += D3DCOLORWRITEENABLE_GREEN;
     if (blue>=0.5) mask += D3DCOLORWRITEENABLE_BLUE;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_COLORWRITEENABLE,*(DWORD *)&mask);
+    Device->SetRenderState(D3DRS_COLORWRITEENABLE,*(DWORD *)&mask);
     return 0;
 }
 GMREAL dx8_set_fill_mode(double mode) {
     DWORD newmode=D3DFILL_POINT;
     if (mode>=0.5) newmode=D3DFILL_WIREFRAME;
     if (mode>=1.5) newmode=D3DFILL_SOLID;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FILLMODE,newmode);    
+    Device->SetRenderState(D3DRS_FILLMODE,newmode);    
     return 0;
 }
 GMREAL dx8_set_cull_mode(double mode) {
     DWORD newmode=D3DCULL_NONE;
     if (mode>=0.5) newmode=D3DCULL_CW;
     if (mode>=1.5) newmode=D3DCULL_CCW;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_CULLMODE,newmode);    
+    Device->SetRenderState(D3DRS_CULLMODE,newmode);    
     return 0;
 }
 GMREAL dx8_set_zbias(double bias) {
     DWORD newbias=(DWORD)round(max(0.0,min(16.0,bias)));
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_ZBIAS,newbias);    
+    Device->SetRenderState(D3DRS_ZBIAS,newbias);    
     return 0;
+}
+
+GMREAL __gm82dx8_setrangefog(double type,double color,double start,double end) {
+    
+    Device->SetRenderState(D3DRS_FOGENABLE,(DWORD)type);
+    
+    if (type>0) {
+        Device->SetRenderState(D3DRS_FOGCOLOR,gm_col_to_dx8(color));
+        
+        float f_start=(float)start;
+        float f_end=(float)end;
+        if (type<2) {
+            //pixel fog
+            Device->SetRenderState(D3DRS_FOGTABLEMODE,D3DFOG_LINEAR);
+            Device->SetRenderState(D3DRS_FOGVERTEXMODE,D3DFOG_NONE);
+        } else {
+            //vertex fog
+            Device->SetRenderState(D3DRS_FOGTABLEMODE,D3DFOG_NONE);
+            Device->SetRenderState(D3DRS_FOGVERTEXMODE,D3DFOG_LINEAR);
+        }        
+        
+        Device->SetRenderState(D3DRS_FOGSTART,*(DWORD *)(&f_start));
+        Device->SetRenderState(D3DRS_FOGEND,*(DWORD *)(&f_end));
+        
+        Device->SetRenderState(D3DRS_RANGEFOGENABLE,(type==2));
+    }
+    return 0;
+}
+GMREAL __gm82dx8_surface_set_depth(double id) {
+	IDirect3DSurface8* render_target;
+	if (__dx_vibe_check("__gm82dx8_surface_set_depth",Device->GetRenderTarget(&render_target)))
+        return -1;
+	if (__dx_vibe_check("__gm82dx8_surface_set_depth",Device->SetRenderTarget(render_target, get_gm_surface_depthbuffer(id))))
+		return -1;
+	return 0;
 }
 
 GMREAL __gm82dx8_dllcheck() {
@@ -92,60 +140,60 @@ GMREAL __gm82dx8_resize_backbuffer(double width, double height) {
 }
 GMREAL __gm82dx8_setpointscale(double size,double scaling,double minscale,double maxscale,double sprite) {
     float ps = (float)size;
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE,*(DWORD *)&ps);
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSPRITEENABLE,(DWORD)sprite);
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALEENABLE,(DWORD)scaling);
+    Device->SetRenderState(D3DRS_POINTSIZE,*(DWORD *)&ps);
+    Device->SetRenderState(D3DRS_POINTSPRITEENABLE,(DWORD)sprite);
+    Device->SetRenderState(D3DRS_POINTSCALEENABLE,(DWORD)scaling);
     if (scaling) {
         float ps = (float)minscale;
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
+        Device->SetRenderState(D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
         ps = (float)maxscale;
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+        Device->SetRenderState(D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
         ps = 1.0f;
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALE_B,*(DWORD *)&ps);        
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSCALE_C,*(DWORD *)&ps); 
+        Device->SetRenderState(D3DRS_POINTSCALE_B,*(DWORD *)&ps);        
+        Device->SetRenderState(D3DRS_POINTSCALE_C,*(DWORD *)&ps); 
     } else {
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+        Device->SetRenderState(D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
+        Device->SetRenderState(D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
     }
     return 0;
 }
 GMREAL __gm82dx8_setviewport(double x, double y, double width, double height) {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    Device->GetViewport(&viewport);
     viewport.X=(DWORD)x;
     viewport.Y=(DWORD)y;
     viewport.Width=(DWORD)width;
     viewport.Height=(DWORD)height;
     
-    IDirect3DDevice8_SetViewport(*d3d8_device,&viewport);
+    Device->SetViewport(&viewport);
     
     return 0;
 }
 GMREAL __gm82dx8_getviewportx() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    Device->GetViewport(&viewport);
     return (double)viewport.X;
 }
 GMREAL __gm82dx8_getviewporty() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    Device->GetViewport(&viewport);
     return (double)viewport.Y;
 }
 GMREAL __gm82dx8_getviewportw() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    Device->GetViewport(&viewport);
     return (double)viewport.Width;
 }
 GMREAL __gm82dx8_getviewporth() {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    Device->GetViewport(&viewport);
     return (double)viewport.Height;
 }
 GMREAL __gm82dx8_setzscale(double znear, double zfar) {
-    IDirect3DDevice8_GetViewport(*d3d8_device,&viewport);
+    Device->GetViewport(&viewport);
     viewport.MinZ=(float)znear;
     viewport.MaxZ=(float)zfar;
-    IDirect3DDevice8_SetViewport(*d3d8_device,&viewport);
+    Device->SetViewport(&viewport);
     
     return 0;
 }
 GMREAL __gm82dx8_getvideomem() {
-    return (double)(IDirect3DDevice8_GetAvailableTextureMem(*d3d8_device)/1048576);
+    return (double)(Device->GetAvailableTextureMem()/1048576);
 }
 GMREAL __gm82dx8_getmaxwidth() {
     return (double)d3d8_caps->MaxTextureWidth;
@@ -155,7 +203,7 @@ GMREAL __gm82dx8_getmaxheight() {
 }
 GMREAL __gm82dx8_transformvertex(double inx, double iny, double inz) {
 	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
-    IDirect3DDevice8_GetTransform(*d3d8_device,D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
+    Device->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
     vertex = XMVector3TransformCoord(in_vec,world_matrix);
     return (double)XMVectorGetX(vertex);
 }
@@ -164,97 +212,4 @@ GMREAL __gm82dx8_getvertexy() {
 }
 GMREAL __gm82dx8_getvertexz() {
     return (double)XMVectorGetZ(vertex);
-}
-
-DWORD gm_col_to_dx8(double color) {
-    int col=(int)round(color);
-    return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
-}
-
-GMREAL __gm82dx8_setrangefog(double type,double color,double start,double end) {
-    
-    IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGENABLE,(DWORD)type);
-    
-    if (type>0) {
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGCOLOR,gm_col_to_dx8(color));
-        
-        float f_start=(float)start;
-        float f_end=(float)end;
-        if (type<2) {
-            //pixel fog
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGTABLEMODE,D3DFOG_LINEAR);
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGVERTEXMODE,D3DFOG_NONE);
-        } else {
-            //vertex fog
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGTABLEMODE,D3DFOG_NONE);
-            IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGVERTEXMODE,D3DFOG_LINEAR);
-        }        
-        
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGSTART,*(DWORD *)(&f_start));
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_FOGEND,*(DWORD *)(&f_end));
-        
-        IDirect3DDevice8_SetRenderState(*d3d8_device,D3DRS_RANGEFOGENABLE,(type==2));
-    }
-    return 0;
-}
-
-
-///begin vsync shit
-
-ULONGLONG resolution = 1000000, frequency = 1;
-
-GMREAL __gm82dx8_not_xp() {
-    return IsWindowsVistaOrGreater();
-}
-GMREAL __gm82dx8_dll_init() {
-    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
-    
-    //this seems to cause issues with dwm-grab screen recorders
-    /*if (IsWindows8OrGreater()) {
-        dwm_dll = LoadLibrary(TEXT("dwmapi.dll")); 
-        DwmFlush = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmFlush");
-        isdwm = 1;
-    } else if (IsWindowsVistaOrGreater()) {
-        //DWM is possible. let's load it and see if it's enabled:
-        dwm_dll = LoadLibrary(TEXT("dwmapi.dll")); 
-        
-        int enabled;
-        DwmIsCompositionEnabled = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmIsCompositionEnabled");        
-        (DwmIsCompositionEnabled)(&enabled);        
-        if (enabled) {
-            //DWM exists and is enabled.
-            DwmFlush = (DLL_FUNC) GetProcAddress(dwm_dll, "DwmFlush");
-            isdwm = 1;
-        }
-    }*/
-    return 0;    
-}
-GMREAL __gm82dx8_time_now() {
-    ULONGLONG now;
-    if (QueryPerformanceCounter((LARGE_INTEGER*)&now)) {
-        return (double)(now*resolution/frequency);
-    } else {
-        return -1.0;
-    }
-}
-GMREAL __gm82dx8_waitvblank() {    
-    IDirect3DDevice8_GetRasterStatus(*d3d8_device,&raster_status);
-    if (raster_status.InVBlank) return 1;
-    return 0;    
-}
-GMREAL __gm82dx8_sleep(double ms) {
-    SleepEx((DWORD)ms,TRUE);
-    return 0;
-}
-GMREAL __gm82dx8_sync_dwm() {
-    if (isdwm) (DwmFlush)();
-    else SleepEx(2,TRUE);
-    return 0;
-}
-GMREAL __gm82dx8_surface_set_depth(double id) {
-	IDirect3DSurface8* render_target;
-	if (FAILED((*d3d8_device)->GetRenderTarget(&render_target))) return -1;
-	if (FAILED((*d3d8_device)->SetRenderTarget(render_target, (*(IDirect3DSurface8***)0x84527c)[4+5*int(id)])))
-		return -1;
-	return 0;
 }
