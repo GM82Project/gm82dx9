@@ -6,6 +6,8 @@
     
     if (__gm82dx8_checkstart()) exit
     
+    globalvar __gm82dx8_cross_detect;
+    
     globalvar __gm82dx8_time;           __gm82dx8_time=__gm82dx8_time_now()
     globalvar __gm82dx8_vsync_enabled;
     globalvar __gm82dx8_vpatched;       __gm82dx8_vpatched=false

@@ -102,7 +102,115 @@ GMREAL __gm82dx8_surface_set_depth(double id) {
 		return -1;
 	return 0;
 }
+GMREAL __gm82dx8_buffer_to_surface(double buffer, double id, double gm_width, double gm_height) {    
+    //parse arguments    
+    char* src=(char*)(int)buffer;
+    int gmw=(int)gm_width;
+    int gmh=(int)gm_height;
+    
+    //get current render target
+    //(surface by id is confusing)
+    IDirect3DSurface8* surf;
+    //surf=get_gm_surface_depthbuffer(id);
+    if (__dx_vibe_check("__gm82dx8_buffer_to_surface",Device->GetRenderTarget(&surf))) return -1;  
 
+    //query for actual width and height, and get gm w/h
+    D3DSURFACE_DESC desc;
+    if (__dx_vibe_check("__gm82dx8_buffer_to_surface",surf->GetDesc(&desc))) return -1;
+    int width=desc.Width;
+    int height=desc.Height;
+
+    //create scratch surface
+    IDirect3DSurface8* scratch;    
+    if (__dx_vibe_check("__gm82dx8_buffer_to_surface",Device->CreateImageSurface(
+        desc.Width,
+        desc.Height,
+        desc.Format,
+        &scratch
+    ))) return -1;    
+
+    //"lock" full surface rectangle and get information about it
+    D3DLOCKED_RECT pLockedRect;
+    if (__dx_vibe_check("__gm82dx8_buffer_to_surface",scratch->LockRect(&pLockedRect,NULL,0)))
+        return -1;
+
+    char* dest=(char*)pLockedRect.pBits;
+    int surfpitch=pLockedRect.Pitch;
+    
+    int srcpos=0;
+    int dstpos=0;
+    int bufstride=gmw*4;
+    for (int i=0;i<gmh;i+=1) {
+        memcpy(&dest[dstpos],&src[srcpos],bufstride);
+        srcpos+=bufstride;
+        dstpos+=surfpitch;
+    }
+    
+    //free the lock.
+    scratch->UnlockRect();
+    
+    if (__dx_vibe_check("__gm82dx8_buffer_to_surface",Device->CopyRects(scratch,NULL,0,surf,NULL)))
+        return -1;
+    
+    scratch->Release();
+    surf->Release();
+    
+    return 0;    
+}
+GMREAL __gm82dx8_surface_to_buffer(double buffer, double id, double gm_width, double gm_height) {    
+    //parse arguments    
+    char* dest=(char*)(int)buffer;
+    int gmw=(int)gm_width;
+    int gmh=(int)gm_height;
+    
+    //get current render target
+    //(surface by id is confusing)
+    IDirect3DSurface8* surf;
+    //surf=get_gm_surface_depthbuffer(id);
+    if (__dx_vibe_check("__gm82dx8_surface_to_buffer",Device->GetRenderTarget(&surf))) return -1;  
+
+    //query for actual width and height, and get gm w/h
+    D3DSURFACE_DESC desc;
+    if (__dx_vibe_check("__gm82dx8_surface_to_buffer",surf->GetDesc(&desc))) return -1;
+    int width=desc.Width;
+    int height=desc.Height; 
+
+    //create scratch surface
+    IDirect3DSurface8* scratch;    
+    if (__dx_vibe_check("__gm82dx8_surface_to_buffer",Device->CreateImageSurface(
+        desc.Width,
+        desc.Height,
+        desc.Format,
+        &scratch
+    ))) return -1;
+
+    if (__dx_vibe_check("__gm82dx8_surface_to_buffer",Device->CopyRects(surf,NULL,0,scratch,NULL)))
+        return -1;
+
+    //"lock" full surface rectangle and get information about it
+    D3DLOCKED_RECT pLockedRect;
+    if (__dx_vibe_check("__gm82dx8_surface_to_buffer",scratch->LockRect(&pLockedRect,NULL,D3DLOCK_NO_DIRTY_UPDATE|D3DLOCK_NOSYSLOCK|D3DLOCK_READONLY)))
+        return -1;
+
+    char* src=(char*)pLockedRect.pBits;
+    int surfpitch=pLockedRect.Pitch;
+    
+    int srcpos=0;
+    int dstpos=0;
+    int bufstride=gmw*4;
+    for (int i=0;i<gmh;i+=1) {
+        memcpy(&dest[dstpos],&src[srcpos], bufstride);
+        srcpos+=surfpitch;
+        dstpos+=bufstride;
+    }
+    
+    //free the lock and scratch surface.
+    scratch->UnlockRect();
+    scratch->Release();
+    surf->Release();
+    
+    return 0;    
+}
 GMREAL __gm82dx8_dllcheck() {
     return 820;
 }
@@ -126,6 +234,16 @@ GMREAL __gm82dx8_setfullscreen(double hz) {
     runner_display_reset();
 
     return 1;
+}
+GMREAL __gm82dx8_setalphabuffer(double enable) {
+    if (enable>=0.5)
+        *dx8_backbuffer_format = D3DFMT_A8R8G8B8; //backbuffer format: 32bit ARGB w/ alpha
+    else
+        *dx8_backbuffer_format = D3DFMT_X8R8G8B8; //backbuffer format: 32bit opaque
+    
+    runner_display_reset();
+
+    return 0;
 }
 GMREAL __gm82dx8_resize_backbuffer(double width, double height) {
     int iwidth = (int)round(width);
