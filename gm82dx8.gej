@@ -1078,6 +1078,36 @@
 					"name": "lt_sun",
 					"value": "3",
 					"hidden": false
+				},
+				{
+					"name": "cm_less",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "cm_equal",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "cm_lessequal",
+					"value": "4",
+					"hidden": false
+				},
+				{
+					"name": "cm_greater",
+					"value": "5",
+					"hidden": false
+				},
+				{
+					"name": "cm_greaterequal",
+					"value": "7",
+					"hidden": false
+				},
+				{
+					"name": "cm_notequal",
+					"value": "6",
+					"hidden": false
 				}
 			]
 		},
