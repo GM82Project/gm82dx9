@@ -67,6 +67,95 @@ GMREAL dx8_set_zbias(double bias) {
     Device->SetRenderState(D3DRS_ZBIAS,newbias);    
     return 0;
 }
+GMREAL dx8_set_alphatest(double enable,double value,double cmpfunc) {
+    Device->SetRenderState(D3DRS_ALPHATESTENABLE,(DWORD)(enable>0.5));    
+    Device->SetRenderState(D3DRS_ALPHAREF,(DWORD)(int)value);  
+    Device->SetRenderState(D3DRS_ALPHAFUNC,(DWORD)(int)cmpfunc);      
+    return 0;
+}
+GMREAL dx8_set_texture_repeat(double hrepeat, double vrepeat, double bordercolor) {
+    Device->SetTextureStageState(0,D3DTSS_ADDRESSU,(DWORD)(int)hrepeat);    
+    Device->SetTextureStageState(0,D3DTSS_ADDRESSV,(DWORD)(int)vrepeat);    
+    Device->SetTextureStageState(0,D3DTSS_BORDERCOLOR,gm_col_to_dx8(bordercolor));    
+    return 0;
+}
+GMREAL dx8_set_texture_mode(double mode) {
+    Device->SetTextureStageState(0,D3DTSS_TEXCOORDINDEX,(DWORD)(int)mode);    
+    return 0;
+}
+GMREAL dx8_set_light(
+    double index, double type,
+    double x, double y, double z,
+    double dx, double dy, double dz,
+    double range, double inner_rad, double outer_rad,
+    double color, double color_factor,
+    double specular, double specular_factor
+) {
+    if (range<=0) return 0;
+    
+    D3DLIGHT8 light;
+    
+    ZeroMemory(&light, sizeof(light));
+    
+    light.Type=(D3DLIGHTTYPE)type;
+    
+    light.Position.x=x;
+    light.Position.y=y;
+    light.Position.z=z;
+    light.Direction.x=dx;
+    light.Direction.y=dy;
+    light.Direction.z=dz;
+    
+    light.Falloff=1.0f;
+    light.Theta=inner_rad/180*M_PI;
+    light.Phi=outer_rad/180*M_PI;
+    
+    light.Attenuation0=0.8f;
+    light.Attenuation1=0.0f;
+    light.Attenuation2=0.1/range;
+    light.Range=range;
+    
+    int col=(int)round(color);
+    
+    light.Diffuse.r=((col & 0xff)/0xff)*color_factor;
+    light.Diffuse.g=(((col & 0xff00)>>8)/0xff)*color_factor;
+    light.Diffuse.b=(((col & 0xff0000)>>16)/0xff)*color_factor;
+    light.Diffuse.a=1.0f;
+    
+    col=(int)round(specular);
+    
+    light.Specular.r=(col & 0xff)/0xff;
+    light.Specular.g=((col & 0xff00)>>8)/0xff;
+    light.Specular.b=((col & 0xff0000)>>16)/0xff;
+    light.Specular.a=1.0f;
+    
+    Device->SetLight((int)index,&light);
+    Device->LightEnable((int)index,true);
+    
+    //set up material so specular actually works
+    D3DMATERIAL8 mat;
+    
+    Device->GetMaterial(&mat);
+    
+    mat.Specular.r = 1.0f;
+    mat.Specular.g = 1.0f;
+    mat.Specular.b = 1.0f;
+    mat.Specular.a = 1.0f;
+    mat.Power = specular_factor;
+
+    Device->SetMaterial(&mat);
+    Device->SetRenderState(D3DRS_SPECULARENABLE,true);
+    
+    return 0;
+}
+
+GMREAL __gm82dx8_testfunc() {
+    D3DLIGHT8 light;
+
+    Device->GetLight(0,&light);
+ 
+    return light.Attenuation2;
+}
 
 GMREAL __gm82dx8_setrangefog(double type,double color,double start,double end) {
     
