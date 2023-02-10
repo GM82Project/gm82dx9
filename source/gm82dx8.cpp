@@ -91,7 +91,7 @@ GMREAL dx8_set_light(
     double color, double color_factor,
     double specular, double specular_factor
 ) {
-    if (range<=0) return 0;
+    if (range<=0 && type!=D3DLIGHT_DIRECTIONAL) return 0;
     
     D3DLIGHT8 light;
     
