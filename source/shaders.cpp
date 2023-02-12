@@ -58,7 +58,7 @@ GMREAL dx8_shader_vertex_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
     IDirect3DVertexShader9 *shader;
-    if (FAILED((*d3d8_device)->CreateVertexShader(data, &shader))) {
+    if (__dx_vibe_check("dx8_shader_vertex_create_file", Device->CreateVertexShader(data, &shader))) {
         free(data);
         return -1;
     }
@@ -73,7 +73,7 @@ GMREAL dx8_shader_pixel_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
     IDirect3DPixelShader9 *shader;
-    if (FAILED((*d3d8_device)->CreatePixelShader(data, &shader))) {
+    if (__dx_vibe_check("dx8_shader_pixel_create_file", Device->CreatePixelShader(data, &shader))) {
         free(data);
         return -1;
     }
@@ -86,25 +86,25 @@ GMREAL dx8_shader_pixel_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.pixel_shaders.find(shader_id);
     if (it == shader_data.pixel_shaders.end()) return 1;
-    return FAILED((*d3d8_device)->SetPixelShader(it->second));
+    return __dx_vibe_check("dx8_shader_pixel_set", Device->SetPixelShader(it->second));
 }
 
 GMREAL dx8_shader_vertex_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.vertex_shaders.find(shader_id);
     if (it == shader_data.vertex_shaders.end()) return 1;
-    if (FAILED((*d3d8_device)->SetVertexShader(it->second))) return 1;
+    if (__dx_vibe_check("dx8_shader_vertex_set", Device->SetVertexShader(it->second))) return 1;
     using_shader = true;
     return 0;
 }
 
 GMREAL dx8_shader_pixel_reset() {
-    (*d3d8_device)->SetPixelShader(nullptr);
+    Device->SetPixelShader(nullptr);
     return 0;
 }
 
 GMREAL dx8_shader_vertex_reset() {
-    (*d3d8_device)->SetVertexShader(nullptr);
+    Device->SetVertexShader(nullptr);
     using_shader = false;
     return 0;
 }
@@ -112,27 +112,27 @@ GMREAL dx8_shader_vertex_reset() {
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_1 ## ty_lo (double reg, double v1) { \
         ty_name data[] = {(ty_name)v1, 0, 0, 0};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
+        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_2 ## ty_lo (double reg, double v1, double v2) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, 0, 0};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
+        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, 0};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
+        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);       \
+        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);       \
         return 0;\
     } \
     GMREAL dx8_shader_ ## st_lo ## _set_constant_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4, (ty_name)v5, (ty_name)v6, (ty_name)v7, (ty_name)v8};            \
-        (*d3d8_device)->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);       \
+        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);       \
         return 0;\
     }
 
@@ -142,8 +142,8 @@ CONSTANT_FUNC(vertex,Vertex,float,f,F)
 #define COPY_MATRIX(func,cons) \
     GMREAL dx8_shader_vertex_copy_matrix_ ## func(double reg) { \
         D3DMATRIX mat; \
-        (*d3d8_device)->GetTransform(cons, &mat); \
-        (*d3d8_device)->SetVertexShaderConstantF(reg, mat.m[0], 4); \
+        Device->GetTransform(cons, &mat); \
+        Device->SetVertexShaderConstantF(reg, mat.m[0], 4); \
         return 0;                  \
     }
 
@@ -153,36 +153,36 @@ COPY_MATRIX(p, D3DTS_PROJECTION)
 
 GMREAL dx8_shader_vertex_copy_matrix_wv(double reg) {
     XMMATRIX world, view;
-    (*d3d8_device)->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
-    (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
+    Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
+    Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
     world = DirectX::XMMatrixMultiply(world, view);
-    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
+    Device->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
     return 0;
 }
 
 GMREAL dx8_shader_vertex_copy_matrix_vp(double reg) {
     XMMATRIX view, projection;
-    (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
-    (*d3d8_device)->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
+    Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
+    Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
     view = DirectX::XMMatrixMultiply(view, projection);
-    (*d3d8_device)->SetVertexShaderConstantF(reg, view.r->m128_f32, 4);
+    Device->SetVertexShaderConstantF(reg, view.r->m128_f32, 4);
     return 0;
 }
 
 GMREAL dx8_shader_vertex_copy_matrix_wvp(double reg) {
     XMMATRIX world, view, projection;
-    (*d3d8_device)->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
-    (*d3d8_device)->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
-    (*d3d8_device)->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
+    Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
+    Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
+    Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
     world = DirectX::XMMatrixMultiply(DirectX::XMMatrixMultiply(world, view), projection);
-    (*d3d8_device)->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
+    Device->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
     return 0;
 }
 
 GMREAL dx8_texture_set_stage(double stage, double tex_f) {
     int tex = tex_f;
     if (tex < 0) {
-        (*d3d8_device)->SetTexture(stage, nullptr);
+        Device->SetTexture(stage, nullptr);
         return 0;
     }
     bool exists;
@@ -194,18 +194,18 @@ GMREAL dx8_texture_set_stage(double stage, double tex_f) {
     }
     if (exists) {
         auto textures = (GMTexture**)0x85b3c4;
-        (*d3d8_device)->SetTexture(stage, (*textures)[tex].texture);
+        Device->SetTexture(stage, (*textures)[tex].texture);
     }
     return 0;
 }
 
 GMREAL dx8_texture_stage_set_interpolation(double stage, double linear_d) {
 	if (linear_d >= 0.5) {
-		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MAGFILTER,2);
-		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MINFILTER,2);
+		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,2);
+		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,2);
 	} else {
-		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MAGFILTER,1);
-		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MINFILTER,1);
+		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,1);
+		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,1);
 	}
 	return 0;
 }

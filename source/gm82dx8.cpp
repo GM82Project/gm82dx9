@@ -4,8 +4,6 @@
 #include "d3dx9.h"
 #include "dxerr.h"
 
-#define Device (*d3d8_device)
-
 int has_started = 0;
 
 D3DVIEWPORT9 viewport;
@@ -14,7 +12,6 @@ XMMATRIX world_matrix;
 XMVECTOR vertex;
 
 IDirect3DDevice9** d3d8_device = (IDirect3DDevice9**)0x6886a8;
-D3DPRESENT_PARAMETERS* d3d8_present = (D3DPRESENT_PARAMETERS*)0x85b38c;
 
 create_c_function(void,runner_display_reset,0x61f9f4);
 create_c_function(void,runner_clear_depth,0x563a8c);
@@ -31,12 +28,12 @@ IDirect3DSurface9* get_gm_surface_depthbuffer(double id) {
     return (*(IDirect3DSurface9***)0x84527c)[4+5*int(id)];
 }
 bool __dx_vibe_check(const char* func, HRESULT hr) {
-    if (hr==D3D_OK) return 0;
+    if (SUCCEEDED(hr)) return false;
     
     char buf[1024];
     snprintf(buf, 1024, "DirectX9 error in function %s:\n%s\n%s",func,DXGetErrorStringA(hr),DXGetErrorDescriptionA(hr));
     MessageBox(0, buf, "Warning", 0);
-    return 1;
+    return true;
 }
 
 GMREAL dx8_set_color_mask(double red, double green, double blue, double alpha) {

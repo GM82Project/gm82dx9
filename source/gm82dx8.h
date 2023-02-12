@@ -32,14 +32,15 @@ extern DLL_FUNC DwmIsCompositionEnabled;
 extern DLL_FUNC DwmFlush;
 
 extern IDirect3DDevice9** d3d8_device;
-extern IDirect3DDevice9** d3d8_device_8;
+#define Device (*d3d8_device)
 extern D3DVIEWPORT9 viewport;
 extern D3DRASTER_STATUS raster_status;
-extern XMMATRIX world_matrix,matrix;
+extern XMMATRIX world_matrix;
 extern D3DPRESENT_PARAMETERS d3d_parameters;
 extern D3DCAPS9 d3d_caps;
 extern XMVECTOR vertex;
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
+bool __dx_vibe_check(const char* func, HRESULT hr);
 
 #endif
