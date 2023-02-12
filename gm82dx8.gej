@@ -1110,6 +1110,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "dx8_texture_stage_set_interpolation",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "dx8_texture_stage_set_interpolation(stage,linear)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "dx8_shader_vertex_copy_matrix_v",
 					"extname": "",
 					"calltype": 12,

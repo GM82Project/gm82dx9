@@ -199,6 +199,17 @@ GMREAL dx8_texture_set_stage(double stage, double tex_f) {
     return 0;
 }
 
+GMREAL dx8_texture_stage_set_interpolation(double stage, double linear_d) {
+	if (linear_d >= 0.5) {
+		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MAGFILTER,2);
+		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MINFILTER,2);
+	} else {
+		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MAGFILTER,1);
+		(*d3d8_device)->SetSamplerState(stage,D3DSAMP_MINFILTER,1);
+	}
+	return 0;
+}
+
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf) {
     if (using_shader) {
 #define FVF(flags, name) \
