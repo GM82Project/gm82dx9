@@ -8,10 +8,14 @@
     rettype (*name)(__VA_ARGS__) = (rettype(*)(__VA_ARGS__))addr;
 
 #define _USE_MATH_DEFINES
+
+#include <stdio.h>
 #include <math.h>
 #include <windows.h>
 #include <versionhelpers.h>
-#include "d3d9.h"
+
+#include "d3dx9.h"
+#include "dxerr.h"
 #include "DirectXMath/DirectXMath.h"
 
 using namespace DirectX;
@@ -33,6 +37,7 @@ extern DLL_FUNC DwmFlush;
 
 extern IDirect3DDevice9** d3d8_device;
 #define Device (*d3d8_device)
+
 extern D3DVIEWPORT9 viewport;
 extern D3DRASTER_STATUS raster_status;
 extern XMMATRIX world_matrix;
@@ -41,6 +46,7 @@ extern D3DCAPS9 d3d_caps;
 extern XMVECTOR vertex;
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
+
 bool __dx_vibe_check(const char* file, int line, HRESULT hr);
 #define vibe_check(a) __dx_vibe_check(__FILE__,__LINE__,a)
 

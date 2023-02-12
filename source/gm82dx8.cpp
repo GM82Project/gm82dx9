@@ -1,9 +1,5 @@
 #include "gm82dx8.h"
 
-#include <stdio.h>
-#include "d3dx9.h"
-#include "dxerr.h"
-
 int has_started = 0;
 
 D3DVIEWPORT9 viewport;
