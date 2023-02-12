@@ -58,7 +58,7 @@ GMREAL dx8_shader_vertex_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
     IDirect3DVertexShader9 *shader;
-    if (__dx_vibe_check("dx8_shader_vertex_create_file", Device->CreateVertexShader(data, &shader))) {
+    if (vibe_check(Device->CreateVertexShader(data, &shader))) {
         free(data);
         return -1;
     }
@@ -73,7 +73,7 @@ GMREAL dx8_shader_pixel_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
     IDirect3DPixelShader9 *shader;
-    if (__dx_vibe_check("dx8_shader_pixel_create_file", Device->CreatePixelShader(data, &shader))) {
+    if (vibe_check(Device->CreatePixelShader(data, &shader))) {
         free(data);
         return -1;
     }
@@ -86,14 +86,14 @@ GMREAL dx8_shader_pixel_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.pixel_shaders.find(shader_id);
     if (it == shader_data.pixel_shaders.end()) return 1;
-    return __dx_vibe_check("dx8_shader_pixel_set", Device->SetPixelShader(it->second));
+    return vibe_check(Device->SetPixelShader(it->second));
 }
 
 GMREAL dx8_shader_vertex_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.vertex_shaders.find(shader_id);
     if (it == shader_data.vertex_shaders.end()) return 1;
-    if (__dx_vibe_check("dx8_shader_vertex_set", Device->SetVertexShader(it->second))) return 1;
+    if (vibe_check(Device->SetVertexShader(it->second))) return 1;
     using_shader = true;
     return 0;
 }

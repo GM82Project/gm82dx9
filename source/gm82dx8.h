@@ -41,6 +41,7 @@ extern D3DCAPS9 d3d_caps;
 extern XMVECTOR vertex;
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
-bool __dx_vibe_check(const char* func, HRESULT hr);
+bool __dx_vibe_check(const char* file, int line, HRESULT hr);
+#define vibe_check(a) __dx_vibe_check(__FILE__,__LINE__,a)
 
 #endif
