@@ -1619,6 +1619,15 @@
 					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
+				},
+				{
+					"name": "dx8_shader_reset",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "dx8_shader_reset()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
 				}
 			],
 			"constants": []

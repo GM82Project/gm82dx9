@@ -192,5 +192,12 @@
     if (argument_count==2) {
         d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
     } else d3d_set_fog(0,0,0,0)
+
+#define dx8_shader_reset
+    ///()
+    dx8_shader_pixel_reset()
+    dx8_shader_vertex_reset()
+
+
 //
 //
