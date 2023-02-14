@@ -67,8 +67,6 @@ GMREAL dx8_shader_vertex_create_file(const char* filename) {
     return shader_data.idcounter_vertex;
 }
 
-#include <d3dx9.h>
-
 GMREAL dx8_shader_pixel_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
@@ -201,11 +199,11 @@ GMREAL dx8_texture_set_stage(double stage, double tex_f) {
 
 GMREAL dx8_texture_stage_set_interpolation(double stage, double linear_d) {
 	if (linear_d >= 0.5) {
-		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,2);
-		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,2);
+		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
+		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
 	} else {
-		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,1);
-		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,1);
+		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_POINT);
+		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_POINT);
 	}
 	return 0;
 }
