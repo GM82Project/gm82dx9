@@ -112,6 +112,13 @@ D3DXGetErrorStringA(
     return hr;
 }
 
+void WINAPI regain_device() {
+    // force exclusive fullscreen off
+    d3d_parameters.Windowed = TRUE;
+    d3d_parameters.FullScreen_RefreshRateInHz = 0;
+    (*runner_display_reset)();
+}
+
 BOOL WINAPI DllMain(
         _In_ HINSTANCE hinstDLL,
         _In_ DWORD fdwReason,
@@ -513,6 +520,8 @@ BOOL WINAPI DllMain(
     PATCH_D3DX(0x531253, D3DXCreateTextureFromFileInMemoryEx);
     PATCH_D3DX(0x531277, D3DXGetErrorStringA);
 
+    ptr = (char*)(&regain_device) - (0x620012 + 5);
+    WriteProcessMemory(proc, (void*)(0x620012), &ptr, 4, nullptr);
 
     return TRUE;
 }
