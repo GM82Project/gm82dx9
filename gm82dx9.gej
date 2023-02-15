@@ -5,7 +5,7 @@
 	"author": "renex && Floogle",
 	"date": "15/02/2023",
 	"license": "Free to use, also for commercial games.",
-	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
+	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
 	"hidden": false,
 	"dependencies": [],
