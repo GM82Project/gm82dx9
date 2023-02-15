@@ -8,7 +8,7 @@
 #define surface_reset
     ///surface_reset()
     if (__gm82dx9_appsurfcompose!=noone) {
-        application_surface=surface_get("application_surface",__gm82dx8_resw,__gm82dx8_resh)
+        application_surface=surface_get("application_surface",__gm82dx9_resw,__gm82dx9_resh)
     } else {
         surface_reset_target()
         d3d_set_projection_default()
@@ -23,17 +23,17 @@
     __w=argument1
     __h=argument2
 
-    __s=ds_map_find_value(__gm82dx8_surfmap,__name)
+    __s=ds_map_find_value(__gm82dx9_surfmap,__name)
     if (__s) {
         if (!surface_exists(__s-1)) {
             //clear map & surfaces
-            __key=ds_map_find_first(__gm82dx8_surfmap)
-            repeat (ds_map_size(__gm82dx8_surfmap)) {
-                __s=ds_map_find_value(__gm82dx8_surfmap,__key)
+            __key=ds_map_find_first(__gm82dx9_surfmap)
+            repeat (ds_map_size(__gm82dx9_surfmap)) {
+                __s=ds_map_find_value(__gm82dx9_surfmap,__key)
                 if (surface_exists(__s-1)) surface_free(__s-1)
-                __key=ds_map_find_next(__gm82dx8_surfmap,__key)
+                __key=ds_map_find_next(__gm82dx9_surfmap,__key)
             }
-            ds_map_clear(__gm82dx8_surfmap)
+            ds_map_clear(__gm82dx9_surfmap)
             __s=0
         }
     }
@@ -41,7 +41,7 @@
     if (!__s) {
         //create surf
         __s=surface_create(__w,__h)+1
-        ds_map_add(__gm82dx8_surfmap,__name,__s)
+        ds_map_add(__gm82dx9_surfmap,__name,__s)
     }
 
     return __s-1
@@ -64,11 +64,11 @@
 
     __name=argument0
 
-    __s=ds_map_find_value(__gm82dx8_surfmap,__name)
+    __s=ds_map_find_value(__gm82dx9_surfmap,__name)
 
     if (__s!=0) {
         if (surface_exists(__s-1)) surface_free(__s-1)
-        ds_map_delete(__gm82dx8_surfmap,__name)
+        ds_map_delete(__gm82dx9_surfmap,__name)
     }
 
 
