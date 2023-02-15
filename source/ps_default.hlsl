@@ -1,8 +1,8 @@
-SamplerState Sampler : register(s0);
+SamplerState rSampler: register(s0);
 
 struct PS_INPUT {
     float4 position: POSITION0;
-    float2 uv: TEXCOORD0;
+    float2 texcoord: TEXCOORD0;
     float4 color: COLOR;
 };
 
@@ -13,7 +13,7 @@ struct PS_OUTPUT {
 PS_OUTPUT main(PS_INPUT input) {
     PS_OUTPUT output;
 
-    float4 albedo = tex2D(Sampler,input.uv);
+    float4 albedo = tex2D(rSampler,input.texcoord);
 
     output.color = albedo * input.color;
     

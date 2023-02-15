@@ -1,9 +1,9 @@
 {
-	"name": "Game Maker 8.2 DirectX8",
+	"name": "Game Maker 8.2 DirectX9",
 	"folder": "gm82",
-	"version": "1.3",
-	"author": "renex && floogle",
-	"date": "14/02/2023",
+	"version": "1.0",
+	"author": "renex && Floogle",
+	"date": "15/02/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package contains additional functions to control the graphics rendering state.",
 	"helpfile": "",
@@ -11,15 +11,15 @@
 	"dependencies": [],
 	"files": [
 		{
-			"filename": "gm82dx8.dll",
-			"origname": "build/Release/gm82dx8.dll",
+			"filename": "gm82dx9.dll",
+			"origname": "build/Release/gm82dx9.dll",
 			"kind": 1,
-			"init": "__gm82dx8_dll_init",
+			"init": "__gm82dx9_dll_init",
 			"final": "",
 			"functions": [
 				{
 					"name": "d3d_clear_depth",
-					"extname": "__gm82dx8_cleardepth",
+					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": false,
@@ -27,64 +27,102 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_clear_depth_buffer",
-					"extname": "__gm82dx8_cleardepth",
+					"name": "d3d_clear_depth_buffer",
+					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
-					"helpline": "dx8_clear_depth_buffer()",
+					"helpline": "d3d_clear_depth_buffer()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_get_free_video_memory",
-					"extname": "__gm82dx8_getvideomem",
+					"name": "d3d_get_free_video_memory",
+					"extname": "__gm82dx9_getvideomem",
 					"calltype": 12,
-					"helpline": "dx8_get_free_video_memory()",
+					"helpline": "d3d_get_free_video_memory()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_get_viewport_h",
-					"extname": "__gm82dx8_getviewporth",
+					"name": "d3d_get_viewport_h",
+					"extname": "__gm82dx9_getviewporth",
 					"calltype": 12,
-					"helpline": "dx8_get_viewport_h()",
+					"helpline": "d3d_get_viewport_h()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_get_viewport_w",
-					"extname": "__gm82dx8_getviewportw",
+					"name": "d3d_get_viewport_w",
+					"extname": "__gm82dx9_getviewportw",
 					"calltype": 12,
-					"helpline": "dx8_get_viewport_w()",
+					"helpline": "d3d_get_viewport_w()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_get_viewport_x",
-					"extname": "__gm82dx8_getviewportx",
+					"name": "d3d_get_viewport_x",
+					"extname": "__gm82dx9_getviewportx",
 					"calltype": 12,
-					"helpline": "dx8_get_viewport_x()",
+					"helpline": "d3d_get_viewport_x()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_get_viewport_y",
-					"extname": "__gm82dx8_getviewporty",
+					"name": "d3d_get_viewport_y",
+					"extname": "__gm82dx9_getviewporty",
 					"calltype": 12,
-					"helpline": "dx8_get_viewport_y()",
+					"helpline": "d3d_get_viewport_y()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_resize_buffer",
-					"extname": "__gm82dx8_resize_backbuffer",
+					"name": "d3d_set_alphatest",
+					"extname": "__gm82dx9_set_alphatest",
 					"calltype": 12,
-					"helpline": "dx8_resize_buffer(w,h)",
+					"helpline": "d3d_set_alphatest(enable,value,cm_comparison)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_color_mask",
+					"extname": "__gm82dx9_set_color_mask",
+					"calltype": 12,
+					"helpline": "d3d_set_color_mask(red,green,blue,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_cull_mode",
+					"extname": "__gm82dx9_set_cull_mode",
+					"calltype": 12,
+					"helpline": "d3d_set_cull_mode(mode)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_depth_scale",
+					"extname": "__gm82dx9_setzscale",
+					"calltype": 12,
+					"helpline": "d3d_set_depth_scale(near,far)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -93,192 +131,124 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_set_alphatest",
+					"name": "d3d_set_fill_mode",
+					"extname": "__gm82dx9_set_fill_mode",
+					"calltype": 12,
+					"helpline": "d3d_set_fill_mode(mode)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_fog_ext",
+					"extname": "__gm82dx9_setrangefog",
+					"calltype": 12,
+					"helpline": "d3d_set_fog_ext(type,color,start,end)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_light_ext",
+					"extname": "__gm82dx9_set_light",
+					"calltype": 12,
+					"helpline": "d3d_set_light_ext(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,color_diffuse,diffuse_factor,color_specular,specular_factor)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_point_options",
+					"extname": "__gm82dx9_setpointscale",
+					"calltype": 12,
+					"helpline": "d3d_set_point_options(size,scaled,minscale,maxscale,spritemode)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_scissor",
+					"extname": "__gm82dx9_setviewport",
+					"calltype": 12,
+					"helpline": "d3d_set_scissor(x,y,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_zbias",
+					"extname": "__gm82dx9_set_zbias",
+					"calltype": 12,
+					"helpline": "d3d_set_zbias(bias)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_texture_set_mode",
+					"extname": "__gm82dx9_texture_set_mode",
+					"calltype": 12,
+					"helpline": "d3d_texture_set_mode(tm_mode)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_texture_set_repeat",
+					"extname": "__gm82dx9_texture_set_repeat",
+					"calltype": 12,
+					"helpline": "d3d_texture_set_repeat(tr_hrepeat,tr_vrepeat,bordercolor)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_set_matrix",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_set_alphatest(enable,value,cm_comparison)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_clip_region",
-					"extname": "__gm82dx8_setviewport",
-					"calltype": 12,
-					"helpline": "dx8_set_clip_region(x,y,width,height)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_color_mask",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_color_mask(red,green,blue,alpha)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_cull_mode",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_cull_mode(mode)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_depth_scale",
-					"extname": "__gm82dx8_setzscale",
-					"calltype": 12,
-					"helpline": "dx8_set_depth_scale(near,far)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_fill_mode",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_fill_mode(mode)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_fog",
-					"extname": "__gm82dx8_setrangefog",
-					"calltype": 12,
-					"helpline": "dx8_set_fog(type,color,start,end)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_light",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_light(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,color_diffuse,diffuse_factor,color_specular,specular_factor)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_point_options",
-					"extname": "__gm82dx8_setpointscale",
-					"calltype": 12,
-					"helpline": "dx8_set_point_options(size,scaled,minscale,maxscale,spritemode)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_texture_mode",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_texture_mode(tm_mode)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_texture_repeat",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_texture_repeat(tr_hrepeat,tr_vrepeat,bordercolor)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_zbias",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_set_zbias(bias)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_texture_get_max_height",
-					"extname": "__gm82dx8_getmaxheight",
-					"calltype": 12,
-					"helpline": "dx8_texture_get_max_height()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_texture_get_max_width",
-					"extname": "__gm82dx8_getmaxwidth",
-					"calltype": 12,
-					"helpline": "dx8_texture_get_max_width()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_set_matrix",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_set_matrix(m11,m12,m13,m14,m21,m22,m23,m24,m31,m32,m33,m34,m41,m42,m43,m44)",
+					"helpline": "d3d_transform_set_matrix(m11,m12,m13,m14,m21,m22,m23,m24,m31,m32,m33,m34,m41,m42,m43,m44)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -301,10 +271,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_xst",
+					"name": "d3d_transform_xst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_xst(rx,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_xst(rx,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -318,10 +288,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_xt",
+					"name": "d3d_transform_xt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_xt(rx,x,y,z)",
+					"helpline": "d3d_transform_xt(rx,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -332,78 +302,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_xyst",
+					"name": "d3d_transform_xyst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_xyst(rx,ry,sx,sy,sz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_xyt",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_xyt(rx,ry,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_xyzst",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_xyzst(rx,ry,rz,sx,sy,sz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_xyzt",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_xyzt(rx,ry,rz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_xzst",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_xzst(rx,rz,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_xyst(rx,ry,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -418,10 +320,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_xzt",
+					"name": "d3d_transform_xyt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_xzt(rx,rz,x,y,z)",
+					"helpline": "d3d_transform_xyt(rx,ry,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -433,10 +335,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_xzyst",
+					"name": "d3d_transform_xyzst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_xzyst(rx,rz,ry,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_xyzst(rx,ry,rz,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -452,10 +354,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_xzyt",
+					"name": "d3d_transform_xyzt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_xzyt(rx,rz,ry,x,y,z)",
+					"helpline": "d3d_transform_xyzt(rx,ry,rz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -468,41 +370,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_yst",
+					"name": "d3d_transform_xzst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_yst(ry,sx,sy,sz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_yt",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_yt(ry,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_yxst",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_yxst(ry,rx,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_xzst(rx,rz,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -517,10 +388,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_yxt",
+					"name": "d3d_transform_xzt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_yxt(ry,rx,x,y,z)",
+					"helpline": "d3d_transform_xzt(rx,rz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -532,10 +403,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_yxzst",
+					"name": "d3d_transform_xzyst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_yxzst(ry,rx,rz,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_xzyst(rx,rz,ry,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -551,10 +422,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_yxzt",
+					"name": "d3d_transform_xzyt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_yxzt(ry,rx,rz,x,y,z)",
+					"helpline": "d3d_transform_xzyt(rx,rz,ry,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -567,78 +438,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_yzst",
+					"name": "d3d_transform_yst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_yzst(ry,rz,sx,sy,sz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_yzt",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_yzt(ry,rz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_yzxst",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_yzxst(ry,rz,rx,sx,sy,sz,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_yzxt",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_yzxt(ry,rz,rx,x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_zst",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_transform_zst(rz,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_yst(ry,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -652,10 +455,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zt",
+					"name": "d3d_transform_yt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zt(rz,x,y,z)",
+					"helpline": "d3d_transform_yt(ry,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -666,10 +469,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zxst",
+					"name": "d3d_transform_yxst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zxst(rz,rx,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_yxst(ry,rx,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -684,10 +487,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zxt",
+					"name": "d3d_transform_yxt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zxt(rz,rx,x,y,z)",
+					"helpline": "d3d_transform_yxt(ry,rx,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -699,10 +502,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zxyst",
+					"name": "d3d_transform_yxzst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zxyst(rz,rx,ry,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_yxzst(ry,rx,rz,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -718,10 +521,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zxyt",
+					"name": "d3d_transform_yxzt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zxyt(rz,rx,ry,x,y,z)",
+					"helpline": "d3d_transform_yxzt(ry,rx,rz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -734,10 +537,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zyst",
+					"name": "d3d_transform_yzst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zyst(rz,ry,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_yzst(ry,rz,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -752,10 +555,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zyt",
+					"name": "d3d_transform_yzt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zyt(rz,ry,x,y,z)",
+					"helpline": "d3d_transform_yzt(ry,rz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -767,10 +570,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zyxst",
+					"name": "d3d_transform_yzxst",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zyxst(rz,ry,rx,sx,sy,sz,x,y,z)",
+					"helpline": "d3d_transform_yzxst(ry,rz,rx,sx,sy,sz,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -786,10 +589,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_transform_zyxt",
+					"name": "d3d_transform_yzxt",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_transform_zyxt(rz,ry,rx,x,y,z)",
+					"helpline": "d3d_transform_yzxt(ry,rz,rx,x,y,z)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -802,10 +605,177 @@
 					"returntype": 2
 				},
 				{
-					"name": "window_resize_buffer",
-					"extname": "__gm82dx8_resize_backbuffer",
+					"name": "d3d_transform_zst",
+					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "d3d_transform_zst(rz,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zt(rz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zxst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zxst(rz,rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zxt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zxt(rz,rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zxyst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zxyst(rz,rx,ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zxyt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zxyt(rz,rx,ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zyst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zyst(rz,ry,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zyt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zyt(rz,ry,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zyxst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zyxst(rz,ry,rx,sx,sy,sz,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_zyxt",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_zyxt(rz,ry,rx,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "display_resize_buffer",
+					"extname": "__gm82dx9_resize_backbuffer",
+					"calltype": 12,
+					"helpline": "display_resize_buffer(w,h)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -814,165 +784,38 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx8_buffer_to_surface",
+					"name": "shader_pixel_constant_1f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_checkstart",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_dllcheck",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_dll_init",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_getvertexy",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
+					"helpline": "shader_pixel_constant_1f(reg,val)",
 					"hidden": false,
-					"argtypes": [],
+					"argtypes": [
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx8_getvertexz",
+					"name": "shader_pixel_constant_2f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "shader_pixel_constant_2f(reg,v1,v2)",
 					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_not_xp",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_setalphabuffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_setfullscreen",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_sleep",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_surface_set_depth",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "__gm82dx8_surface_set_depth(id)",
-					"hidden": true,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_surface_to_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
 					"argtypes": [
 						2,
 						2,
-						2,
 						2
 					],
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx8_sync_dwm",
+					"name": "shader_pixel_constant_3f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_testfunc",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
+					"helpline": "shader_pixel_constant_3f(reg,v1,v2,v3)",
 					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_time_now",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_transformvertex",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
 					"argtypes": [
+						2,
 						2,
 						2,
 						2
@@ -980,19 +823,44 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx8_waitvblank",
+					"name": "shader_pixel_constant_4f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
+					"helpline": "shader_pixel_constant_4f(reg,v1,v2,v3,v4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_pixel_create_file",
+					"name": "shader_pixel_constant_8f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_pixel_create_file(fn)",
+					"helpline": "shader_pixel_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_create_file",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_create_file(fn)",
 					"hidden": false,
 					"argtypes": [
 						1
@@ -1000,10 +868,19 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_pixel_set",
+					"name": "shader_pixel_reset",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_pixel_set(shader)",
+					"helpline": "shader_pixel_reset()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_set(shader)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1011,19 +888,92 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_pixel_reset",
+					"name": "shader_reset",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_pixel_reset()",
+					"helpline": "shader_reset()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_vertex_create_file",
+					"name": "shader_vertex_constant_1f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_vertex_create_file(filename)",
+					"helpline": "shader_vertex_constant_1f(reg,val)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_constant_2f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_constant_2f(reg,v1,v2)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_constant_3f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_constant_3f(reg,v1,v2,v3)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_constant_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_constant_4f(reg,v1,v2,v3,v4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_constant_8f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_create_file",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_create_file(filename)",
 					"hidden": false,
 					"argtypes": [
 						1
@@ -1031,10 +981,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_vertex_set",
+					"name": "shader_vertex_matrix_p",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_vertex_set(shader)",
+					"helpline": "shader_vertex_matrix_p(reg)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1042,19 +992,92 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_vertex_reset",
+					"name": "shader_vertex_matrix_v",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_vertex_reset()",
+					"helpline": "shader_vertex_matrix_v(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_matrix_w",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_matrix_w(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_matrix_wv",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_matrix_wv(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_matrix_wvp",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_matrix_wvp(reg)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_reset",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_reset()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_vertex_set_constant_1f",
+					"name": "shader_vertex_set",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_vertex_set_constant_1f(reg,val)",
+					"helpline": "shader_vertex_set(shader)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "texture_get_max_height",
+					"extname": "__gm82dx9_getmaxheight",
+					"calltype": 12,
+					"helpline": "texture_get_max_height()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "texture_get_max_width",
+					"extname": "__gm82dx9_getmaxwidth",
+					"calltype": 12,
+					"helpline": "texture_get_max_width()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "texture_stage_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "texture_stage_set(stage,tex)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1063,71 +1086,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_vertex_set_constant_2f",
+					"name": "texture_stage_set_interpolation",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_vertex_set_constant_2f(reg,v1,v2)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_set_constant_3f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_set_constant_3f(reg,v1,v2,v3)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_set_constant_4f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_set_constant_4f(reg,v1,v2,v3,v4)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_set_constant_8f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_set_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_pixel_set_constant_1f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_pixel_set_constant_1f(reg,val)",
+					"helpline": "texture_stage_set_interpolation(stage,linear)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1136,24 +1098,11 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_pixel_set_constant_2f",
+					"name": "__gm82dx9_buffer_to_surface",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_pixel_set_constant_2f(reg,v1,v2)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_pixel_set_constant_3f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_pixel_set_constant_3f(reg,v1,v2,v3)",
-					"hidden": false,
+					"helpline": "",
+					"hidden": true,
 					"argtypes": [
 						2,
 						2,
@@ -1163,13 +1112,132 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_pixel_set_constant_4f",
+					"name": "__gm82dx9_checkstart",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_pixel_set_constant_4f(reg,v1,v2,v3,v4)",
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_dllcheck",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_dll_init",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_getvertexy",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
 					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_getvertexz",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_not_xp",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_setalphabuffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
 					"argtypes": [
-						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_setfullscreen",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_pixel_create_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_create_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_sleep",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_surface_set_depth",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "__gm82dx9_surface_set_depth(id)",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_surface_to_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
 						2,
 						2,
 						2,
@@ -1178,18 +1246,39 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_shader_pixel_set_constant_8f",
+					"name": "__gm82dx9_sync_dwm",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_shader_pixel_set_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_testfunc",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
 					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_time_now",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_transformvertex",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
 					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
 						2,
 						2,
 						2
@@ -1197,82 +1286,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_texture_set_stage",
+					"name": "__gm82dx9_waitvblank",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "dx8_texture_set_stage(stage,tex)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_texture_stage_set_interpolation",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_texture_stage_set_interpolation(stage,linear)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_copy_matrix_v",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_copy_matrix_v(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_copy_matrix_p",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_copy_matrix_p(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_copy_matrix_w",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_copy_matrix_w(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_copy_matrix_wv",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_copy_matrix_wv(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_vertex_copy_matrix_wvp",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "dx8_shader_vertex_copy_matrix_wvp(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
 					"returntype": 2
 				}
 			],
@@ -1321,11 +1340,6 @@
 					"name": "fog_vertex",
 					"value": "2",
 					"hidden": false
-				},
-				{
-					"name": "__gm82dx8_obj",
-					"value": "object_add()",
-					"hidden": true
 				},
 				{
 					"name": "tm_regular",
@@ -1425,15 +1439,44 @@
 			]
 		},
 		{
-			"filename": "gm82dx8.gml",
-			"origname": "source\\gm82dx8.gml",
+			"filename": "gm82dx9.gml",
+			"origname": "source\\gm82dx9.gml",
 			"kind": 2,
-			"init": "__gm82dx8_init",
+			"init": "__gm82dx9_init",
 			"final": "",
 			"functions": [
 				{
+					"name": "d3d_projection_reset",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_projection_reset()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_projection_simple",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax,spin)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_reset_projection",
-					"extname": "dx8_reset_projection",
+					"extname": "dx9_reset_projection",
 					"calltype": 2,
 					"helpline": "",
 					"hidden": false,
@@ -1442,7 +1485,7 @@
 				},
 				{
 					"name": "d3d_set_projection_simple",
-					"extname": "dx8_projection_simple",
+					"extname": "dx9_projection_simple",
 					"calltype": 2,
 					"helpline": "",
 					"hidden": false,
@@ -1461,10 +1504,23 @@
 					"returntype": 2
 				},
 				{
-					"name": "draw_enable_alphablend",
-					"extname": "dx8_set_alphablend",
+					"name": "d3d_transform_vertex",
+					"extname": "",
 					"calltype": 2,
-					"helpline": "",
+					"helpline": "d3d_transform_vertex(x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "display_set_vsync",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "display_set_vsync(enable)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1473,7 +1529,7 @@
 				},
 				{
 					"name": "draw_make_opaque",
-					"extname": "dx8_make_opaque",
+					"extname": "",
 					"calltype": 2,
 					"helpline": "",
 					"hidden": false,
@@ -1481,85 +1537,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_make_opaque",
-					"extname": "",
+					"name": "draw_set_alphablend",
+					"extname": "dx9_set_alphablend",
 					"calltype": 2,
-					"helpline": "dx8_make_opaque()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_projection_simple",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax,spin)",
+					"helpline": "",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_reset_projection",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_reset_projection()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_alphablend",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_set_alphablend(enable)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_fullscreen_ext",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_set_fullscreen_ext(enable)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_set_vsync",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_set_vsync(enable)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_transform_vertex",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_transform_vertex(x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
 						2
 					],
 					"returntype": 2
@@ -1574,10 +1557,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "window_set_exclusive_fullscreen",
-					"extname": "dx8_set_fullscreen_ext",
+					"name": "shader_pixel_create_buffer",
+					"extname": "",
 					"calltype": 2,
-					"helpline": "",
+					"helpline": "shader_pixel_create_buffer(buffer)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1585,52 +1568,71 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx8_compose",
+					"name": "shader_pixel_set_passthrough",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_init",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_prepare",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx8_vsync",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_shader_reset",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_shader_reset()",
+					"helpline": "shader_pixel_set_passthrough()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_create_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_create_buffer(buffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_set_passthrough",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_set_passthrough()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "window_set_fullscreen_ext",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "window_set_fullscreen_ext(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_init",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_vsync",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
 				}
 			],
-			"constants": []
+			"constants": [
+				{
+					"name": "__gm82dx9_obj",
+					"value": "object_add()",
+					"hidden": true
+				}
+			]
 		},
 		{
 			"filename": "surfaces.gml",
@@ -1699,80 +1701,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "dx8_surface_discard",
+					"name": "surface_discard",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "",
+					"helpline": "surface_discard(id)",
 					"hidden": false,
 					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_disengage",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_engage",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_ensure",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "dx8_surface_set_depth",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "dx8_surface_set_depth(id)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "surface_disengage",
-					"extname": "dx8_surface_disengage",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "surface_engage",
-					"extname": "dx8_surface_engage",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
 						2
 					],
 					"returntype": 2
@@ -1803,7 +1737,7 @@
 				},
 				{
 					"name": "surface_reset",
-					"extname": "dx8_surface_disengage",
+					"extname": "",
 					"calltype": 2,
 					"helpline": "surface_reset()",
 					"hidden": false,
@@ -1822,15 +1756,62 @@
 						2
 					],
 					"returntype": 2
+				},
+				{
+					"name": "surface_set_depth",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_set_depth(id)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_compose",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_prepare",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
 				}
 			],
 			"constants": [
 				{
-					"name": "__gm82dx8_surfmap",
+					"name": "__gm82dx9_surfmap",
 					"value": "ds_map_create()",
 					"hidden": true
 				}
 			]
+		},
+		{
+			"filename": "vs_default.vs3",
+			"origname": "source\\vs_default.vs3",
+			"kind": 4,
+			"init": "",
+			"final": "",
+			"functions": [],
+			"constants": []
+		},
+		{
+			"filename": "ps_default.ps3",
+			"origname": "source\\ps_default.ps3",
+			"kind": 4,
+			"init": "",
+			"final": "",
+			"functions": [],
+			"constants": []
 		}
 	]
 }

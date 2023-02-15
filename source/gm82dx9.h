@@ -35,8 +35,8 @@ extern HINSTANCE dwm_dll;
 extern DLL_FUNC DwmIsCompositionEnabled;
 extern DLL_FUNC DwmFlush;
 
-extern IDirect3DDevice9** d3d8_device;
-#define Device (*d3d8_device)
+extern IDirect3DDevice9** d3d9_device;
+#define Device (*d3d9_device)
 
 extern D3DVIEWPORT9 viewport;
 extern D3DRASTER_STATUS raster_status;

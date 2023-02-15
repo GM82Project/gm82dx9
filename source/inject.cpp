@@ -1,4 +1,4 @@
-#include "gm82dx8.h"
+#include "gm82dx9.h"
 #include <array>
 
 #include "d3dx9.h"

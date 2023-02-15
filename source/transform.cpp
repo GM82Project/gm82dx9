@@ -1,6 +1,6 @@
-#include "gm82dx8.h"
+#include "gm82dx9.h"
 
-GMREAL dx8_transform_set_matrix(
+GMREAL dx9_transform_set_matrix(
         double m_11, double m_12, double m_13, double m_14,
         double m_21, double m_22, double m_23, double m_24,
         double m_31, double m_32, double m_33, double m_34,
@@ -12,7 +12,7 @@ GMREAL dx8_transform_set_matrix(
     SET_MAT(31) SET_MAT(32) SET_MAT(33) SET_MAT(34)
     SET_MAT(41) SET_MAT(42) SET_MAT(43) SET_MAT(44)
 #undef SET_MAT
-    (*d3d8_device)->SetTransform(D3DTS_WORLD, &m);
+    Device->SetTransform(D3DTS_WORLD, &m);
     return 0;
 }
 
@@ -51,32 +51,32 @@ GMREAL dx8_transform_set_matrix(
 
 // Start of function
 #define FUNC_START {                                                                \
-    (*d3d8_device)->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix))
+    Device->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix))
 
 // End of function
 #define FUNC_END                                                                    \
-    (*d3d8_device)->SetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix)); \
+    Device->SetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix)); \
     return 0;                                                                       \
 }
 
 // Function definition macros
 #define CT_FUNC(c)                                      \
-    GMREAL dx8_transform_ ## c ## t(C_PARM(c), T_PARM)  \
+    GMREAL dx9_transform_ ## c ## t(C_PARM(c), T_PARM)  \
         FUNC_START; C_MUL(c); T_MUL; FUNC_END
 #define CST_FUNC(c)                                             \
-    GMREAL dx8_transform_ ## c ## st(C_PARM(c), S_PARM, T_PARM) \
+    GMREAL dx9_transform_ ## c ## st(C_PARM(c), S_PARM, T_PARM) \
         FUNC_START; C_MUL(c); S_MUL; T_MUL; FUNC_END
 #define CCT_FUNC(c1, c2)                                            \
-    GMREAL dx8_transform_ ## c1 ## c2 ## t(CC_PARM(c1, c2), T_PARM) \
+    GMREAL dx9_transform_ ## c1 ## c2 ## t(CC_PARM(c1, c2), T_PARM) \
         FUNC_START; CC_MUL(c1, c2); T_MUL; FUNC_END
 #define CCST_FUNC(c1, c2)                                                       \
-    GMREAL dx8_transform_ ## c1 ## c2 ## st(CC_PARM(c1, c2), S_PARM, T_PARM)    \
+    GMREAL dx9_transform_ ## c1 ## c2 ## st(CC_PARM(c1, c2), S_PARM, T_PARM)    \
         FUNC_START; CC_MUL(c1, c2); S_MUL; T_MUL; FUNC_END
 #define CCCT_FUNC(c1, c2, c3)                                                   \
-    GMREAL dx8_transform_ ## c1 ## c2 ## c3 ## t(CCC_PARM(c1, c2, c3), T_PARM)  \
+    GMREAL dx9_transform_ ## c1 ## c2 ## c3 ## t(CCC_PARM(c1, c2, c3), T_PARM)  \
         FUNC_START; CCC_MUL(c1, c2, c3); T_MUL; FUNC_END
 #define CCCST_FUNC(c1, c2, c3)                                                          \
-    GMREAL dx8_transform_ ## c1 ## c2 ## c3 ## st(CCC_PARM(c1, c2, c3), S_PARM, T_PARM) \
+    GMREAL dx9_transform_ ## c1 ## c2 ## c3 ## st(CCC_PARM(c1, c2, c3), S_PARM, T_PARM) \
         FUNC_START; CCC_MUL(c1, c2, c3); S_MUL; T_MUL; FUNC_END
 
 // Actual function definitions

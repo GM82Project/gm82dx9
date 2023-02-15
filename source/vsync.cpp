@@ -1,4 +1,4 @@
-#include "gm82dx8.h"
+#include "gm82dx9.h"
 
 int isdwm = 0;
 HINSTANCE dwm_dll = 0;
@@ -6,10 +6,10 @@ DLL_FUNC DwmIsCompositionEnabled = 0;
 DLL_FUNC DwmFlush = 0;
 ULONGLONG resolution = 1000000, frequency = 1;
 
-GMREAL __gm82dx8_not_xp() {
+GMREAL __gm82dx9_not_xp() {
     return IsWindowsVistaOrGreater();
 }
-GMREAL __gm82dx8_dll_init() {
+GMREAL __gm82dx9_dll_init() {
     QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
     
     //this seems to cause issues with dwm-grab screen recorders
@@ -32,7 +32,7 @@ GMREAL __gm82dx8_dll_init() {
     }*/
     return 0;    
 }
-GMREAL __gm82dx8_time_now() {
+GMREAL __gm82dx9_time_now() {
     ULONGLONG now;
     if (QueryPerformanceCounter((LARGE_INTEGER*)&now)) {
         return (double)(now*resolution/frequency);
@@ -40,16 +40,16 @@ GMREAL __gm82dx8_time_now() {
         return -1.0;
     }
 }
-GMREAL __gm82dx8_waitvblank() {    
-    (*d3d8_device)->GetRasterStatus(0, &raster_status);
+GMREAL __gm82dx9_waitvblank() {    
+    Device->GetRasterStatus(0, &raster_status);
     if (raster_status.InVBlank) return 1;
     return 0;    
 }
-GMREAL __gm82dx8_sleep(double ms) {
+GMREAL __gm82dx9_sleep(double ms) {
     SleepEx((DWORD)ms,TRUE);
     return 0;
 }
-GMREAL __gm82dx8_sync_dwm() {
+GMREAL __gm82dx9_sync_dwm() {
     if (isdwm) (DwmFlush)();
     else SleepEx(2,TRUE);
     return 0;

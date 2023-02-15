@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gm82dx8.h"
+#include "gm82dx9.h"
 #include <map>
 
 struct GMTexture {
