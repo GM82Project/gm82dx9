@@ -200,5 +200,89 @@
 #define shader_pixel_set_passthrough
     ///shader_pixel_set_passthrough()
     shader_pixel_set(__gm82dx9_default_ps)
+
+
+#define shader_vertex_uniform_f
+    ///shader_vertex_uniform_f(reg,...)
+    var __i; __i=0
+    do switch (argument_count-__i) {
+        case 0: case 1: exit
+        case 2: shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        default:
+            shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __i+=4
+    } until (__i <= 0)
+
+
+#define shader_pixel_uniform_f
+    ///shader_pixel_uniform_f(reg,...)
+    var __i; __i=0
+    do switch (argument_count-__i) {
+        case 0: case 1: exit
+        case 2: shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        default:
+            shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __i+=4
+    } until (__i <= 0)
+
+
+#define shader_vertex_uniform_i
+    ///shader_vertex_uniform_i(reg,...)
+    var __i; __i=0
+    do switch (argument_count-__i) {
+        case 0: case 1: exit
+        case 2: shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        default:
+            shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __i+=4
+    } until (__i <= 0)
+
+
+#define shader_pixel_uniform_i
+    ///shader_pixel_uniform_i(reg,...)
+    var __i; __i=0
+    do switch (argument_count-__i) {
+        case 0: case 1: exit
+        case 2: shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        default:
+            shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __i+=4
+    } until (__i <= 0)
+
+
+#define shader_vertex_uniform_b
+    ///shader_vertex_uniform_b(reg,...)
+    var __i; __i=0
+    do switch (argument_count-__i) {
+        case 0: case 1: exit
+        case 2: shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        default:
+            shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __i+=4
+    } until (__i <= 0)
+
+
+#define shader_pixel_uniform_b
+    ///shader_pixel_uniform_b(reg,...)
+    var __i; __i=0
+    do switch (argument_count-__i) {
+        case 0: case 1: exit
+        case 2: shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        default:
+            shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __i+=4
+    } until (__i <= 0)
 //
 //

@@ -220,34 +220,18 @@ GMREAL shader_reset() {
 }
 
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
-    GMREAL shader_ ## st_lo ## _uniform_1 ## ty_lo (double reg, double v1) { \
-        ty_name data[] = {(ty_name)v1, 0, 0, 0};            \
-        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
-        return 0;\
-    } \
-    GMREAL shader_ ## st_lo ## _uniform_2 ## ty_lo (double reg, double v1, double v2) { \
-        ty_name data[] = {(ty_name)v1, (ty_name)v2, 0, 0};            \
-        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
-        return 0;\
-    } \
-    GMREAL shader_ ## st_lo ## _uniform_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
-        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, 0};            \
-        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
-        return 0;\
-    } \
-    GMREAL shader_ ## st_lo ## _uniform_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
+    GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);       \
         return 0;\
-    } \
-    GMREAL shader_ ## st_lo ## _uniform_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
-        ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4, (ty_name)v5, (ty_name)v6, (ty_name)v7, (ty_name)v8};            \
-        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);       \
-        return 0;\
     }
 
-CONSTANT_FUNC(pixel,Pixel,float,f,F)
 CONSTANT_FUNC(vertex,Vertex,float,f,F)
+CONSTANT_FUNC(pixel,Pixel,float,f,F)
+CONSTANT_FUNC(vertex,Vertex,int,i,I)
+CONSTANT_FUNC(pixel,Pixel,int,i,I)
+CONSTANT_FUNC(vertex,Vertex,BOOL,b,B)
+CONSTANT_FUNC(pixel,Pixel,BOOL,b,B)
 
 #define COPY_MATRIX(func,cons) \
     GMREAL shader_vertex_matrix_ ## func(double reg) { \
