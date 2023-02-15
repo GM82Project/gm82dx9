@@ -9,10 +9,10 @@ D3DPRESENT_PARAMETERS d3d_parameters = {
         .BackBufferCount = 1,
         .MultiSampleType = D3DMULTISAMPLE_NONE,
         .SwapEffect = D3DSWAPEFFECT_COPY,
-        .Windowed = -1,
+        .Windowed = 1,
         .EnableAutoDepthStencil = TRUE,
         .AutoDepthStencilFormat = D3DFMT_D24S8,
-        .PresentationInterval = 0,
+        .PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE,
 };
 
 HRESULT WINAPI CheckDeviceMultiSampleType(IDirect3D9 *d3d, UINT Adapter,
