@@ -772,97 +772,24 @@
 					"returntype": 2
 				},
 				{
-					"name": "window_resize_buffer",
-					"extname": "__gm82dx9_resize_backbuffer",
-					"calltype": 12,
-					"helpline": "window_resize_buffer(w,h)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_pixel_constant_1f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_constant_1f(reg,val)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_pixel_constant_2f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_constant_2f(reg,v1,v2)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_pixel_constant_3f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_constant_3f(reg,v1,v2,v3)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_pixel_constant_4f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_constant_4f(reg,v1,v2,v3,v4)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_pixel_constant_8f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_pixel_create_file",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "shader_pixel_create_file(fn)",
 					"hidden": false,
 					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_get_uniform",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_get_uniform(shader,name)",
+					"hidden": false,
+					"argtypes": [
+						2,
 						1
 					],
 					"returntype": 2
@@ -888,6 +815,79 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_pixel_uniform_1f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_1f(reg,val)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_2f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_2f(reg,v1,v2)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_3f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_3f(reg,v1,v2,v3)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_4f(reg,v1,v2,v3,v4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_8f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_reset",
 					"extname": "",
 					"calltype": 12,
@@ -897,85 +897,24 @@
 					"returntype": 2
 				},
 				{
-					"name": "shader_vertex_constant_1f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_constant_1f(reg,val)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_constant_2f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_constant_2f(reg,v1,v2)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_constant_3f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_constant_3f(reg,v1,v2,v3)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_constant_4f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_constant_4f(reg,v1,v2,v3,v4)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_constant_8f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_constant_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_vertex_create_file",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "shader_vertex_create_file(filename)",
 					"hidden": false,
 					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_get_uniform",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_get_uniform(shader,name)",
+					"hidden": false,
+					"argtypes": [
+						2,
 						1
 					],
 					"returntype": 2
@@ -1056,6 +995,79 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_vertex_uniform_1f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_1f(reg,val)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_2f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_2f(reg,v1,v2)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_3f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_3f(reg,v1,v2,v3)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_4f(reg,v1,v2,v3,v4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_8f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_8f(reg,v1,v2,v3,v4,v5,v6,v7,v8)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "texture_get_max_height",
 					"extname": "__gm82dx9_getmaxheight",
 					"calltype": 12,
@@ -1074,6 +1086,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "texture_stage_interpolation",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "texture_stage_interpolation(stage,linear)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "texture_stage_set",
 					"extname": "",
 					"calltype": 12,
@@ -1086,10 +1110,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "texture_stage_interpolation",
-					"extname": "",
+					"name": "window_resize_buffer",
+					"extname": "__gm82dx9_resize_backbuffer",
 					"calltype": 12,
-					"helpline": "texture_stage_interpolation(stage,linear)",
+					"helpline": "window_resize_buffer(w,h)",
 					"hidden": false,
 					"argtypes": [
 						2,

@@ -62,21 +62,43 @@ GMREAL shader_vertex_create_file(const char* filename) {
         free(data);
         return -1;
     }
+    ID3DXConstantTable* ppConstantTable;
+    if (vibe_check(D3DXGetShaderConstantTable(data,&ppConstantTable))) {
+        free(data);
+        return -1;
+    }
     free(data);
-    shader_data.vertex_shaders.insert(std::pair{++shader_data.idcounter_vertex, shader});
+    
+    VShaderWithTable shconst;
+    
+    shconst.shader=shader;
+    shconst.constants=ppConstantTable;
+    
+    shader_data.vertex_shaders.insert(std::pair{++shader_data.idcounter_vertex, shconst});
     return shader_data.idcounter_vertex;
 }
 
 GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer) {
     DWORD* data = (DWORD*)(int)buffer;
     if (data == nullptr) return -1;
-    IDirect3DVertexShader9 *shader;
+    IDirect3DVertexShader9* shader;
     if (vibe_check(Device->CreateVertexShader(data, &shader))) {
         free(data);
         return -1;
     }
+    ID3DXConstantTable* ppConstantTable;
+    if (vibe_check(D3DXGetShaderConstantTable(data,&ppConstantTable))) {
+        free(data);
+        return -1;
+    }
     free(data);
-    shader_data.vertex_shaders.insert(std::pair{++shader_data.idcounter_vertex, shader});
+    
+    VShaderWithTable shconst;
+    
+    shconst.shader=shader;
+    shconst.constants=ppConstantTable;
+    
+    shader_data.vertex_shaders.insert(std::pair{++shader_data.idcounter_vertex, shconst});
     return shader_data.idcounter_vertex;
 }
 
@@ -88,8 +110,19 @@ GMREAL shader_pixel_create_file(const char* filename) {
         free(data);
         return -1;
     }
-    free(data);
-    shader_data.pixel_shaders.insert(std::pair{++shader_data.idcounter_pixel, shader});
+    ID3DXConstantTable* ppConstantTable;
+    if (vibe_check(D3DXGetShaderConstantTable(data,&ppConstantTable))) {
+        free(data);
+        return -1;
+    }
+    free(data);    
+    
+    PShaderWithTable shconst;
+    
+    shconst.shader=shader;
+    shconst.constants=ppConstantTable;
+
+    shader_data.pixel_shaders.insert(std::pair{++shader_data.idcounter_pixel, shconst});
     return shader_data.idcounter_pixel;
 }
 
@@ -101,24 +134,70 @@ GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer) {
         free(data);
         return -1;
     }
-    free(data);
-    shader_data.pixel_shaders.insert(std::pair{++shader_data.idcounter_pixel, shader});
+    ID3DXConstantTable* ppConstantTable;
+    if (vibe_check(D3DXGetShaderConstantTable(data,&ppConstantTable))) {
+        free(data);
+        return -1;
+    }
+    free(data);       
+    
+    PShaderWithTable shconst;
+    
+    shconst.shader=shader;
+    shconst.constants=ppConstantTable;
+
+    shader_data.pixel_shaders.insert(std::pair{++shader_data.idcounter_pixel, shconst});
     return shader_data.idcounter_pixel;
+}
+
+GMREAL shader_vertex_get_uniform(double shader_id, const char* name) {
+    if (shader_id < 0) return 1;
+    auto it = shader_data.vertex_shaders.find(shader_id);
+    if (it == shader_data.vertex_shaders.end()) return 1;
+    
+    ID3DXConstantTable* ctable=it->second.constants;
+    
+    D3DXHANDLE handle = ctable->GetConstantByName(0, name);
+    
+    unsigned int count;
+    D3DXCONSTANT_DESC desc;    
+    ctable->GetConstantDesc(handle, &desc, &count);   
+    
+    return desc.RegisterIndex;
+}
+
+GMREAL shader_pixel_get_uniform(double shader_id, const char* name) {
+    if (shader_id < 0) return 1;
+    auto it = shader_data.pixel_shaders.find(shader_id);
+    if (it == shader_data.pixel_shaders.end()) return 1;
+    
+    ID3DXConstantTable* ctable=it->second.constants;
+    
+    D3DXHANDLE handle = ctable->GetConstantByName(0, name);
+    
+    unsigned int count;
+    D3DXCONSTANT_DESC desc;    
+    ctable->GetConstantDesc(handle, &desc, &count);   
+    
+    return desc.RegisterIndex;
 }
 
 GMREAL shader_pixel_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.pixel_shaders.find(shader_id);
     if (it == shader_data.pixel_shaders.end()) return 1;
-    return vibe_check(Device->SetPixelShader(it->second));
+    vibe_check(Device->SetPixelShader(it->second.shader));
+    it->second.constants->SetDefaults(Device);
+    return 0;
 }
 
 GMREAL shader_vertex_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.vertex_shaders.find(shader_id);
     if (it == shader_data.vertex_shaders.end()) return 1;
-    if (vibe_check(Device->SetVertexShader(it->second))) return 1;
+    if (vibe_check(Device->SetVertexShader(it->second.shader))) return 1;
     using_shader = true;
+    it->second.constants->SetDefaults(Device);
     return 0;
 }
 
@@ -141,27 +220,27 @@ GMREAL shader_reset() {
 }
 
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
-    GMREAL shader_ ## st_lo ## _constant_1 ## ty_lo (double reg, double v1) { \
+    GMREAL shader_ ## st_lo ## _uniform_1 ## ty_lo (double reg, double v1) { \
         ty_name data[] = {(ty_name)v1, 0, 0, 0};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
-    GMREAL shader_ ## st_lo ## _constant_2 ## ty_lo (double reg, double v1, double v2) { \
+    GMREAL shader_ ## st_lo ## _uniform_2 ## ty_lo (double reg, double v1, double v2) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, 0, 0};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
-    GMREAL shader_ ## st_lo ## _constant_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
+    GMREAL shader_ ## st_lo ## _uniform_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, 0};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
-    GMREAL shader_ ## st_lo ## _constant_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
+    GMREAL shader_ ## st_lo ## _uniform_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);       \
         return 0;\
     } \
-    GMREAL shader_ ## st_lo ## _constant_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
+    GMREAL shader_ ## st_lo ## _uniform_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4, (ty_name)v5, (ty_name)v6, (ty_name)v7, (ty_name)v8};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);       \
         return 0;\
