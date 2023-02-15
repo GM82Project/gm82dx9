@@ -20,6 +20,19 @@ SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} /SAFESEH:NO")
 SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /SAFESEH:NO")
 SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /SAFESEH:NO")
 
+
+macro(compile_shader in_fn out_fn model)
+	add_custom_command(
+			TARGET gm82dx9
+			PRE_BUILD
+			COMMAND fxc /nologo /T${model} /Fo source/${out_fn} source/${in_fn}
+			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	)
+endmacro()
+
+compile_shader(vs_pass.hlsl vs_pass.vs3 vs_3_0)
+compile_shader(ps_pass.hlsl ps_pass.ps3 ps_3_0)
+
 option(INSTALL_GEX "Install the generated .gex" OFF)
 
 if (INSTALL_GEX)
