@@ -783,6 +783,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_pixel_destroy",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_destroy(shader)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_pixel_get_uniform",
 					"extname": "",
 					"calltype": 12,
@@ -876,6 +887,17 @@
 					"hidden": false,
 					"argtypes": [
 						1
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_destroy",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_destroy(shader)",
+					"hidden": false,
+					"argtypes": [
+						2
 					],
 					"returntype": 2
 				},

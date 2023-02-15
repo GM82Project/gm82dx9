@@ -150,6 +150,24 @@ GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer) {
     return shader_data.idcounter_pixel;
 }
 
+GMREAL shader_vertex_destroy(double shader_id) {
+    auto it = shader_data.vertex_shaders.find(shader_id);
+    if (it == shader_data.vertex_shaders.end()) return 1;
+    it->second.shader->Release();
+    it->second.constants->Release();
+    shader_data.vertex_shaders.erase(it);
+    return 0;
+}
+
+GMREAL shader_pixel_destroy(double shader_id) {
+    auto it = shader_data.pixel_shaders.find(shader_id);
+    if (it == shader_data.pixel_shaders.end()) return 1;
+    it->second.shader->Release();
+    it->second.constants->Release();
+    shader_data.pixel_shaders.erase(it);
+    return 0;
+}
+
 GMREAL shader_vertex_get_uniform(double shader_id, const char* name) {
     if (shader_id < 0) return 1;
     auto it = shader_data.vertex_shaders.find(shader_id);
