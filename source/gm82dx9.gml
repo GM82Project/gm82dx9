@@ -207,11 +207,11 @@
     var __i; __i=0
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: __gm82dx9_shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: __gm82dx9_shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: __gm82dx9_shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
         default:
-            shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_vertex_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (__i <= 0)
 
@@ -221,11 +221,11 @@
     var __i; __i=0
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: __gm82dx9_shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: __gm82dx9_shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: __gm82dx9_shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
         default:
-            shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_pixel_uniform_4f(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (__i <= 0)
 
@@ -235,11 +235,11 @@
     var __i; __i=0
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: __gm82dx9_shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: __gm82dx9_shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: __gm82dx9_shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
         default:
-            shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_vertex_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (__i <= 0)
 
@@ -249,11 +249,11 @@
     var __i; __i=0
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: __gm82dx9_shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: __gm82dx9_shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: __gm82dx9_shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
         default:
-            shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_pixel_uniform_4i(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (__i <= 0)
 
@@ -263,11 +263,11 @@
     var __i; __i=0
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: __gm82dx9_shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: __gm82dx9_shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: __gm82dx9_shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
         default:
-            shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_vertex_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (__i <= 0)
 
@@ -277,11 +277,11 @@
     var __i; __i=0
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: __gm82dx9_shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],0,0,0) exit
+        case 3: __gm82dx9_shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
+        case 4: __gm82dx9_shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
         default:
-            shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_pixel_uniform_4b(argument[0]+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (__i <= 0)
 //
