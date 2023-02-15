@@ -112,6 +112,13 @@ D3DXGetErrorStringA(
     return hr;
 }
 
+HRESULT WINAPI screen_refresh(IDirect3DDevice9 *dev, const RECT *pSourceRect, const RECT *pDestRect, HWND hDestOverride, const RGNDATA *pDirtyRegion) {
+    dev->EndScene();
+    auto res = dev->Present(pSourceRect, pDestRect, hDestOverride, pDirtyRegion);
+    dev->BeginScene();
+    return res;
+}
+
 void WINAPI regain_device() {
     // force exclusive fullscreen off
     d3d_parameters.Windowed = TRUE;
@@ -261,6 +268,15 @@ BOOL WINAPI DllMain(
                  ptr = ((char*)(&GetBackBuffer) - (a + 5)); \
                  WriteProcessMemory(proc, (void*)(a + 1), &ptr, 4, nullptr)
     PATCH(0x6201b2);
+#undef PATCH
+
+    // screen_refresh
+#define PATCH(a) \
+                 offset = 0xe8; \
+                 WriteProcessMemory(proc, (void*)(a), &offset, 1, nullptr); \
+                 ptr = ((char*)(&screen_refresh) - (a + 5)); \
+                 WriteProcessMemory(proc, (void*)(a + 1), &ptr, 4, nullptr)
+    PATCH(0x6200c2);
 #undef PATCH
 
     // SetStreamSource
@@ -419,7 +435,6 @@ BOOL WINAPI DllMain(
 
     PATCH_SIMPLE(0x61ff50, 0xa4); // BeginScene
     PATCH_SIMPLE(0x61ff77, 0xa8); // EndScene
-    PATCH_SIMPLE(0x6200c4, 0x44); // Present
     PATCH_SIMPLE(0x61ffff, 0x44); // Present
 
     PATCH_DOUBLE(0x5662e5, 0x104); // SetTexture
