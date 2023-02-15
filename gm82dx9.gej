@@ -772,10 +772,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "display_resize_buffer",
+					"name": "window_resize_buffer",
 					"extname": "__gm82dx9_resize_backbuffer",
 					"calltype": 12,
-					"helpline": "display_resize_buffer(w,h)",
+					"helpline": "window_resize_buffer(w,h)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1086,10 +1086,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "texture_stage_set_interpolation",
+					"name": "texture_stage_interpolation",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "texture_stage_set_interpolation(stage,linear)",
+					"helpline": "texture_stage_interpolation(stage,linear)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1446,48 +1446,39 @@
 			"final": "",
 			"functions": [
 				{
-					"name": "d3d_projection_reset",
+					"name": "d3d_fog_trick",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "d3d_projection_reset()",
+					"helpline": "d3d_fog_trick([color,amount])",
 					"hidden": false,
-					"argtypes": [],
+					"argtypes": null,
 					"returntype": 2
 				},
 				{
-					"name": "d3d_projection_simple",
+					"name": "d3d_set_alphablend",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "d3d_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax,spin)",
+					"helpline": "",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
 						2
 					],
 					"returntype": 2
 				},
 				{
-					"name": "d3d_reset_projection",
-					"extname": "dx9_reset_projection",
+					"name": "d3d_set_projection_default",
+					"extname": "",
 					"calltype": 2,
-					"helpline": "",
+					"helpline": "d3d_set_projection_default()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
 				{
 					"name": "d3d_set_projection_simple",
-					"extname": "dx9_projection_simple",
+					"extname": "",
 					"calltype": 2,
-					"helpline": "",
+					"helpline": "d3d_set_projection_simple(x,y,w,h,angle,dollyzoom,depthmin,depthfocus,depthmax,spin)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1517,43 +1508,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "display_set_vsync",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "display_set_vsync(enable)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "draw_make_opaque",
 					"extname": "",
 					"calltype": 2,
 					"helpline": "",
 					"hidden": false,
 					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "draw_set_alphablend",
-					"extname": "dx9_set_alphablend",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "fog_trick",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "fog_trick([color,amount])",
-					"hidden": false,
-					"argtypes": null,
 					"returntype": 2
 				},
 				{
@@ -1601,6 +1561,17 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "window_set_fullscreen_ext(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "window_set_vsync_ext",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "window_set_vsync_ext(enable)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1796,8 +1767,8 @@
 			]
 		},
 		{
-			"filename": "vs_default.vs3",
-			"origname": "source\\vs_default.vs3",
+			"filename": "vs_pass.vs3",
+			"origname": "source\\vs_pass.vs3",
 			"kind": 4,
 			"init": "",
 			"final": "",
@@ -1805,8 +1776,8 @@
 			"constants": []
 		},
 		{
-			"filename": "ps_default.ps3",
-			"origname": "source\\ps_default.ps3",
+			"filename": "ps_pass.ps3",
+			"origname": "source\\ps_pass.ps3",
 			"kind": 4,
 			"init": "",
 			"final": "",

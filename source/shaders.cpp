@@ -54,7 +54,7 @@ static DWORD* load_shader_data(const char* filename) {
     return data;
 }
 
-GMREAL dx9_shader_vertex_create_file(const char* filename) {
+GMREAL shader_vertex_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
     IDirect3DVertexShader9 *shader;
@@ -80,7 +80,7 @@ GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer) {
     return shader_data.idcounter_vertex;
 }
 
-GMREAL dx9_shader_pixel_create_file(const char* filename) {
+GMREAL shader_pixel_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
     if (data == nullptr) return -1;
     IDirect3DPixelShader9 *shader;
@@ -106,14 +106,14 @@ GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer) {
     return shader_data.idcounter_pixel;
 }
 
-GMREAL dx9_shader_pixel_set(double shader_id) {
+GMREAL shader_pixel_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.pixel_shaders.find(shader_id);
     if (it == shader_data.pixel_shaders.end()) return 1;
     return vibe_check(Device->SetPixelShader(it->second));
 }
 
-GMREAL dx9_shader_vertex_set(double shader_id) {
+GMREAL shader_vertex_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.vertex_shaders.find(shader_id);
     if (it == shader_data.vertex_shaders.end()) return 1;
@@ -122,18 +122,18 @@ GMREAL dx9_shader_vertex_set(double shader_id) {
     return 0;
 }
 
-GMREAL dx9_shader_pixel_reset() {
+GMREAL shader_pixel_reset() {
     Device->SetPixelShader(nullptr);
     return 0;
 }
 
-GMREAL dx9_shader_vertex_reset() {
+GMREAL shader_vertex_reset() {
     Device->SetVertexShader(nullptr);
     using_shader = false;
     return 0;
 }
 
-GMREAL dx9_shader_reset() {
+GMREAL shader_reset() {
     Device->SetPixelShader(nullptr);
     Device->SetVertexShader(nullptr);
     using_shader = false;
@@ -141,27 +141,27 @@ GMREAL dx9_shader_reset() {
 }
 
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
-    GMREAL dx9_shader_ ## st_lo ## _set_constant_1 ## ty_lo (double reg, double v1) { \
+    GMREAL shader_ ## st_lo ## _constant_1 ## ty_lo (double reg, double v1) { \
         ty_name data[] = {(ty_name)v1, 0, 0, 0};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
-    GMREAL dx9_shader_ ## st_lo ## _set_constant_2 ## ty_lo (double reg, double v1, double v2) { \
+    GMREAL shader_ ## st_lo ## _constant_2 ## ty_lo (double reg, double v1, double v2) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, 0, 0};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
-    GMREAL dx9_shader_ ## st_lo ## _set_constant_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
+    GMREAL shader_ ## st_lo ## _constant_3 ## ty_lo (double reg, double v1, double v2, double v3) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, 0};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);   \
         return 0;\
     } \
-    GMREAL dx9_shader_ ## st_lo ## _set_constant_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
+    GMREAL shader_ ## st_lo ## _constant_4 ## ty_lo (double reg, double v1, double v2, double v3, double v4) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 1);       \
         return 0;\
     } \
-    GMREAL dx9_shader_ ## st_lo ## _set_constant_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
+    GMREAL shader_ ## st_lo ## _constant_8 ## ty_lo (double reg, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8) { \
         ty_name data[] = {(ty_name)v1, (ty_name)v2, (ty_name)v3, (ty_name)v4, (ty_name)v5, (ty_name)v6, (ty_name)v7, (ty_name)v8};            \
         Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, 2);       \
         return 0;\
@@ -171,7 +171,7 @@ CONSTANT_FUNC(pixel,Pixel,float,f,F)
 CONSTANT_FUNC(vertex,Vertex,float,f,F)
 
 #define COPY_MATRIX(func,cons) \
-    GMREAL dx9_shader_vertex_copy_matrix_ ## func(double reg) { \
+    GMREAL shader_vertex_matrix_ ## func(double reg) { \
         D3DMATRIX mat; \
         Device->GetTransform(cons, &mat); \
         Device->SetVertexShaderConstantF(reg, mat.m[0], 4); \
@@ -182,7 +182,7 @@ COPY_MATRIX(w, D3DTS_WORLD)
 COPY_MATRIX(v, D3DTS_VIEW)
 COPY_MATRIX(p, D3DTS_PROJECTION)
 
-GMREAL dx9_shader_vertex_copy_matrix_wv(double reg) {
+GMREAL shader_vertex_matrix_wv(double reg) {
     XMMATRIX world, view;
     Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
     Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
@@ -191,7 +191,7 @@ GMREAL dx9_shader_vertex_copy_matrix_wv(double reg) {
     return 0;
 }
 
-GMREAL dx9_shader_vertex_copy_matrix_vp(double reg) {
+GMREAL shader_vertex_matrix_vp(double reg) {
     XMMATRIX view, projection;
     Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
     Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
@@ -200,7 +200,7 @@ GMREAL dx9_shader_vertex_copy_matrix_vp(double reg) {
     return 0;
 }
 
-GMREAL dx9_shader_vertex_copy_matrix_wvp(double reg) {
+GMREAL shader_vertex_matrix_wvp(double reg) {
     XMMATRIX world, view, projection;
     Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
     Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
@@ -210,7 +210,7 @@ GMREAL dx9_shader_vertex_copy_matrix_wvp(double reg) {
     return 0;
 }
 
-GMREAL dx9_texture_set_stage(double stage, double tex_f) {
+GMREAL texture_stage_set(double stage, double tex_f) {
     int tex = tex_f;
     if (tex < 0) {
         Device->SetTexture(stage, nullptr);
@@ -230,7 +230,7 @@ GMREAL dx9_texture_set_stage(double stage, double tex_f) {
     return 0;
 }
 
-GMREAL dx9_texture_stage_set_interpolation(double stage, double linear_d) {
+GMREAL texture_stage_interpolation(double stage, double linear_d) {
 	if (linear_d >= 0.5) {
 		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
 		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);

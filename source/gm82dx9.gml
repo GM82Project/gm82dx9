@@ -43,8 +43,8 @@
         object_event_add(__gm82dx9_controller,ev_other,ev_room_start,"if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
         object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
         //load default shaders
-        __gm82dx9_default_vs=dx9_shader_vertex_create_file(temp_directory+"\gm82\vs_default.vs3")
-        __gm82dx9_default_ps=dx9_shader_pixel_create_file(temp_directory+"\gm82\ps_default.ps3")
+        __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
+        __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")
         //initialize globals
         __gm82dx9_isntxp=__gm82dx9_not_xp()
         __gm82dx9_vsync_enabled=__gm82dx9_isntxp
@@ -80,18 +80,18 @@
     }
 
 
-#define display_set_vsync
-    ///display_set_vsync(enable)
+#define window_set_vsync_ext
+    ///window_set_vsync_ext(enable)
     __gm82dx9_vsync_enabled=!!argument0 && __gm82dx9_isntxp
     
     
-#define draw_set_alphablend
-    ///draw_set_alphablend(enable)
+#define d3d_set_alphablend
+    ///d3d_set_alphablend(enable)
     YoYo_EnableAlphaBlend(argument0)
 
 
 #define draw_make_opaque
-    ///dx9_make_opaque()
+    ///draw_make_opaque()
     draw_set_blend_mode(bm_add)
     draw_rectangle_color(-9999999,-9999999,9999999,9999999,0,0,0,0,0)
     draw_set_blend_mode(0)
@@ -100,7 +100,7 @@
 #define window_set_fullscreen_ext
     ///window_set_fullscreen_ext(enabled)
     //exclusive fullscreen
-    //warning: buggy    
+    //warning: VERY buggy    
     if (argument0 ^ window_get_fullscreen()) {
         if (window_get_fullscreen()) {
             __gm82dx9_setfullscreen(0)
@@ -112,15 +112,15 @@
     }
 
 
-#define d3d_projection_reset
-    ///d3d_projection_reset()
+#define d3d_set_projection_default
+    ///d3d_set_projection_default()
     if (view_enabled)
         d3d_set_projection_ortho(view_xview[view_current],view_yview[view_current],view_wview[view_current],view_hview[view_current],view_angle[view_current])
     else
         d3d_set_projection_ortho(0,0,room_width,room_height,0)
 
 
-#define d3d_projection_simple
+#define d3d_set_projection_simple
     ///d3d_projection_simple(x,y,w,h,tilt,dollyzoom,depthmin,depthfocus,depthmax,spin)
     var __xfrom,__yfrom,__zfrom,__spin;
     
@@ -163,9 +163,9 @@
     d3d_transform_vertex[2]=__gm82dx9_getvertexz()
 
 
-#define fog_trick
-    ///fog_trick(color,amount)
-    ///fog_trick()
+#define d3d_fog_trick
+    ///d3d_fog_trick(color,amount)
+    ///d3d_fog_trick()
 
     if (argument_count==2) {
         d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
@@ -174,7 +174,7 @@
 #define shader_vertex_create_buffer
     ///shader_vertex_create_buffer(buffer)
     if (!variable_global_exists("__gm82net_cross_detect")) {
-        show_error("Add the Game Maker 8.2 Network extension to your project in order to use dx9_shader_vertex_create_buffer().",0)
+        show_error("Add the Game Maker 8.2 Network extension to your project in order to use shader_vertex_create_buffer().",0)
         return 0
     }
     
@@ -184,7 +184,7 @@
 #define shader_pixel_create_buffer
     ///shader_pixel_create_buffer(buffer)
     if (!variable_global_exists("__gm82net_cross_detect")) {
-        show_error("Add the Game Maker 8.2 Network extension to your project in order to use dx9_shader_pixel_create_buffer().",0)
+        show_error("Add the Game Maker 8.2 Network extension to your project in order to use shader_pixel_create_buffer().",0)
         return 0
     }
     
@@ -193,12 +193,12 @@
 
 #define shader_vertex_set_passthrough
     ///shader_vertex_set_passthrough()
-    dx9_shader_vertex_set(__gm82dx9_default_vs)
-    dx9_shader_vertex_copy_matrix_wvp(0)
+    shader_vertex_set(__gm82dx9_default_vs)
+    shader_vertex_matrix_wvp(0)
     
 
 #define shader_pixel_set_passthrough
     ///shader_pixel_set_passthrough()
-    dx9_shader_pixel_set(__gm82dx9_default_ps)
+    shader_pixel_set(__gm82dx9_default_ps)
 //
 //

@@ -1,4 +1,4 @@
-# gm82dx8
+# gm82dx9
 This extension upgrades Game Maker 8.2 to DirectX version 9.0.
 
 Contains contributions by Floogle and Lovey01.

@@ -11,7 +11,7 @@
         application_surface=surface_get("application_surface",__gm82dx8_resw,__gm82dx8_resh)
     } else {
         surface_reset_target()
-        d3d_reset_projection()
+        d3d_set_projection_default()
     }    
 
 
