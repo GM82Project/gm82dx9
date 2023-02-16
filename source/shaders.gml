@@ -32,7 +32,7 @@
 #define shader_vertex_uniform_f
     ///shader_vertex_uniform_f(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_get_vconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_vconst(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4f(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -47,7 +47,7 @@
 #define shader_pixel_uniform_f
     ///shader_pixel_uniform_f(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_get_pconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_pconst(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4f(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -62,7 +62,7 @@
 #define shader_vertex_uniform_i
     ///shader_vertex_uniform_i(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_get_vconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_vconst(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4i(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -77,7 +77,7 @@
 #define shader_pixel_uniform_i
     ///shader_pixel_uniform_i(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_get_pconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_pconst(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4i(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -92,7 +92,7 @@
 #define shader_vertex_uniform_b
     ///shader_vertex_uniform_b(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_get_vconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_vconst(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4b(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -107,7 +107,7 @@
 #define shader_pixel_uniform_b
     ///shader_pixel_uniform_b(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_get_pconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_pconst(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4b(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -122,7 +122,7 @@
 #define shader_vertex_uniform_matrix
     //shader_vertex_uniform_matrix(uniform,mtx_type)
     var __uni;
-    __uni=__gm82dx9_get_vconst(argument0)
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_vconst(__uni)
     switch (argument1) {
         case mtx_world: __gm82dx9_shader_vertex_matrix_w(__uni) break
         case mtx_view: __gm82dx9_shader_vertex_matrix_v(__uni) break
