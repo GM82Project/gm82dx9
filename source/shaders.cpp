@@ -261,45 +261,34 @@ CONSTANT_FUNC(pixel,Pixel,int,i,I)
 CONSTANT_FUNC(vertex,Vertex,BOOL,b,B)
 CONSTANT_FUNC(pixel,Pixel,BOOL,b,B)
 
-#define COPY_MATRIX(func,cons) \
-    GMREAL __gm82dx9_shader_vertex_matrix_ ## func(double reg) { \
-        D3DMATRIX mat; \
-        Device->GetTransform(cons, &mat); \
-        Device->SetVertexShaderConstantF(reg, mat.m[0], 4); \
-        return 0;                  \
+#undef CONSTANT_FUNC
+
+#define UNI_MATRIX(st_lo, st_up) \
+    GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_matrix(double reg, double mask_f) { \
+        int mask = mask_f; \
+        XMMATRIX matrix; \
+        if (mask & 1) { \
+            Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&matrix); \
+        } else { \
+            matrix = DirectX::XMMatrixIdentity(); \
+        } \
+        if (mask & 2) { \
+            XMMATRIX view; \
+            Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view); \
+            matrix = DirectX::XMMatrixMultiply(matrix, view); \
+        } \
+        if (mask & 4) { \
+            XMMATRIX projection; \
+            Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection); \
+            matrix = DirectX::XMMatrixMultiply(matrix, projection); \
+        } \
+        Device->Set ## st_up ## ShaderConstantF(reg, matrix.r->m128_f32, 4); \
+        return 0; \
     }
-
-COPY_MATRIX(w, D3DTS_WORLD)
-COPY_MATRIX(v, D3DTS_VIEW)
-COPY_MATRIX(p, D3DTS_PROJECTION)
-
-GMREAL __gm82dx9_shader_vertex_matrix_wv(double reg) {
-    XMMATRIX world, view;
-    Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
-    Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
-    world = DirectX::XMMatrixMultiply(world, view);
-    Device->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
-    return 0;
-}
-
-GMREAL __gm82dx9_shader_vertex_matrix_vp(double reg) {
-    XMMATRIX view, projection;
-    Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
-    Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
-    view = DirectX::XMMatrixMultiply(view, projection);
-    Device->SetVertexShaderConstantF(reg, view.r->m128_f32, 4);
-    return 0;
-}
-
-GMREAL __gm82dx9_shader_vertex_matrix_wvp(double reg) {
-    XMMATRIX world, view, projection;
-    Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
-    Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
-    Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
-    world = DirectX::XMMatrixMultiply(DirectX::XMMatrixMultiply(world, view), projection);
-    Device->SetVertexShaderConstantF(reg, world.r->m128_f32, 4);
-    return 0;
-}
+    
+UNI_MATRIX(vertex, Vertex)
+UNI_MATRIX(pixel, Pixel)
+#undef UNI_MATRIX
 
 GMREAL texture_stage_set(double stage, double tex_f) {
     int tex = tex_f;
@@ -322,14 +311,14 @@ GMREAL texture_stage_set(double stage, double tex_f) {
 }
 
 GMREAL texture_stage_interpolation(double stage, double linear_d) {
-	if (linear_d >= 0.5) {
-		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
-		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
-	} else {
-		Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_POINT);
-		Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_POINT);
-	}
-	return 0;
+    if (linear_d >= 0.5) {
+        Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
+        Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
+    } else {
+        Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_POINT);
+        Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_POINT);
+    }
+    return 0;
 }
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf) {

@@ -123,13 +123,13 @@
     //shader_vertex_uniform_matrix(uniform,mtx_type)
     var __uni;
     __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_vconst(__uni)
-    switch (argument1) {
-        case mtx_world: __gm82dx9_shader_vertex_matrix_w(__uni) break
-        case mtx_view: __gm82dx9_shader_vertex_matrix_v(__uni) break
-        case mtx_projection: __gm82dx9_shader_vertex_matrix_p(__uni) break
-        case mtx_world_view: __gm82dx9_shader_vertex_matrix_wv(__uni) break
-        case mtx_view_projection: __gm82dx9_shader_vertex_matrix_vp(__uni) break
-        case mtx_world_view_projection: __gm82dx9_shader_vertex_matrix_wvp(__uni) break
-    }
+    __gm82dx9_shader_vertex_uniform_matrix(__uni,argument1)
+
+
+#define shader_pixel_uniform_matrix
+    //shader_pixel_uniform_matrix(uniform,mtx_type)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_pconst(__uni)
+    __gm82dx9_shader_pixel_uniform_matrix(__uni,argument1)
 //
 //
