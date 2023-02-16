@@ -1,6 +1,6 @@
 #define __gm82dx9_init
     if (__gm82dx9_dllcheck()!=820) {
-        show_error('GM8.2 DirectX8 Extension failed to link DLL.',1)
+        show_error('GM8.2 DirectX9 Extension failed to link DLL.',1)
         exit
     }
     
@@ -8,83 +8,36 @@
     
     globalvar __gm82dx9_cross_detect;
     
-    globalvar __gm82dx9_time;           __gm82dx9_time=__gm82dx9_time_now()
-    globalvar __gm82dx9_vsync_enabled;
-    globalvar __gm82dx9_vpatched;       __gm82dx9_vpatched=false
     globalvar __gm82dx9_controller;     __gm82dx9_controller=__gm82dx9_obj
     globalvar __gm82dx9_appsurfcompose; __gm82dx9_appsurfcompose=noone
-    globalvar __gm82dx9_isntxp;
+
     globalvar __gm82dx9_resw,__gm82dx9_resh;
     globalvar __gm82dx9_default_vs,__gm82dx9_default_ps;
     
     globalvar d3d_transform_vertex;
     
-    //check for gm 8.1.141
-    if (execute_string("return get_function_address('display_get_orientation')") <= 0) {
-        if (variable_global_get("__gm82core_version")>134) {
-            //recent enough core extension: we can work together
-            __gm82dx9_controller=gm82core_object
-        } else {
-            //core extension not detected: let's do it ourselves
-            object_event_add(__gm82dx9_controller,ev_destroy,0,"instance_copy(0)")
-            object_event_add(__gm82dx9_controller,ev_other,ev_room_end,"persistent=true")
-            object_set_persistent(__gm82dx9_controller,1)
-            room_instance_add(room_first,0,0,__gm82dx9_controller)
-        }
-        object_event_add(__gm82dx9_controller,ev_other,ev_game_start,"
-            //set a variable to prevent conflicts with the gm82vpatch extension
-            if (variable_global_exists('__gm82vpatch_time')) __gm82dx9_vpatched=true
-        ")
-        //set target to appsurf at end step, to catch view setup and all draw events
-        object_event_add(__gm82dx9_controller,ev_step,ev_step_end,"__gm82dx9_prepare()")
-        //finally after all draw events, compose the window
-        object_event_add(__gm82dx9_controller,ev_other,ev_animation_end,"__gm82dx9_compose()")  
-        //ignore first room frame
-        object_event_add(__gm82dx9_controller,ev_other,ev_room_start,"if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
-        object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
-        //load default shaders
-        __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
-        __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")
-        //initialize globals
-        __gm82dx9_isntxp=__gm82dx9_not_xp()
-        __gm82dx9_vsync_enabled=__gm82dx9_isntxp
+    if (variable_global_get("__gm82core_version")>134) {
+        //recent enough core extension: we can work together
+        __gm82dx9_controller=gm82core_object
     } else {
-        //we say 8.2 even though it only technically needs 8.1 because why would you use 8.1
-        show_error("Sorry, but Game Maker 8.2 DirectX8 requires Game Maker 8.2.",1)
+        //core extension not detected: let's do it ourselves
+        object_event_add(__gm82dx9_controller,ev_destroy,0,"instance_copy(0)")
+        object_event_add(__gm82dx9_controller,ev_other,ev_room_end,"persistent=true")
+        object_set_persistent(__gm82dx9_controller,1)
+        room_instance_add(room_first,0,0,__gm82dx9_controller)
     }
+    //set target to appsurf at end step, to catch view setup and all draw events
+    object_event_add(__gm82dx9_controller,ev_step,ev_step_end,"__gm82dx9_prepare()")
+    //finally after all draw events, compose the window
+    object_event_add(__gm82dx9_controller,ev_other,ev_animation_end,"__gm82dx9_compose()")  
+    //ignore first room frame
+    object_event_add(__gm82dx9_controller,ev_other,ev_room_start,"if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
+    object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
+    //load default shaders
+    __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
+    __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")   
 
 
-#define __gm82dx9_vsync
-    //only activate if vsyncable
-    var freq;freq=display_get_frequency()/room_speed
-    
-    if (abs(freq-round(freq))<0.03 && __gm82dx9_vsync_enabled && !__gm82dx9_vpatched) {
-        set_synchronization(false)
-        //we do timed wakeups every 1ms to check the time
-        while (!__gm82dx9_waitvblank()) {
-             __gm82dx9_sleep(1)
-             if (__gm82dx9_time_now()-__gm82dx9_time>1000000/room_speed-2000) {
-                //Oh my fur and whiskers! I'm late, I'm late, I'm late!
-                break
-            }
-        }
-
-        //busywait for vblank
-        while (!__gm82dx9_waitvblank()) {/*òwó*/}
-        __gm82dx9_time=__gm82dx9_time_now()
-
-        //sync DWM
-        __gm82dx9_sync_dwm()
-
-        //epic win
-    }
-
-
-#define window_set_vsync_ext
-    ///window_set_vsync_ext(enable)
-    __gm82dx9_vsync_enabled=!!argument0 && __gm82dx9_isntxp
-    
-    
 #define d3d_set_alphablend
     ///d3d_set_alphablend(enable)
     YoYo_EnableAlphaBlend(argument0)

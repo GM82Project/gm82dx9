@@ -12,7 +12,7 @@ endif()
 include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Include")
 link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86")
 
-add_library(gm82dx9 SHARED source/gm82dx9.cpp source/transform.cpp source/vsync.cpp source/shaders.cpp source/inject.cpp)
+add_library(gm82dx9 SHARED source/gm82dx9.cpp source/transform.cpp source/shaders.cpp source/inject.cpp)
 target_link_libraries(gm82dx9 d3d9 d3dx9 dxerr legacy_stdio_definitions)
 
 SET(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} /D \"SAFESEH:NO\"")

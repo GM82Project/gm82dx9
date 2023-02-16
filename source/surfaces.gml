@@ -137,13 +137,10 @@
 #define __gm82dx9_compose
     if (__gm82dx9_appsurfcompose!=noone) {
         d3d_set_depth(0)      
-        application_surface=surface_set("application_surface",__gm82dx9_resw,__gm82dx9_resh)        
         surface_reset_target()        
+        application_surface=surface_get("application_surface",__gm82dx9_resw,__gm82dx9_resh)        
         d3d_set_projection_ortho(0,0,__gm82dx9_resw,__gm82dx9_resh,0)
         script_execute(__gm82dx9_appsurfcompose)
     }
-    __gm82dx9_vsync()
-
-
 //
 //

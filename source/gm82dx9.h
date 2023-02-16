@@ -1,5 +1,4 @@
-#ifndef GM82DX8_H
-#define GM82DX8_H
+#pragma once
 
 #define GMREAL extern "C" __declspec(dllexport) double __cdecl
 #define GMSTR extern "C" __declspec(dllexport) char* __cdecl
@@ -30,10 +29,6 @@ typedef struct {
 }GMVAL;
 
 extern int has_started;
-extern int isdwm;
-extern HINSTANCE dwm_dll;
-extern DLL_FUNC DwmIsCompositionEnabled;
-extern DLL_FUNC DwmFlush;
 
 extern IDirect3DDevice9** d3d9_device;
 #define Device (*d3d9_device)
@@ -51,5 +46,3 @@ HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
 
 bool __dx_vibe_check(const char* file, int line, HRESULT hr);
 #define vibe_check(a) __dx_vibe_check(__FILE__,__LINE__,a)
-
-#endif
