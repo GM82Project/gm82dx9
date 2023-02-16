@@ -12,8 +12,6 @@ IDirect3DDevice9** d3d9_device = (IDirect3DDevice9**)0x6886a8;
 create_c_function(void,runner_display_reset,0x61f9f4);
 create_c_function(void,runner_clear_depth,0x563a8c);
 
-int* dx9_present_param_ms = (int*)0x85af74;
-int* dx9_present_param_swap = (int*)0x85af7c;
 int* dx9_backbuffer_format = (int*)0x85b394;
 
 bool __dx_vibe_check(const char* file, int line, HRESULT hr) {
@@ -23,18 +21,24 @@ bool __dx_vibe_check(const char* file, int line, HRESULT hr) {
     MessageBox(0, buf, "Warning", 0);
     return true;
 }
-
 DWORD gm_col_to_dx9(double color) {
     int col=(int)round(color);
     return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
 }
-
 IDirect3DSurface9* get_gm_surface_depthbuffer(double id) {
     return (*(IDirect3DSurface9***)0x84527c)[4+5*int(id)];
 }
 
 //-//
 
+GMREAL __gm82dx9_dllcheck() {
+    return 820;
+}
+GMREAL __gm82dx9_checkstart() {
+    if (has_started) return 1;
+    has_started = 1;
+    return 0;
+}
 GMREAL __gm82dx9_testfunc() {
     return 0;
 }
@@ -296,14 +300,6 @@ GMREAL __gm82dx9_surface_to_buffer(double buffer, double id, double gm_width, do
     
     return 0;    
 }
-GMREAL __gm82dx9_dllcheck() {
-    return 820;
-}
-GMREAL __gm82dx9_checkstart() {
-    if (has_started) return 1;
-    has_started = 1;
-    return 0;
-}
 GMREAL __gm82dx9_cleardepth() {
     runner_clear_depth();
     return 1;
@@ -311,8 +307,6 @@ GMREAL __gm82dx9_cleardepth() {
 GMREAL __gm82dx9_setfullscreen(double hz) {
     int z = (int)hz;
     
-    *dx9_present_param_ms = 0;  //multisample off
-    *dx9_present_param_swap = 3;  //swap effect copy
     d3d_parameters.Windowed = !z; //windowed mode
     d3d_parameters.FullScreen_RefreshRateInHz = z; //refresh rate
     

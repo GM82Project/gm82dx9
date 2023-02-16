@@ -252,7 +252,7 @@ CONSTANT_FUNC(vertex,Vertex,BOOL,b,B)
 CONSTANT_FUNC(pixel,Pixel,BOOL,b,B)
 
 #define COPY_MATRIX(func,cons) \
-    GMREAL shader_vertex_matrix_ ## func(double reg) { \
+    GMREAL __gm82dx9_shader_vertex_matrix_ ## func(double reg) { \
         D3DMATRIX mat; \
         Device->GetTransform(cons, &mat); \
         Device->SetVertexShaderConstantF(reg, mat.m[0], 4); \
@@ -263,7 +263,7 @@ COPY_MATRIX(w, D3DTS_WORLD)
 COPY_MATRIX(v, D3DTS_VIEW)
 COPY_MATRIX(p, D3DTS_PROJECTION)
 
-GMREAL shader_vertex_matrix_wv(double reg) {
+GMREAL __gm82dx9_shader_vertex_matrix_wv(double reg) {
     XMMATRIX world, view;
     Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
     Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
@@ -272,7 +272,7 @@ GMREAL shader_vertex_matrix_wv(double reg) {
     return 0;
 }
 
-GMREAL shader_vertex_matrix_vp(double reg) {
+GMREAL __gm82dx9_shader_vertex_matrix_vp(double reg) {
     XMMATRIX view, projection;
     Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);
     Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection);
@@ -281,7 +281,7 @@ GMREAL shader_vertex_matrix_vp(double reg) {
     return 0;
 }
 
-GMREAL shader_vertex_matrix_wvp(double reg) {
+GMREAL __gm82dx9_shader_vertex_matrix_wvp(double reg) {
     XMMATRIX world, view, projection;
     Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&world);
     Device->GetTransform(D3DTS_VIEW, (D3DMATRIX*)&view);

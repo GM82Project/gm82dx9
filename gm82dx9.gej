@@ -14,7 +14,7 @@
 			"filename": "gm82dx9.dll",
 			"origname": "build/Release/gm82dx9.dll",
 			"kind": 1,
-			"init": "__gm82dx9_dll_init",
+			"init": "",
 			"final": "",
 			"functions": [
 				{
@@ -826,51 +826,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_pixel_uniform_4f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_uniform_4f(reg,v1,v2,v3,v4)",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_pixel_uniform_4i",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_uniform_4i(reg,v1,v2,v3,v4)",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_pixel_uniform_4b",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_uniform_4b(reg,v1,v2,v3,v4)",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_reset",
 					"extname": "",
 					"calltype": 12,
@@ -914,61 +869,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "shader_vertex_matrix_p",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_matrix_p(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_matrix_v",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_matrix_v(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_matrix_w",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_matrix_w(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_matrix_wv",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_matrix_wv(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_matrix_wvp",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_matrix_wvp(reg)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_vertex_reset",
 					"extname": "",
 					"calltype": 12,
@@ -984,51 +884,6 @@
 					"helpline": "shader_vertex_set(shader)",
 					"hidden": false,
 					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_vertex_uniform_4f",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_uniform_4f(reg,v1,v2,v3,v4)",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_vertex_uniform_4i",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_uniform_4i(reg,v1,v2,v3,v4)",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_vertex_uniform_4b",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_uniform_4b(reg,v1,v2,v3,v4)",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
 						2
 					],
 					"returntype": 2
@@ -1120,15 +975,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_dll_init",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
 					"name": "__gm82dx9_getvertexy",
 					"extname": "",
 					"calltype": 12,
@@ -1143,15 +989,6 @@
 					"calltype": 12,
 					"helpline": "",
 					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_not_xp",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
 				},
@@ -1189,6 +1026,51 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_pixel_uniform_4b",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_4b(reg,v1,v2,v3,v4)",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_pixel_uniform_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_4f(reg,v1,v2,v3,v4)",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_pixel_uniform_4i",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_pixel_uniform_4i(reg,v1,v2,v3,v4)",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_vertex_create_buffer",
 					"extname": "",
 					"calltype": 12,
@@ -1200,12 +1082,101 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_sleep",
+					"name": "__gm82dx9_shader_vertex_matrix_p",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_matrix_v",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_matrix_w",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_matrix_wv",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_matrix_wvp",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_4b",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_4b(reg,v1,v2,v3,v4)",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_4f",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_4f(reg,v1,v2,v3,v4)",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_4i",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_vertex_uniform_4i(reg,v1,v2,v3,v4)",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
 						2
 					],
 					"returntype": 2
@@ -1236,29 +1207,11 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_sync_dwm",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
 					"name": "__gm82dx9_testfunc",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_time_now",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
 				},
@@ -1273,15 +1226,6 @@
 						2,
 						2
 					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_waitvblank",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [],
 					"returntype": 2
 				}
 			],
@@ -1507,6 +1451,42 @@
 					"returntype": 2
 				},
 				{
+					"name": "window_set_fullscreen_ext",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "window_set_fullscreen_ext(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_init",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				}
+			],
+			"constants": [
+				{
+					"name": "__gm82dx9_obj",
+					"value": "object_add()",
+					"hidden": true
+				}
+			]
+		},
+		{
+			"filename": "shaders.gml",
+			"origname": "C:\\Stuff\\github\\gm82dx9\\source\\shaders.gml",
+			"kind": 2,
+			"init": "",
+			"final": "",
+			"functions": [
+				{
 					"name": "shader_pixel_create_buffer",
 					"extname": "",
 					"calltype": 2,
@@ -1524,6 +1504,33 @@
 					"helpline": "shader_pixel_set_passthrough()",
 					"hidden": false,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_b",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_b(reg,...)",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_f",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_f(reg,...)",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_i",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_i(reg,...)",
+					"hidden": false,
+					"argtypes": null,
 					"returntype": 2
 				},
 				{
@@ -1547,6 +1554,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_vertex_uniform_b",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_uniform_b(reg,...)",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
 					"name": "shader_vertex_uniform_f",
 					"extname": "",
 					"calltype": 2,
@@ -1556,96 +1572,52 @@
 					"returntype": 2
 				},
 				{
-					"name": "shader_pixel_uniform_f",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "shader_pixel_uniform_f(reg,...)",
-					"hidden": false,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
 					"name": "shader_vertex_uniform_i",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_vertex_uniform_f(reg,...)",
+					"helpline": "shader_vertex_uniform_i(reg,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
 				},
 				{
-					"name": "shader_pixel_uniform_i",
+					"name": "shader_vertex_uniform_matrix",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_pixel_uniform_f(reg,...)",
-					"hidden": false,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_uniform_b",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "shader_vertex_uniform_f(reg,...)",
-					"hidden": false,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "shader_pixel_uniform_b",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "shader_pixel_uniform_f(reg,...)",
-					"hidden": false,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "window_set_fullscreen_ext",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "window_set_fullscreen_ext(enable)",
+					"helpline": "shader_vertex_uniform_matrix(reg,mtx_type)",
 					"hidden": false,
 					"argtypes": [
+						2,
 						2
 					],
-					"returntype": 2
-				},
-				{
-					"name": "window_set_vsync_ext",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "window_set_vsync_ext(enable)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_init",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_vsync",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
 					"returntype": 2
 				}
 			],
 			"constants": [
 				{
-					"name": "__gm82dx9_obj",
-					"value": "object_add()",
-					"hidden": true
+					"name": "mtx_world",
+					"value": "1",
+					"hidden": false
+				},
+				{
+					"name": "mtx_view",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "mtx_projection",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "mtx_world_view",
+					"value": "4",
+					"hidden": false
+				},
+				{
+					"name": "mtx_world_view_projection",
+					"value": "5",
+					"hidden": false
 				}
 			]
 		},
@@ -1811,8 +1783,8 @@
 			]
 		},
 		{
-			"filename": "vs_pass.vs3",
-			"origname": "source\\vs_pass.vs3",
+			"filename": "ps_pass.ps3",
+			"origname": "source\\ps_pass.ps3",
 			"kind": 4,
 			"init": "",
 			"final": "",
@@ -1820,8 +1792,8 @@
 			"constants": []
 		},
 		{
-			"filename": "ps_pass.ps3",
-			"origname": "source\\ps_pass.ps3",
+			"filename": "vs_pass.vs3",
+			"origname": "source\\vs_pass.vs3",
 			"kind": 4,
 			"init": "",
 			"final": "",
