@@ -1136,6 +1136,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_vertex_matrix_vp",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_vertex_matrix_wvp",
 					"extname": "",
 					"calltype": 12,
@@ -1625,8 +1636,13 @@
 					"hidden": false
 				},
 				{
-					"name": "mtx_world_view_projection",
+					"name": "mtx_view_projection",
 					"value": "5",
+					"hidden": false
+				},
+				{
+					"name": "mtx_world_view_projection",
+					"value": "6",
 					"hidden": false
 				}
 			]

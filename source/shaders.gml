@@ -128,6 +128,7 @@
         case mtx_view: __gm82dx9_shader_vertex_matrix_v(__uni) break
         case mtx_projection: __gm82dx9_shader_vertex_matrix_p(__uni) break
         case mtx_world_view: __gm82dx9_shader_vertex_matrix_wv(__uni) break
+        case mtx_view_projection: __gm82dx9_shader_vertex_matrix_vp(__uni) break
         case mtx_world_view_projection: __gm82dx9_shader_vertex_matrix_wvp(__uni) break
     }
 //
