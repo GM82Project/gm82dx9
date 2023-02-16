@@ -1,6 +1,8 @@
 #include "shaders.h"
 
 ShaderData shader_data;
+VShaderWithTable current_vshader;
+PShaderWithTable current_pshader;
 
 D3DVERTEXELEMENT9 elems_shape[] = {
         {0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
@@ -153,8 +155,15 @@ GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer) {
 GMREAL shader_vertex_destroy(double shader_id) {
     auto it = shader_data.vertex_shaders.find(shader_id);
     if (it == shader_data.vertex_shaders.end()) return 1;
-    it->second.shader->Release();
-    it->second.constants->Release();
+    
+    VShaderWithTable vsh=it->second;    
+    if (&current_vshader==&vsh) {
+        Device->SetVertexShader(nullptr);
+        using_shader = false;
+    }    
+    
+    vsh.shader->Release();
+    vsh.constants->Release();
     shader_data.vertex_shaders.erase(it);
     return 0;
 }
@@ -162,50 +171,25 @@ GMREAL shader_vertex_destroy(double shader_id) {
 GMREAL shader_pixel_destroy(double shader_id) {
     auto it = shader_data.pixel_shaders.find(shader_id);
     if (it == shader_data.pixel_shaders.end()) return 1;
-    it->second.shader->Release();
-    it->second.constants->Release();
+    
+    PShaderWithTable psh=it->second;    
+    if (&current_pshader==&psh) {
+        Device->SetPixelShader(nullptr);
+    }
+    
+    psh.shader->Release();
+    psh.constants->Release();
     shader_data.pixel_shaders.erase(it);
     return 0;
-}
-
-GMREAL shader_vertex_get_uniform(double shader_id, const char* name) {
-    if (shader_id < 0) return 1;
-    auto it = shader_data.vertex_shaders.find(shader_id);
-    if (it == shader_data.vertex_shaders.end()) return 1;
-    
-    ID3DXConstantTable* ctable=it->second.constants;
-    
-    D3DXHANDLE handle = ctable->GetConstantByName(0, name);
-    
-    unsigned int count;
-    D3DXCONSTANT_DESC desc;    
-    ctable->GetConstantDesc(handle, &desc, &count);   
-    
-    return desc.RegisterIndex;
-}
-
-GMREAL shader_pixel_get_uniform(double shader_id, const char* name) {
-    if (shader_id < 0) return 1;
-    auto it = shader_data.pixel_shaders.find(shader_id);
-    if (it == shader_data.pixel_shaders.end()) return 1;
-    
-    ID3DXConstantTable* ctable=it->second.constants;
-    
-    D3DXHANDLE handle = ctable->GetConstantByName(0, name);
-    
-    unsigned int count;
-    D3DXCONSTANT_DESC desc;    
-    ctable->GetConstantDesc(handle, &desc, &count);   
-    
-    return desc.RegisterIndex;
 }
 
 GMREAL shader_pixel_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.pixel_shaders.find(shader_id);
     if (it == shader_data.pixel_shaders.end()) return 1;
-    vibe_check(Device->SetPixelShader(it->second.shader));
-    it->second.constants->SetDefaults(Device);
+    current_pshader = it->second;
+    vibe_check(Device->SetPixelShader(current_pshader.shader));
+    current_pshader.constants->SetDefaults(Device);
     return 0;
 }
 
@@ -213,9 +197,16 @@ GMREAL shader_vertex_set(double shader_id) {
     if (shader_id < 0) return 1;
     auto it = shader_data.vertex_shaders.find(shader_id);
     if (it == shader_data.vertex_shaders.end()) return 1;
-    if (vibe_check(Device->SetVertexShader(it->second.shader))) return 1;
+    current_vshader = it->second;
+    if (vibe_check(Device->SetVertexShader(current_vshader.shader))) return 1;
     using_shader = true;
-    it->second.constants->SetDefaults(Device);
+    current_vshader.constants->SetDefaults(Device);
+    return 0;
+}
+
+GMREAL shader_set(double vshader, double pshader) {
+    shader_pixel_set(vshader);
+    shader_vertex_set(pshader);
     return 0;
 }
 
@@ -231,10 +222,29 @@ GMREAL shader_vertex_reset() {
 }
 
 GMREAL shader_reset() {
-    Device->SetPixelShader(nullptr);
-    Device->SetVertexShader(nullptr);
-    using_shader = false;
+    shader_pixel_reset();
+    shader_vertex_reset();
     return 0;
+}
+
+GMREAL __gm82dx9_get_vconst(const char* name) {
+    unsigned int count;
+    D3DXCONSTANT_DESC desc;
+
+    if (!current_vshader.shader) return 0;
+    current_vshader.constants->GetConstantDesc(current_vshader.constants->GetConstantByName(0, name), &desc, &count);   
+    
+    return desc.RegisterIndex;
+}
+
+GMREAL __gm82dx9_get_pconst(const char* name) {
+    unsigned int count;
+    D3DXCONSTANT_DESC desc;
+
+    if (!current_pshader.shader) return 0;
+    current_pshader.constants->GetConstantDesc(current_pshader.constants->GetConstantByName(0, name), &desc, &count);   
+    
+    return desc.RegisterIndex;
 }
 
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \

@@ -794,18 +794,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "shader_pixel_get_uniform",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_get_uniform(shader,name)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						1
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_pixel_reset",
 					"extname": "",
 					"calltype": 12,
@@ -835,6 +823,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "shader_set(vertex,pixel)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_vertex_create_file",
 					"extname": "",
 					"calltype": 12,
@@ -853,18 +853,6 @@
 					"hidden": false,
 					"argtypes": [
 						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_get_uniform",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_get_uniform(shader,name)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						1
 					],
 					"returntype": 2
 				},
@@ -993,6 +981,28 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_get_pconst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_get_vconst",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_setalphabuffer",
 					"extname": "",
 					"calltype": 12,
@@ -1029,7 +1039,7 @@
 					"name": "__gm82dx9_shader_pixel_uniform_4b",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "shader_pixel_uniform_4b(reg,v1,v2,v3,v4)",
+					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
@@ -1044,7 +1054,7 @@
 					"name": "__gm82dx9_shader_pixel_uniform_4f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "shader_pixel_uniform_4f(reg,v1,v2,v3,v4)",
+					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
@@ -1059,7 +1069,7 @@
 					"name": "__gm82dx9_shader_pixel_uniform_4i",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "shader_pixel_uniform_4i(reg,v1,v2,v3,v4)",
+					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
@@ -1140,7 +1150,7 @@
 					"name": "__gm82dx9_shader_vertex_uniform_4b",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "shader_vertex_uniform_4b(reg,v1,v2,v3,v4)",
+					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
@@ -1155,7 +1165,7 @@
 					"name": "__gm82dx9_shader_vertex_uniform_4f",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "shader_vertex_uniform_4f(reg,v1,v2,v3,v4)",
+					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
@@ -1170,7 +1180,7 @@
 					"name": "__gm82dx9_shader_vertex_uniform_4i",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "shader_vertex_uniform_4i(reg,v1,v2,v3,v4)",
+					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
@@ -1510,7 +1520,7 @@
 					"name": "shader_pixel_uniform_b",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_pixel_uniform_b(reg,...)",
+					"helpline": "shader_pixel_uniform_b(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
@@ -1519,7 +1529,7 @@
 					"name": "shader_pixel_uniform_f",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_pixel_uniform_f(reg,...)",
+					"helpline": "shader_pixel_uniform_f(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
@@ -1528,7 +1538,7 @@
 					"name": "shader_pixel_uniform_i",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_pixel_uniform_i(reg,...)",
+					"helpline": "shader_pixel_uniform_i(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
@@ -1557,7 +1567,7 @@
 					"name": "shader_vertex_uniform_b",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_vertex_uniform_b(reg,...)",
+					"helpline": "shader_vertex_uniform_b(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
@@ -1566,7 +1576,7 @@
 					"name": "shader_vertex_uniform_f",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_vertex_uniform_f(reg,...)",
+					"helpline": "shader_vertex_uniform_f(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
@@ -1575,7 +1585,7 @@
 					"name": "shader_vertex_uniform_i",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_vertex_uniform_i(reg,...)",
+					"helpline": "shader_vertex_uniform_i(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
@@ -1584,7 +1594,7 @@
 					"name": "shader_vertex_uniform_matrix",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_vertex_uniform_matrix(reg,mtx_type)",
+					"helpline": "shader_vertex_uniform_matrix(uniform,mtx_type)",
 					"hidden": false,
 					"argtypes": [
 						2,
