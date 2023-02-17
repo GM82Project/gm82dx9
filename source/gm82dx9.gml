@@ -1,6 +1,6 @@
 #define __gm82dx9_init
     if (__gm82dx9_dllcheck()!=820) {
-        show_error('GM8.2 DirectX9 Extension failed to link DLL.',1)
+        show_error('GM8.2 DirectX9 Extension failed to link DLL. Make sure you have the latest DirectX runtimes installed: https://www.microsoft.com/en-us/download/details.aspx?id=35',1)
         exit
     }
     
