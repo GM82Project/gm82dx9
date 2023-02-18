@@ -41,18 +41,44 @@ static DWORD* load_shader_data(const char* filename) {
     if (err) return nullptr;
     fseek(f, 0, SEEK_END);
     len = ftell(f);
-    if (len == -1 || len % 4 != 0) {
+    // some integrity checks
+    if (len == -1 || len % 4 != 0 || len < 8) {
         fclose(f);
         return nullptr;
     }
+    unsigned short header_len;
+    fseek(f, 6, SEEK_SET);
+    if (fread(&header_len, 2, 1, f) != 1) {
+        fclose(f);
+        return nullptr;
+    }
+    int data_start = header_len + 2;
+    if ((data_start + 1) * 4 >= len) {
+        fclose(f);
+        return nullptr;
+    }
+    // read the data
     fseek(f, 0, SEEK_SET);
     auto data = (DWORD*)malloc(len);
-    if (fread(data, 1, len, f) != len) {
+    if (data == nullptr || fread(data, 1, len, f) != len) {
         free(data);
         fclose(f);
         return nullptr;
     }
     fclose(f);
+    // scan the instructions to see if there's an end command before EOF
+    DWORD* data_end = data + len / 4;
+    DWORD* cursor = data + data_start;
+    while (true) {
+        if ((*cursor & D3DSI_OPCODE_MASK) == D3DSIO_END) {
+            break;
+        }
+        cursor += 1 + ((*cursor & D3DSI_INSTLENGTH_MASK) >> D3DSI_INSTLENGTH_SHIFT);
+        if (cursor >= data_end) {
+            free(data);
+            return nullptr;
+        }
+    }
     return data;
 }
 
