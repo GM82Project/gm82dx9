@@ -123,5 +123,31 @@
     if (argument_count==2) {
         d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
     } else d3d_set_fog(0,0,0,0)
+
+
+#define draw_set_blend_alphamode
+    ///draw_set_blend_alphamode(enable,mode or [src,dest])
+    if (argument_count<2) {
+        __gm82dx9_setsepalphablend(0,0,0)
+    }
+    if (argument_count==2) {
+        src=bm_src_alpha
+        dst=bm_inv_src_alpha
+        if (argument[1]==bm_add) {
+            dst=bm_one
+        }
+        if (argument[1]==bm_subtract) {
+            dst=bm_inv_src_color
+        }
+        if (argument[1]==bm_max) {
+            src=bm_zero
+            dst=bm_inv_src_color
+        }
+        
+        __gm82dx9_setsepalphablend(1,src,dst)        
+    }
+    if (argument_count==3) {
+        __gm82dx9_setsepalphablend(1,argument[1],argument[2])        
+    }
 //
 //

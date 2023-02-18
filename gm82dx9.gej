@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "renex && Floogle",
-	"date": "16/02/2023",
+	"date": "18/02/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1047,24 +1047,25 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_pixel_create_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_pixel_uniform_matrix",
+					"name": "__gm82dx9_setsepalphablend",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_pixel_create_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
 						2
 					],
 					"returntype": 2
@@ -1115,24 +1116,24 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_vertex_create_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_vertex_uniform_matrix",
+					"name": "__gm82dx9_shader_pixel_uniform_matrix",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
 						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_create_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
 						2
 					],
 					"returntype": 2
@@ -1177,6 +1178,18 @@
 						2,
 						2,
 						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_matrix",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
 						2,
 						2
 					],
@@ -1449,6 +1462,15 @@
 					"helpline": "",
 					"hidden": false,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "draw_set_blend_alphamode",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "draw_set_blend_alphamode(enable,mode or [src,dest])",
+					"hidden": false,
+					"argtypes": null,
 					"returntype": 2
 				},
 				{

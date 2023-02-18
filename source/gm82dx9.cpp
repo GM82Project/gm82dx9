@@ -354,6 +354,13 @@ GMREAL __gm82dx9_setpointscale(double size,double scaling,double minscale,double
     }
     return 0;
 }
+GMREAL __gm82dx9_setsepalphablend(double enabled, double src, double dest) {
+    Device->SetRenderState(D3DRS_SEPARATEALPHABLENDENABLE,(DWORD)enabled>0.5);
+    Device->SetRenderState(D3DRS_SRCBLENDALPHA,(DWORD)src);
+    Device->SetRenderState(D3DRS_DESTBLENDALPHA,(DWORD)dest);
+    
+    return 0;
+}
 GMREAL __gm82dx9_setviewport(double x, double y, double width, double height) {
     Device->GetViewport(&viewport);
     viewport.X=(DWORD)x;
