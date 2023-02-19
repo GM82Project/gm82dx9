@@ -25,8 +25,28 @@ DWORD gm_col_to_dx9(double color) {
     int col=(int)round(color);
     return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
 }
-IDirect3DSurface9* get_gm_surface_depthbuffer(double id) {
-    return (*(IDirect3DSurface9***)0x84527c)[4+5*int(id)];
+
+struct GMSurface {
+    int texture, width, height;
+    bool exists;
+    IDirect3DSurface9* zbuffer;
+};
+
+struct GMTexture {
+    IDirect3DTexture9* texture;
+    int width, height, width_pow2, height_pow2;
+    bool exists;
+};
+
+GMSurface** gm_surfaces = (GMSurface**)(0x84527c);
+GMTexture** gm_textures = (GMTexture**)(0x85b3c4);
+
+inline GMSurface* get_gm_surface(double id) {
+    return &(*gm_surfaces)[int(id)];
+}
+
+inline GMTexture* get_gm_texture(int id) {
+    return &(*gm_textures)[id];
 }
 
 //-//
@@ -179,7 +199,7 @@ GMREAL __gm82dx9_setrangefog(double type,double color,double start,double end) {
     return 0;
 }
 GMREAL __gm82dx9_surface_set_depth(double id) {
-	if (vibe_check(Device->SetDepthStencilSurface(get_gm_surface_depthbuffer(id))))
+	if (vibe_check(Device->SetDepthStencilSurface(get_gm_surface(id)->zbuffer)))
         return -1;
 	return 0;
 }
@@ -188,57 +208,26 @@ GMREAL __gm82dx9_buffer_to_surface(double buffer, double id, double gm_width, do
     char* src=(char*)(int)buffer;
     int gmw=(int)gm_width;
     int gmh=(int)gm_height;
-    
-    //get current render target
-    //(surface by id is confusing)
-    IDirect3DSurface9* surf;
-    //surf=get_gm_surface_depthbuffer(id);
-    if (vibe_check(Device->GetRenderTarget(0, &surf))) return -1;  
 
-    //query for actual width and height, and get gm w/h
-    D3DSURFACE_DESC desc;
-    if (vibe_check(surf->GetDesc(&desc))) return -1;
-    int width=desc.Width;
-    int height=desc.Height;
+    // get surface
+    GMSurface* gm_surf = get_gm_surface(id);
+    IDirect3DTexture9* tex = get_gm_texture(gm_surf->texture)->texture;
+    IDirect3DSurface9* surf = nullptr;
+    if (vibe_check(tex->GetSurfaceLevel(0, &surf))) return -1;
 
-    //create scratch surface
-    IDirect3DSurface9* scratch;    
-    if (vibe_check(Device->CreateOffscreenPlainSurface(
-        desc.Width,
-        desc.Height,
-        desc.Format,
-		D3DPOOL_SCRATCH,
-        &scratch,
-		nullptr
-    ))) return -1;    
+    // make rectangle
+    RECT rect = {
+            .left = 0, .top = 0, .right = gmw, .bottom = gmh
+    };
 
-    //"lock" full surface rectangle and get information about it
-    D3DLOCKED_RECT pLockedRect;
-    if (vibe_check(scratch->LockRect(&pLockedRect,NULL,0)))
-        return -1;
+    // load it up
+    if (vibe_check(D3DXLoadSurfaceFromMemory(
+            surf, nullptr, &rect,
+            src, D3DFMT_A8R8G8B8, gmw * 4, nullptr, &rect,
+            D3DX_FILTER_NONE, 0
+   ))) return -1;
 
-    char* dest=(char*)pLockedRect.pBits;
-    int surfpitch=pLockedRect.Pitch;
-    
-    int srcpos=0;
-    int dstpos=0;
-    int bufstride=gmw*4;
-    for (int i=0;i<gmh;i+=1) {
-        memcpy(&dest[dstpos],&src[srcpos],bufstride);
-        srcpos+=bufstride;
-        dstpos+=surfpitch;
-    }
-    
-    //free the lock.
-    scratch->UnlockRect();
-    
-	if (vibe_check(D3DXLoadSurfaceFromSurface(
-		scratch, nullptr, nullptr, surf, nullptr, nullptr, D3DX_FILTER_NONE, 0
-	)))
-		return -1;
-    
-    scratch->Release();
-    surf->Release();
+    tex->AddDirtyRect(&rect);
     
     return 0;    
 }
@@ -247,38 +236,35 @@ GMREAL __gm82dx9_surface_to_buffer(double buffer, double id, double gm_width, do
     char* dest=(char*)(int)buffer;
     int gmw=(int)gm_width;
     int gmh=(int)gm_height;
-    
-    //get current render target
-    //(surface by id is confusing)
-    IDirect3DSurface9* surf;
-    //surf=get_gm_surface_depthbuffer(id);
-    if (vibe_check(Device->GetRenderTarget(0, &surf))) return -1;  
 
-    //query for actual width and height, and get gm w/h
-    D3DSURFACE_DESC desc;
-    if (vibe_check(surf->GetDesc(&desc))) return -1;
-    int width=desc.Width;
-    int height=desc.Height; 
+    // get surface
+    GMSurface* gm_surf = get_gm_surface(id);
+    IDirect3DSurface9* surf = nullptr;
+    if (vibe_check(get_gm_texture(gm_surf->texture)->texture->GetSurfaceLevel(0, &surf))) return -1;
 
     //create scratch surface
     IDirect3DSurface9* scratch;    
     if (vibe_check(Device->CreateOffscreenPlainSurface(
-        desc.Width,
-        desc.Height,
-        desc.Format,
+        gmw,
+        gmh,
+        D3DFMT_A8R8G8B8,
 		D3DPOOL_SCRATCH,
         &scratch,
 		nullptr
     ))) return -1;
 
+    RECT rect = {
+            .left = 0, .top = 0, .right = gmw, .bottom = gmh
+    };
+
 	if (vibe_check(D3DXLoadSurfaceFromSurface(
-		surf,NULL,NULL,scratch,NULL,NULL,D3DX_FILTER_NONE,0
+		scratch,nullptr,&rect,surf,nullptr,&rect,D3DX_FILTER_NONE,0
 	)))
 		return -1;
 
     //"lock" full surface rectangle and get information about it
     D3DLOCKED_RECT pLockedRect;
-    if (vibe_check(scratch->LockRect(&pLockedRect,NULL,D3DLOCK_NO_DIRTY_UPDATE|D3DLOCK_NOSYSLOCK|D3DLOCK_READONLY)))
+    if (vibe_check(scratch->LockRect(&pLockedRect,&rect,D3DLOCK_NO_DIRTY_UPDATE|D3DLOCK_NOSYSLOCK|D3DLOCK_READONLY)))
         return -1;
 
     char* src=(char*)pLockedRect.pBits;
