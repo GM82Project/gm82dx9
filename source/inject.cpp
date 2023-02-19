@@ -126,6 +126,20 @@ void WINAPI regain_device() {
     (*runner_display_reset)();
 }
 
+IDirect3DTexture9 *white_pixel = nullptr;
+uint8_t white_pixel_tga[] = {
+    0, 0, 2, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0,
+    32, 0, 255, 255, 255, 255
+};
+void create_white_pixel() {
+    D3DXCreateTextureFromFileInMemory(Device, white_pixel_tga, 22, &white_pixel);
+}
+
+HRESULT WINAPI SetNullTexture(IDirect3DDevice9 *dev, DWORD Stage, IDirect3DBaseTexture9 *pTexture) {
+    return dev->SetTexture(0, white_pixel);
+}
+
 BOOL WINAPI DllMain(
         _In_ HINSTANCE hinstDLL,
         _In_ DWORD fdwReason,
@@ -299,6 +313,31 @@ BOOL WINAPI DllMain(
     PATCH(0x56b712);
 #undef PATCH
 
+    // SetTexture(0, NULL)
+#define PATCH(a) \
+                 offset = 0xe890; \
+                 WriteProcessMemory(proc, (void*)(a), &offset, 2, nullptr); \
+                 ptr = ((char*)(&SetNullTexture) - (a + 6)); \
+                 WriteProcessMemory(proc, (void*)(a + 2), &ptr, 4, nullptr)
+    PATCH(0x5662e5); // SetTexture
+    PATCH(0x566376); // SetTexture
+    PATCH(0x56642c); // SetTexture
+    PATCH(0x56658d); // SetTexture
+    PATCH(0x56665e); // SetTexture
+    PATCH(0x5667ff); // SetTexture
+    PATCH(0x5668bd); // SetTexture
+    PATCH(0x5669ca); // SetTexture
+    PATCH(0x566b83); // SetTexture
+    PATCH(0x566d86); // SetTexture
+    PATCH(0x566f7e); // SetTexture
+    PATCH(0x567448); // SetTexture
+    PATCH(0x6212ed); // SetTexture
+#undef PATCH
+
+    // initialize white pixel texture
+    ptr = ((char*)(&create_white_pixel) - (0x627e5a + 5));
+    WriteProcessMemory(proc, (void*)(0x627e5a + 1), &ptr, 4, nullptr);
+
 #define PATCH_SIMPLE(a, off) \
         offset = off;        \
         WriteProcessMemory(proc, (void*)(a + 2), &offset, 1, nullptr)
@@ -437,20 +476,8 @@ BOOL WINAPI DllMain(
     PATCH_SIMPLE(0x61ff77, 0xa8); // EndScene
     PATCH_SIMPLE(0x61ffff, 0x44); // Present
 
-    PATCH_DOUBLE(0x5662e5, 0x104); // SetTexture
-    PATCH_DOUBLE(0x566376, 0x104); // SetTexture
-    PATCH_DOUBLE(0x56642c, 0x104); // SetTexture
-    PATCH_DOUBLE(0x56658d, 0x104); // SetTexture
-    PATCH_DOUBLE(0x56665e, 0x104); // SetTexture
-    PATCH_DOUBLE(0x5667ff, 0x104); // SetTexture
-    PATCH_DOUBLE(0x5668bd, 0x104); // SetTexture
-    PATCH_DOUBLE(0x5669ca, 0x104); // SetTexture
-    PATCH_DOUBLE(0x566b83, 0x104); // SetTexture
-    PATCH_DOUBLE(0x566d86, 0x104); // SetTexture
-    PATCH_DOUBLE(0x566f7e, 0x104); // SetTexture
-    PATCH_DOUBLE(0x567448, 0x104); // SetTexture
+    // SetTexture with actual texture
     PATCH_DOUBLE(0x6212d7, 0x104); // SetTexture
-    PATCH_DOUBLE(0x6212ed, 0x104); // SetTexture
     PATCH_DOUBLE(0x621451, 0x104); // SetTexture
     PATCH_DOUBLE(0x6215b1, 0x104); // SetTexture
     PATCH_DOUBLE(0x62171a, 0x104); // SetTexture
