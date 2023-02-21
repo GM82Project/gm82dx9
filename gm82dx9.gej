@@ -8,7 +8,9 @@
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
 	"hidden": false,
-	"dependencies": [],
+	"dependencies": [
+		"Game Maker 8.2 Network"
+	],
 	"files": [
 		{
 			"filename": "gm82dx9.dll",
@@ -1403,6 +1405,30 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_model_load_g3z",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_load_g3z(model,filename)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_save_g3z",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_save_g3z(model,filename)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_set_alphablend",
 					"extname": "",
 					"calltype": 2,
@@ -1738,6 +1764,30 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "application_surface_resize(width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_get_surface",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_get_surface(buffer,surface)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_set_surface",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_set_surface(buffer,surface)",
 					"hidden": false,
 					"argtypes": [
 						2,

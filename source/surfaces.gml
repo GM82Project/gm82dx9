@@ -142,5 +142,55 @@
         d3d_set_projection_ortho(0,0,__gm82dx9_resw,__gm82dx9_resh,0)
         script_execute(__gm82dx9_appsurfcompose)
     }
+
+
+#define buffer_set_surface
+    ///buffer_set_surface(buffer,surface)
+    var __buf,__surf;
+    
+    __buf=argument0
+    __surf=argument1
+    
+    if (!surface_exists(__surf)) {
+        show_error("Trying to set nonexisting surface("+string(__surf)+") data from a buffer("+string(__buf)+").",0)
+        return 0
+    }
+    
+    if (!buffer_exists(__buf)) {
+        show_error("Trying to set surface("+string(__surf)+") data from a nonexisting buffer("+string(__buf)+").",0)
+        return 0
+    }
+    
+    if (buffer_get_size(__buf)<surface_get_width(__surf)*surface_get_height(__surf)) {
+        show_error("Trying to set surface("+string(__surf)+") data from a buffer("+string(__buf)+") that is too small.",0)
+        return 0
+    }        
+    
+    __gm82dx9_buffer_to_surface(buffer_get_address(__buf,0),__surf,surface_get_width(__surf),surface_get_height(__surf))
+    return 1
+
+
+#define buffer_get_surface
+    ///buffer_get_surface(buffer,surface)
+    var __buf,__surf;
+    
+    __buf=argument0
+    __surf=argument1
+    
+    if (!surface_exists(__surf)) {
+        show_error("Trying to get nonexisting surface("+string(__surf)+") data into a buffer("+string(__buf)+").",0)
+        return 0
+    }
+    
+    if (!buffer_exists(__buf)) {
+        show_error("Trying to get surface("+string(__surf)+") data into a nonexisting buffer("+string(__buf)+").",0)
+        return 0
+    }
+    
+    buffer_set_size(__buf,surface_get_width(__surf)*surface_get_height(__surf)*4)
+    buffer_set_pos(__buf,0)         
+    
+    __gm82dx9_surface_to_buffer(buffer_get_address(__buf,0),__surf,surface_get_width(__surf),surface_get_height(__surf))
+    return 1
 //
 //
