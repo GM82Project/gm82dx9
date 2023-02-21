@@ -131,5 +131,17 @@
     var __uni;
     __uni=argument0 if (is_string(__uni)) __uni=__gm82dx9_get_pconst(__uni)
     __gm82dx9_shader_pixel_uniform_matrix(__uni,argument1)
+
+
+#define shader_vertex_uniform_color
+    ///shader_vertex_uniform_color(uniform,color,alpha)
+    shader_vertex_uniform_f(argument0,color_get_red(argument1)/255,color_get_green(argument1)/255,color_get_blue(argument1)/255,argument2)
+
+
+#define shader_pixel_uniform_color
+    ///shader_pixel_uniform_color(uniform,color,alpha)
+    shader_pixel_uniform_f(argument0,color_get_red(argument1)/255,color_get_green(argument1)/255,color_get_blue(argument1)/255,argument2)
+
+
 //
 //

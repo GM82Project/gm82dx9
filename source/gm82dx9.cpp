@@ -225,7 +225,7 @@ GMREAL __gm82dx9_buffer_to_surface(double buffer, double id, double gm_width, do
             surf, nullptr, &rect,
             src, D3DFMT_A8R8G8B8, gmw * 4, nullptr, &rect,
             D3DX_FILTER_NONE, 0
-   ))) return -1;
+    ))) return -1;
 
     tex->AddDirtyRect(&rect);
     

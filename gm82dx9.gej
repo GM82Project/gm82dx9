@@ -2,8 +2,8 @@
 	"name": "Game Maker 8.2 DirectX9",
 	"folder": "gm82",
 	"version": "1.0",
-	"author": "renex && Floogle",
-	"date": "18/02/2023",
+	"author": "Floogle && renex",
+	"date": "21/02/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1459,7 +1459,7 @@
 					"name": "draw_make_opaque",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "",
+					"helpline": "draw_make_opaque()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
@@ -1539,6 +1539,19 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_pixel_uniform_color",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_color(uniform,color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_pixel_uniform_f",
 					"extname": "",
 					"calltype": 2,
@@ -1595,6 +1608,19 @@
 					"helpline": "shader_vertex_uniform_b(uniform,...)",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_color",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_uniform_color(uniform,color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
