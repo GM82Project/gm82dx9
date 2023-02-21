@@ -1542,13 +1542,9 @@
 					"name": "shader_pixel_uniform_color",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_pixel_uniform_color(uniform,color,alpha)",
+					"helpline": "shader_pixel_uniform_color(uniform,color,[alpha])",
 					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
+					"argtypes": null,
 					"returntype": 2
 				},
 				{
@@ -1614,13 +1610,9 @@
 					"name": "shader_vertex_uniform_color",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "shader_vertex_uniform_color(uniform,color,alpha)",
+					"helpline": "shader_vertex_uniform_color(uniform,color,[alpha])",
 					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
+					"argtypes": null,
 					"returntype": 2
 				},
 				{
