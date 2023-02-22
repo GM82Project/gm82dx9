@@ -9,8 +9,8 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS "/O2 /GS- /W2 /WX")
 endif()
 
-include_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Include")
-link_directories("C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86")
+include_directories("include")
+link_directories("lib")
 
 add_library(gm82dx9 SHARED source/gm82dx9.cpp source/transform.cpp source/shaders.cpp source/inject.cpp)
 target_link_libraries(gm82dx9 d3d9 d3dx9 dxerr legacy_stdio_definitions)
