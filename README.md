@@ -1,14 +1,18 @@
 # gm82dx9
 This extension upgrades Game Maker 8.2 to DirectX version 9.0.
 
-Contains contributions by Floogle and Lovey01.
+Shader support by Floogle.
+Optimized transforms by Lovey01.
 
 ## What this enables
 
+    - better window compositing and performance due to using a modern api
     - use HLSL9 vertex and pixel shaders
-    - vpatch for stable framerates when room speed % monitor Hz
-    - resize the damn backbuffer so gm8 can have proper resizing and fullscreen
-    - experimental exclusive fullscreen support
-    - control rendering properties such as point mode, fill mode, point sprites
+    - safe surface functions that won't crash the game
+    - separate blend mode for the alpha channel
+    - resize the backbuffer so you can have proper pixel aspect and good fullscreen
+    - control simple rendering properties such as point mode, fill mode, point sprites
     - toggle alpha blend, color write channels, clear the depth buffer
-    - set the screen clipping region (scissor test) plus convenience functions
+    - set the screen clipping region (scissor test) and other viewport utilities
+    - improved default lighting with specular highlights and spheremap reflections
+    - plus dozens of extra advanced graphics api functions...
