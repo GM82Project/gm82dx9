@@ -119,7 +119,6 @@ GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer) {
         free(data);
         return -1;
     }
-    free(data);
     
     VShaderWithTable shconst;
     
@@ -167,7 +166,6 @@ GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer) {
         free(data);
         return -1;
     }
-    free(data);       
     
     PShaderWithTable shconst;
     

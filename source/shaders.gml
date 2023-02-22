@@ -1,21 +1,11 @@
 #define shader_vertex_create_buffer
     ///shader_vertex_create_buffer(buffer)
-    if (!variable_global_exists("__gm82net_cross_detect")) {
-        show_error("Add the Game Maker 8.2 Network extension to your project in order to use shader_vertex_create_buffer().",0)
-        return 0
-    }
-    
-    return execute_string("return __gm82dx9_shader_vertex_create_buffer(buffer_get_address("+string(buf)+",0))")    
+    return __gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0,0))
 
 
 #define shader_pixel_create_buffer
     ///shader_pixel_create_buffer(buffer)
-    if (!variable_global_exists("__gm82net_cross_detect")) {
-        show_error("Add the Game Maker 8.2 Network extension to your project in order to use shader_pixel_create_buffer().",0)
-        return 0
-    }
-    
-    return execute_string("return __gm82dx9_shader_pixel_create_buffer(buffer_get_address("+string(buf)+",0))")    
+    return __gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0,0))
 
 
 #define shader_vertex_set_passthrough
@@ -147,5 +137,27 @@
         shader_pixel_uniform_f(argument[0],color_get_red(argument[1])/255,color_get_green(argument[1])/255,color_get_blue(argument[1])/255,argument[2])
     else
         shader_pixel_uniform_f(argument[0],color_get_red(argument[1])/255,color_get_green(argument[1])/255,color_get_blue(argument[1])/255,1)
+
+
+#define shader_pixel_create_base64
+    ///shader_pixel_create_base64(string)
+    var __buf,__shd;
+    __buf=buffer_create()
+    buffer_write_base64(__buf,argument0)
+    buffer_inflate(__buf)
+    __shd=shader_pixel_create_buffer(__buf)
+    buffer_destroy(__buf)
+    return __shd
+
+
+#define shader_vertex_create_base64
+    ///shader_vertex_create_base64(string)
+    var __buf,__shd;
+    __buf=buffer_create()
+    buffer_write_base64(__buf,argument0)
+    buffer_inflate(__buf)
+    __shd=shader_vertex_create_buffer(__buf)
+    buffer_destroy(__buf)
+    return __shd
 //
 //
