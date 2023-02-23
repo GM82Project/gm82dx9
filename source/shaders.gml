@@ -1,11 +1,11 @@
 #define shader_vertex_create_buffer
     ///shader_vertex_create_buffer(buffer)
-    return __gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0,0))
+    return __gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0))
 
 
 #define shader_pixel_create_buffer
     ///shader_pixel_create_buffer(buffer)
-    return __gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0,0))
+    return __gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0))
 
 
 #define shader_vertex_set_passthrough

@@ -31,6 +31,29 @@ IDirect3DVertexDeclaration9 *decl_3d = nullptr;
 
 bool using_shader = false;
 
+bool shader_bounds_check(const DWORD* data, size_t len) {
+    if (len % 4 != 0 || len < 8) {
+        return false;
+    }
+    // skip past header
+    unsigned short header_len = ((unsigned short*)(data))[3];
+    int data_start = header_len + 2;
+    if ((data_start + 1) * 4 >= len) return false;
+    // scan the instructions to see if there's an end command before EOF
+    const DWORD* data_end = data + len / 4;
+    const DWORD* cursor = data + data_start;
+    while (true) {
+        if ((*cursor & D3DSI_OPCODE_MASK) == D3DSIO_END) {
+            break;
+        }
+        cursor += 1 + ((*cursor & D3DSI_INSTLENGTH_MASK) >> D3DSI_INSTLENGTH_SHIFT);
+        if (cursor >= data_end) {
+            return false;
+        }
+    }
+    return true;
+}
+
 static DWORD* load_shader_data(const char* filename) {
     int len = MultiByteToWideChar(CP_UTF8, 0, filename, -1, nullptr, 0);
     auto wname = (wchar_t *)malloc(len*2);
@@ -66,18 +89,9 @@ static DWORD* load_shader_data(const char* filename) {
         return nullptr;
     }
     fclose(f);
-    // scan the instructions to see if there's an end command before EOF
-    DWORD* data_end = data + len / 4;
-    DWORD* cursor = data + data_start;
-    while (true) {
-        if ((*cursor & D3DSI_OPCODE_MASK) == D3DSIO_END) {
-            break;
-        }
-        cursor += 1 + ((*cursor & D3DSI_INSTLENGTH_MASK) >> D3DSI_INSTLENGTH_SHIFT);
-        if (cursor >= data_end) {
-            free(data);
-            return nullptr;
-        }
+    if (!shader_bounds_check(data, len)) {
+        free(data);
+        return nullptr;
     }
     return data;
 }
@@ -106,9 +120,10 @@ GMREAL shader_vertex_create_file(const char* filename) {
     return shader_data.idcounter_vertex;
 }
 
-GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer) {
+GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer, double length) {
     DWORD* data = (DWORD*)(int)buffer;
     if (data == nullptr) return -1;
+    if (!shader_bounds_check(data, int(length))) return -1;
     IDirect3DVertexShader9* shader;
     if (vibe_check(Device->CreateVertexShader(data, &shader))) {
         free(data);
@@ -153,9 +168,10 @@ GMREAL shader_pixel_create_file(const char* filename) {
     return shader_data.idcounter_pixel;
 }
 
-GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer) {
+GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer, double length) {
     DWORD* data = (DWORD*)(int)buffer;
     if (data == nullptr) return -1;
+    if (!shader_bounds_check(data, int(length))) return -1;
     IDirect3DPixelShader9 *shader;
     if (vibe_check(Device->CreatePixelShader(data, &shader))) {
         free(data);
