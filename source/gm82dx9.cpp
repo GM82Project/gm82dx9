@@ -59,6 +59,9 @@ GMREAL __gm82dx9_checkstart() {
     has_started = 1;
     return 0;
 }
+GMREAL __gm82dx9_abort() {
+    exit(1);
+}
 GMREAL __gm82dx9_testfunc() {
     return 0;
 }
