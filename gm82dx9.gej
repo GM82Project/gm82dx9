@@ -895,6 +895,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "texture_set_mode",
+					"extname": "__gm82dx9_texture_set_mode",
+					"calltype": 12,
+					"helpline": "texture_set_mode(tm_mode)",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "window_resize_buffer",
 					"extname": "__gm82dx9_resize_backbuffer",
 					"calltype": 12,
@@ -1281,17 +1292,6 @@
 					"argtypes": [
 						2,
 						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "texture_set_mode",
-					"extname": "__gm82dx9_texture_set_mode",
-					"calltype": 12,
-					"helpline": "texture_set_mode(tm_mode)",
-					"hidden": true,
-					"argtypes": [
 						2
 					],
 					"returntype": 2

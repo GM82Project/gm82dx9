@@ -157,12 +157,6 @@
     return __shd
 
 
-
-#define texture_set_mode
-    ///texture_set_mode(mode)
-    __gm82dx9_texture_set_stage_mode(0,argument0)
-
-
 #define texture_set_repeat_ext
     ///texture_set_repeat_ext(hrepeat,vrepeat,bordercolor)
     __gm82dx9_texture_set_stage_repeat(0,argument0,argument1,argument2)
