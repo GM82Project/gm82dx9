@@ -102,16 +102,6 @@ GMREAL __gm82dx9_set_alphatest(double enable,double value,double cmpfunc) {
     Device->SetRenderState(D3DRS_ALPHAFUNC,(DWORD)(int)cmpfunc);      
     return 0;
 }
-GMREAL __gm82dx9_texture_set_repeat(double hrepeat, double vrepeat, double bordercolor) {
-    Device->SetSamplerState(0,D3DSAMP_ADDRESSU,(DWORD)(int)hrepeat);    
-    Device->SetSamplerState(0,D3DSAMP_ADDRESSV,(DWORD)(int)vrepeat);    
-    Device->SetSamplerState(0,D3DSAMP_BORDERCOLOR,gm_col_to_dx9(bordercolor));    
-    return 0;
-}
-GMREAL __gm82dx9_texture_set_mode(double mode) {
-    Device->SetTextureStageState(0,D3DTSS_TEXCOORDINDEX,(DWORD)(int)mode);    
-    return 0;
-}
 GMREAL __gm82dx9_set_light(
     double index, double type,
     double x, double y, double z,

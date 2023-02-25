@@ -52,3 +52,5 @@ bool __dx_vibe_check(const wchar_t* file, int line, HRESULT hr);
 
 void __show_error(const char* file, int line, const char* message);
 #define show_error(a) __show_error(__FILE__,__LINE__,a)
+
+DWORD gm_col_to_dx9(double color);

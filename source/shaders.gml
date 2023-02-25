@@ -157,18 +157,36 @@
     return __shd
 
 
+
+#define texture_set_mode
+    ///texture_set_mode(mode)
+    __gm82dx9_texture_set_stage_mode(0,argument0)
+
+
+#define texture_set_repeat_ext
+    ///texture_set_repeat_ext(hrepeat,vrepeat,bordercolor)
+    __gm82dx9_texture_set_stage_repeat(0,argument0,argument1,argument2)
+
+
 #define texture_set_stage
     ///texture_set_stage(sampler,texture)
     var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
     __gm82dx9_texture_stage_set(__uni,argument1)
 
 
 #define texture_set_stage_interpolation
     ///texture_set_stage_interpolation(sampler,texture)
     var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
     __gm82dx9_texture_set_stage_interpolation(__uni,argument1)
+
+
+#define texture_set_stage_repeat
+    ///texture_set_stage_repeat(sampler,hrepeat,vrepeat,bordercolor)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
+    __gm82dx9_texture_set_stage_repeat(__uni,argument1,argument2,argument3)
 
 
 #define texture_set_stage_vertex
@@ -183,5 +201,12 @@
     var __uni;
     __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
     __gm82dx9_texture_set_stage_vertex_interpolation(__uni,argument1)
+
+
+#define texture_set_stage_vertex_repeat
+    ///texture_set_stage_vertex_repeat(sampler,hrepeat,vrepeat,bordercolor)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __gm82dx9_texture_set_stage_vertex_repeat(__uni,argument1,argument2,argument3)
 //
 //
