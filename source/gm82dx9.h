@@ -14,7 +14,7 @@
 #include <versionhelpers.h>
 
 #include "d3dx9.h"
-#include "dxerr.h"
+#include "dxerr/dxerr.h"
 #include "DirectXMath/DirectXMath.h"
 
 using namespace DirectX;
