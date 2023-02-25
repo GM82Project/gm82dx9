@@ -1061,6 +1061,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_pixel_uniform_b",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_pixel_uniform_4b",
 					"extname": "",
 					"calltype": 12,
@@ -1119,6 +1131,18 @@
 				},
 				{
 					"name": "__gm82dx9_shader_vertex_create_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_b",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",

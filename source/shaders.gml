@@ -85,11 +85,9 @@
     __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: __gm82dx9_shader_vertex_uniform_4b(__uni+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: __gm82dx9_shader_vertex_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: __gm82dx9_shader_vertex_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: case 3: case 4: __gm82dx9_shader_vertex_uniform_b(__uni+__i,argument[1+__i]) __i+=1 continue
         default:
-            __gm82dx9_shader_vertex_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_vertex_uniform_4b(__uni+__i,argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (false)
 
@@ -100,11 +98,9 @@
     __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
     do switch (argument_count-__i) {
         case 0: case 1: exit
-        case 2: __gm82dx9_shader_pixel_uniform_4b(__uni+(__i div 4),argument[1+__i],0,0,0) exit
-        case 3: __gm82dx9_shader_pixel_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],0,0) exit
-        case 4: __gm82dx9_shader_pixel_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],0) exit
+        case 2: case 3: case 4: __gm82dx9_shader_pixel_uniform_b(__uni+__i,argument[1+__i]) __i+=1 continue
         default:
-            __gm82dx9_shader_pixel_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
+            __gm82dx9_shader_pixel_uniform_4b(__uni+__i,argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
     } until (false)
 

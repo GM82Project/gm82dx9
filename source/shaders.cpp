@@ -298,10 +298,25 @@ CONSTANT_FUNC(vertex,Vertex,float,f,F)
 CONSTANT_FUNC(pixel,Pixel,float,f,F)
 CONSTANT_FUNC(vertex,Vertex,int,i,I)
 CONSTANT_FUNC(pixel,Pixel,int,i,I)
-CONSTANT_FUNC(vertex,Vertex,BOOL,b,B)
-CONSTANT_FUNC(pixel,Pixel,BOOL,b,B)
 
 #undef CONSTANT_FUNC
+
+#define CONSTANT_BOOL(st_lo, st_up) \
+    GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_b(double reg, double b) { \
+        BOOL data = b >= 0.5; \
+        Device->Set ## st_up ## ShaderConstantB(reg, &data, 1); \
+        return 0; \
+    } \
+    GMREAL __gm82dx9_shader_ ## st_lo ##_uniform_4b(double reg, double b1, double b2, double b3, double b4) { \
+        BOOL data[] = {b1 >= 0.5, b2 >= 0.5, b3 >= 0.5, b4 >= 0.5}; \
+        Device->Set ## st_up ## ShaderConstantB(reg, data, 4); \
+        return 0; \
+    }
+
+CONSTANT_BOOL(vertex,Vertex)
+CONSTANT_BOOL(pixel,Pixel)
+
+#undef CONSTANT_BOOL
 
 #define UNI_MATRIX(st_lo, st_up) \
     GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_matrix(double reg, double mask_f) { \
