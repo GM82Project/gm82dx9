@@ -919,42 +919,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "texture_stage_interpolation",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "texture_stage_interpolation(stage,linear)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "texture_stage_set",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "texture_stage_set(stage,tex)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "texture_stage_vertex_set",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "texture_stage_vertex_set(stage,texture)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "window_resize_buffer",
 					"extname": "__gm82dx9_resize_backbuffer",
 					"calltype": 12,
@@ -1073,18 +1037,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_pixel_uniform_b",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "__gm82dx9_shader_pixel_uniform_4b",
 					"extname": "",
 					"calltype": 12,
@@ -1130,6 +1082,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_pixel_uniform_b",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_pixel_uniform_matrix",
 					"extname": "",
 					"calltype": 12,
@@ -1143,18 +1107,6 @@
 				},
 				{
 					"name": "__gm82dx9_shader_vertex_create_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_shader_vertex_uniform_b",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
@@ -1211,6 +1163,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_vertex_uniform_b",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_vertex_uniform_matrix",
 					"extname": "",
 					"calltype": 12,
@@ -1254,6 +1218,54 @@
 					"helpline": "",
 					"hidden": false,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_texture_set_stage_interpolation",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_texture_set_stage_vertex_interpolation",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_texture_stage_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_texture_stage_vertex_set",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -1711,6 +1723,54 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "shader_vertex_uniform_matrix(uniform,mtx_type)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "texture_set_stage",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "texture_set_stage(sampler,texture)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "texture_set_stage_interpolation",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "texture_set_stage_interpolation(stage,linear)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "texture_set_stage_vertex",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "texture_set_stage_vertex(sampler,texture)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "texture_set_stage_vertex_interpolation",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "texture_set_stage_vertex_interpolation(sampler,linear)",
 					"hidden": false,
 					"argtypes": [
 						2,

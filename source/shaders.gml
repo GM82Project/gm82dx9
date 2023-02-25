@@ -155,5 +155,33 @@
     __shd=shader_vertex_create_buffer(__buf)
     buffer_destroy(__buf)
     return __shd
+
+
+#define texture_set_stage
+    ///texture_set_stage(sampler,texture)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __gm82dx9_texture_stage_set(__uni,argument1)
+
+
+#define texture_set_stage_interpolation
+    ///texture_set_stage_interpolation(sampler,texture)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __gm82dx9_texture_set_stage_interpolation(__uni,argument1)
+
+
+#define texture_set_stage_vertex
+    ///texture_set_stage_vertex(sampler,texture)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __gm82dx9_texture_stage_vertex_set(__uni,argument1)
+
+
+#define texture_set_stage_vertex_interpolation
+    ///texture_set_stage_vertex_interpolation(sampler,texture)
+    var __uni;
+    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __gm82dx9_texture_set_stage_vertex_interpolation(__uni,argument1)
 //
 //

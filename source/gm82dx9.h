@@ -44,10 +44,11 @@ extern XMVECTOR vertex;
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
 
-bool __dx_vibe_check(const char* file, int line, HRESULT hr);
-#define vibe_check(a) __dx_vibe_check(__FILE__,__LINE__,a)
-void __show_error(const char* file, int line, const char* message);
-#define show_error(a) __show_error(__FILE__,__LINE__,a)
+bool __dx_vibe_check(const wchar_t* file, int line, HRESULT hr);
 #define WIDE2(x) L##x
 #define WIDE1(x) WIDE2(x)
 #define WFILE WIDE1(__FILE__)
+#define vibe_check(a) __dx_vibe_check(WFILE,__LINE__,a)
+
+void __show_error(const char* file, int line, const char* message);
+#define show_error(a) __show_error(__FILE__,__LINE__,a)

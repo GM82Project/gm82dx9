@@ -371,7 +371,7 @@ void __gm82dx9_sampler_set(double stage, double tex_f) {
     }
 }
 
-GMREAL texture_stage_set(double stage, double tex_f) {
+GMREAL __gm82dx9_texture_stage_set(double stage, double tex_f) {
     if (stage<0 || stage>7) {
         show_error("Trying to set out-of-bounds sampler (0-7).");
         return 0;
@@ -381,7 +381,7 @@ GMREAL texture_stage_set(double stage, double tex_f) {
     return 0;
 }
 
-GMREAL texture_stage_vertex_set(double stage, double tex_f) {
+GMREAL __gm82dx9_texture_stage_vertex_set(double stage, double tex_f) {
     if (stage<0 || stage>3) {
         show_error("Trying to set out-of-bounds vertex shader sampler (0-3).");
         return 0;
@@ -391,13 +391,34 @@ GMREAL texture_stage_vertex_set(double stage, double tex_f) {
     return 0;
 }
 
-GMREAL texture_stage_interpolation(double stage, double linear_d) {
+GMREAL __gm82dx9_texture_set_stage_interpolation(double stage, double linear_d) {
+    if (stage<0 || stage>7) {
+        show_error("Trying to set interpolation for out-of-bounds sampler (0-7).");
+        return 0;
+    }
+    
     if (linear_d >= 0.5) {
         Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
         Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
     } else {
         Device->SetSamplerState(stage,D3DSAMP_MAGFILTER,D3DTEXF_POINT);
         Device->SetSamplerState(stage,D3DSAMP_MINFILTER,D3DTEXF_POINT);
+    }
+    return 0;
+}
+
+GMREAL __gm82dx9_texture_set_stage_vertex_interpolation(double stage, double linear_d) {
+    if (stage<0 || stage>7) {
+        show_error("Trying to set interpolation for out-of-bounds vertex shader sampler (0-3).");
+        return 0;
+    }
+    
+    if (linear_d >= 0.5) {
+        Device->SetSamplerState(stage+257,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
+        Device->SetSamplerState(stage+257,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
+    } else {
+        Device->SetSamplerState(stage+257,D3DSAMP_MAGFILTER,D3DTEXF_POINT);
+        Device->SetSamplerState(stage+257,D3DSAMP_MINFILTER,D3DTEXF_POINT);
     }
     return 0;
 }
