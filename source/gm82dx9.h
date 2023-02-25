@@ -14,7 +14,7 @@
 #include <versionhelpers.h>
 
 #include "d3dx9.h"
-#include "dxerr/dxerr.h"
+#include "dxerr.h"
 #include "DirectXMath/DirectXMath.h"
 
 using namespace DirectX;
@@ -44,8 +44,10 @@ extern XMVECTOR vertex;
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
 
-bool __dx_vibe_check(const wchar_t* file, int line, HRESULT hr);
+bool __dx_vibe_check(const char* file, int line, HRESULT hr);
+#define vibe_check(a) __dx_vibe_check(__FILE__,__LINE__,a)
+void __show_error(const char* file, int line, const char* message);
+#define show_error(a) __show_error(__FILE__,__LINE__,a)
 #define WIDE2(x) L##x
 #define WIDE1(x) WIDE2(x)
 #define WFILE WIDE1(__FILE__)
-#define vibe_check(a) __dx_vibe_check(WFILE,__LINE__,a)

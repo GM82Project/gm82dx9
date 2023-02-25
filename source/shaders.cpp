@@ -31,6 +31,13 @@ IDirect3DVertexDeclaration9 *decl_3d = nullptr;
 
 bool using_shader = false;
 
+void __show_error(const char* file, int line, const char* message) {
+    char buf[1024];
+    snprintf(buf, 1024, "DirectX9 error in file %s at line %i:\n%s",file,line,message);
+    MessageBox(0, buf, "Error", 0);
+    exit(1);
+}
+
 bool shader_bounds_check(const DWORD* data, size_t len) {
     if (len % 4 != 0 || len < 8) {
         return false;
@@ -345,23 +352,42 @@ UNI_MATRIX(vertex, Vertex)
 UNI_MATRIX(pixel, Pixel)
 #undef UNI_MATRIX
 
-GMREAL texture_stage_set(double stage, double tex_f) {
+void __gm82dx9_sampler_set(double stage, double tex_f) {
     int tex = tex_f;
     if (tex < 0) {
         Device->SetTexture(stage, nullptr);
+    } else {
+        bool exists;
+        __asm {
+            mov eax, tex
+            mov edx, 0x620ff8
+            call edx
+            mov exists, al
+        }
+        if (exists) {
+            auto textures = (GMTexture**)0x85b3c4;
+            Device->SetTexture(stage, (*textures)[tex].texture);
+        }
+    }
+}
+
+GMREAL texture_stage_set(double stage, double tex_f) {
+    if (stage<0 || stage>7) {
+        show_error("Trying to set out-of-bounds sampler (0-7).");
         return 0;
     }
-    bool exists;
-    __asm {
-        mov eax, tex
-        mov edx, 0x620ff8
-        call edx
-        mov exists, al
+    
+    __gm82dx9_sampler_set(stage,tex_f);
+    return 0;
+}
+
+GMREAL texture_stage_vertex_set(double stage, double tex_f) {
+    if (stage<0 || stage>3) {
+        show_error("Trying to set out-of-bounds vertex shader sampler (0-3).");
+        return 0;
     }
-    if (exists) {
-        auto textures = (GMTexture**)0x85b3c4;
-        Device->SetTexture(stage, (*textures)[tex].texture);
-    }
+    
+    __gm82dx9_sampler_set(stage+257,tex_f);
     return 0;
 }
 
