@@ -31,7 +31,7 @@
         default:
             __gm82dx9_shader_vertex_uniform_4f(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
-    } until (__i <= 0)
+    } until (false)
 
 
 #define shader_pixel_uniform_f
@@ -46,7 +46,7 @@
         default:
             __gm82dx9_shader_pixel_uniform_4f(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
-    } until (__i <= 0)
+    } until (false)
 
 
 #define shader_vertex_uniform_i
@@ -61,7 +61,7 @@
         default:
             __gm82dx9_shader_vertex_uniform_4i(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
-    } until (__i <= 0)
+    } until (false)
 
 
 #define shader_pixel_uniform_i
@@ -76,7 +76,7 @@
         default:
             __gm82dx9_shader_pixel_uniform_4i(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
-    } until (__i <= 0)
+    } until (false)
 
 
 #define shader_vertex_uniform_b
@@ -91,7 +91,7 @@
         default:
             __gm82dx9_shader_vertex_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
-    } until (__i <= 0)
+    } until (false)
 
 
 #define shader_pixel_uniform_b
@@ -106,7 +106,7 @@
         default:
             __gm82dx9_shader_pixel_uniform_4b(__uni+(__i div 4),argument[1+__i],argument[2+__i],argument[3+__i],argument[4+__i])
             __i+=4
-    } until (__i <= 0)
+    } until (false)
 
 
 #define shader_vertex_uniform_matrix
