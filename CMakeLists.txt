@@ -12,8 +12,8 @@ endif()
 include_directories("include")
 link_directories("lib")
 
-add_library(gm82dx9 SHARED source/gm82dx9.cpp source/transform.cpp source/shaders.cpp source/inject.cpp)
-target_link_libraries(gm82dx9 d3d9 d3dx9 dxerr legacy_stdio_definitions)
+add_library(gm82dx9 SHARED source/gm82dx9.cpp source/transform.cpp source/shaders.cpp source/inject.cpp source/dxerr/dxerr.cpp)
+target_link_libraries(gm82dx9 d3d9 d3dx9)
 
 SET(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} /D \"SAFESEH:NO\"")
 SET(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} /SAFESEH:NO")

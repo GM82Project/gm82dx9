@@ -1,8 +1,4 @@
 #include "gm82dx9.h"
-#include <array>
-
-#include "d3dx9.h"
-#include "dxerr.h"
 
 D3DCAPS9 d3d_caps;
 D3DPRESENT_PARAMETERS d3d_parameters = {
@@ -107,9 +103,9 @@ D3DXGetErrorStringA(
         HRESULT hr,
         LPSTR pBuffer,
         UINT BufferLen) {
-    const char *str = DXGetErrorStringA(hr);
-    CopyMemory(pBuffer, str, min(BufferLen, strlen(str) + 1));
-    return hr;
+    const wchar_t *wstr = DXGetErrorStringW(hr);
+    WideCharToMultiByte(CP_ACP, 0, wstr, -1, pBuffer, BufferLen, nullptr, nullptr);
+    return S_OK;
 }
 
 HRESULT WINAPI screen_refresh(IDirect3DDevice9 *dev, const RECT *pSourceRect, const RECT *pDestRect, HWND hDestOverride, const RGNDATA *pDirtyRegion) {

@@ -14,11 +14,13 @@ create_c_function(void,runner_clear_depth,0x563a8c);
 
 int* dx9_backbuffer_format = (int*)0x85b394;
 
-bool __dx_vibe_check(const char* file, int line, HRESULT hr) {
+bool __dx_vibe_check(const wchar_t* file, int line, HRESULT hr) {
     if (SUCCEEDED(hr)) return false;    
-    char buf[1024];
-    snprintf(buf, 1024, "DirectX9 error in file %s at line %i:\n%s\n%s",file,line,DXGetErrorStringA(hr),DXGetErrorDescriptionA(hr));
-    MessageBox(0, buf, "Warning", 0);
+    wchar_t buf[1024];
+    wchar_t errbuf[1024];
+    DXGetErrorDescriptionW(hr, errbuf, 1024);
+    _snwprintf_s(buf, 1024, L"DirectX9 error in file %s at line %i:\n%s\n%s",file,line,DXGetErrorStringW(hr),errbuf);
+    MessageBoxW(0, buf, L"Warning", 0);
     return true;
 }
 DWORD gm_col_to_dx9(double color) {
