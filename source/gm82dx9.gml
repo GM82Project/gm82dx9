@@ -7,8 +7,10 @@
     if (__gm82dx9_checkstart()) exit
 
     if (variable_global_exists("__gm82dx8_controller")) {
-        show_error("The GM82 DX8 and DX9 extensions cannot be combined.",true)
-        __gm82dx9_abort()
+        if (variable_global_get("__gm82dx8_controller")!=0) {
+            show_error("The GM82 DX8 and DX9 extensions cannot be combined.",true)
+            __gm82dx9_abort()
+        }
     }
     
     globalvar __gm82dx9_cross_detect;
