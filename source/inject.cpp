@@ -559,7 +559,7 @@ BOOL WINAPI DllMain(
     PATCH_D3DX(0x531277, D3DXGetErrorStringA);
 
     ptr = (char*)(&regain_device) - (0x620012 + 5);
-    WriteProcessMemory(proc, (void*)(0x620012), &ptr, 4, nullptr);
+    WriteProcessMemory(proc, (void*)(0x620012 + 1), &ptr, 4, nullptr);
 
     return TRUE;
 }
