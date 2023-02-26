@@ -201,7 +201,7 @@
 					"name": "d3d_set_viewport",
 					"extname": "__gm82dx9_setviewport",
 					"calltype": 12,
-					"helpline": "d3d_set_scissor(x,y,width,height)",
+					"helpline": "d3d_set_viewport(x,y,width,height)",
 					"hidden": false,
 					"argtypes": [
 						2,
