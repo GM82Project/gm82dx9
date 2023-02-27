@@ -122,6 +122,25 @@ void WINAPI regain_device() {
     (*runner_display_reset)();
 }
 
+HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceType, HWND hFocusWindow, DWORD BehaviorFlags,
+                            D3DPRESENT_PARAMETERS *pPresentationParameters, IDirect3DDevice9 **ppReturnedDeviceInterface
+) {
+    // _control87 doesn't seem to let us reset the control word so we're going asm
+    short old_cw;
+    _asm {
+        fnstcw [old_cw]
+    }
+    short new_cw = old_cw | 0x3f;
+    _asm {
+        fldcw [new_cw]
+    }
+    auto res = d3d9->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
+    _asm {
+            fldcw [old_cw]
+    }
+    return res;
+}
+
 IDirect3DTexture9 *white_pixel = nullptr;
 uint8_t white_pixel_tga[] = {
     0, 0, 2, 0, 0, 0, 0, 0,
@@ -168,12 +187,6 @@ BOOL WINAPI DllMain(
     WriteProcessMemory(proc, (void *) (0x61ef09), nops, 3, nullptr);
     WriteProcessMemory(proc, (void *) (0x61ef19), nops, 7, nullptr);
     WriteProcessMemory(proc, (void *) (0x61ef25), nops, 3, nullptr);
-    // CreateDevice calls
-    offset = 0x40;
-    WriteProcessMemory(proc, (void *) (0x61ef96 + 2), &offset, 1, nullptr);
-    WriteProcessMemory(proc, (void *) (0x61eff9 + 2), &offset, 1, nullptr);
-    WriteProcessMemory(proc, (void *) (0x61f05c + 2), &offset, 1, nullptr);
-    WriteProcessMemory(proc, (void *) (0x61f09b + 2), &offset, 1, nullptr);
     // set AutoDepthStencilFormat on fail
     offset = 0x28;
     WriteProcessMemory(proc, (void *) (0x61efb2 + 2), &offset, 1, nullptr);
@@ -210,6 +223,18 @@ BOOL WINAPI DllMain(
     PATCH(0x61f156);
     PATCH(0x61f178);
     PATCH(0x61fa58);
+#undef PATCH
+
+    // CreateDevice
+#define PATCH(a) \
+                 offset = 0xe8; \
+                 WriteProcessMemory(proc, (void*)(a), &offset, 1, nullptr); \
+                 ptr = ((char*)(&CreateDevice) - (a + 5)); \
+                 WriteProcessMemory(proc, (void*)(a + 1), &ptr, 4, nullptr)
+    PATCH(0x61ef94);
+    PATCH(0x61eff7);
+    PATCH(0x61f05a);
+    PATCH(0x61f099);
 #undef PATCH
 
     // CreateVertexBuffer
