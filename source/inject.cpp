@@ -155,11 +155,103 @@ HRESULT WINAPI SetNullTexture(IDirect3DDevice9 *dev, DWORD Stage, IDirect3DBaseT
     return dev->SetTexture(0, white_pixel);
 }
 
+const uint8_t reset_patch[] = {
+        // note: 0xdc = sizeof(DEVMODEW), 0x44 = offset(dmSize), 0x46 = offset(dmDriverExtra),
+        // 0xa0 = offset(dmBitsPerPel)
+
+        // sub esp, 0xdc
+        0x81, 0xec, 0xdc, 0x00, 0x00, 0x00,
+
+        // get registry settings
+        // mov dword ptr [esp+0x44], 0xdc
+        0xc7, 0x44, 0x24, 0x44, 0xdc, 0x00, 0x00, 0x00,
+        // push esp
+        0x54,
+        // push -2
+        0x6a, 0xfe,
+        // push 0
+        0x6a, 0x00,
+        // call EnumDisplaySettingsW
+        0xe8, 0xf0, 0xf8, 0xde, 0xff,
+
+        // get current settings
+        // sub esp, 0xdc
+        0x81, 0xec, 0xdc, 0x00, 0x00, 0x00,
+        // mov word ptr [esp+0x44], 0xdc
+        0xc7, 0x44, 0x24, 0x44, 0xdc, 0x00, 0x00, 0x00,
+        // push esp
+        0x54,
+        // push -1
+        0x6a, 0xff,
+        // push 0
+        0x6a, 0x00,
+        // call EnumDisplaySettingsW
+        0xe8, 0xd8, 0xf8, 0xde, 0xff,
+
+        // compare blocks with
+        // lea eax, [esp+0xa8]
+        0x8d, 0x84, 0x24, 0xa8, 0x00, 0x00, 0x00,
+        // lea edx, [esp+0x184]
+        0x8d, 0x94, 0x24, 0x84, 0x01, 0x00, 0x00,
+        // xor ecx, ecx
+        0x33, 0xc9,
+        // mov cl, 0x14
+        0xb1, 0x14,
+        // call CompareMem
+        0xe8, 0xb5, 0x68, 0xdf, 0xff,
+
+        // are they the same?
+        // test al, al
+        0x84, 0xc0,
+        // jne 2f
+        0x75, 0x09,
+
+        // restore display settings
+        // push 0 (x2)
+        0x6a, 0x00, 0x6a, 0x00,
+        // call ChangeDisplaySettingsW
+        0xe8, 0x18, 0xf7, 0xde, 0xff,
+
+        // exit
+        // add esp, 0x1b8
+        0x81, 0xc4, 0xb8, 0x01, 0x00, 0x00,
+        // ret
+        0xc3,
+};
+
+HINSTANCE my_handle;
+
+void WINAPI last_resort_impl(HANDLE hLibModule) {
+    if (hLibModule == my_handle && Device == nullptr) {
+        HANDLE proc = GetCurrentProcess();
+        WriteProcessMemory(proc, (void*)(0x61ede0), reset_patch, sizeof(reset_patch), nullptr);
+        int ptr = 0x61ede0 - (0x561bb0 + 5);
+        WriteProcessMemory(proc, (void*)(0x561bb0 + 1), &ptr, 4, nullptr);
+        ptr = 0x40dd98 - (0x5795c5 + 5);
+        WriteProcessMemory(proc, (void*)(0x5795c5 + 1), &ptr, 4, nullptr);
+        FlushInstructionCache(proc, (void*)0x61ede0, sizeof(reset_patch));
+        FlushInstructionCache(proc, (void*)0x561bb0, 5);
+        FlushInstructionCache(proc, (void*)0x5795c5, 5);
+    }
+}
+
+__declspec(naked) void last_resort() {
+    _asm {
+        push [esp+4]
+        call last_resort_impl
+        mov eax, 0x40dd98
+        jmp eax
+    }
+}
+
 BOOL WINAPI DllMain(
         _In_ HINSTANCE hinstDLL,
         _In_ DWORD fdwReason,
         _In_ LPVOID lpvReserved
 ) {
+    if (fdwReason != DLL_PROCESS_ATTACH) return TRUE;
+    my_handle = hinstDLL;
+
     HANDLE proc = GetCurrentProcess();
 
     void *ptr;
@@ -585,6 +677,11 @@ BOOL WINAPI DllMain(
 
     ptr = (char*)(&regain_device) - (0x620012 + 5);
     WriteProcessMemory(proc, (void*)(0x620012 + 1), &ptr, 4, nullptr);
+
+    ptr = (char*)(last_resort) - (0x5795c5 + 5);
+    WriteProcessMemory(proc, (void*)(0x5795c5 + 1), &ptr, 4, nullptr);
+
+    FlushInstructionCache(proc, nullptr, 0);
 
     return TRUE;
 }
