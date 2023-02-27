@@ -227,11 +227,8 @@ void WINAPI last_resort_impl(HANDLE hLibModule) {
         WriteProcessMemory(proc, (void*)(0x61ede0), reset_patch, sizeof(reset_patch), nullptr);
         int ptr = 0x61ede0 - (0x561bb0 + 5);
         WriteProcessMemory(proc, (void*)(0x561bb0 + 1), &ptr, 4, nullptr);
-        ptr = 0x40dd98 - (0x5795c5 + 5);
-        WriteProcessMemory(proc, (void*)(0x5795c5 + 1), &ptr, 4, nullptr);
         FlushInstructionCache(proc, (void*)0x61ede0, sizeof(reset_patch));
         FlushInstructionCache(proc, (void*)0x561bb0, 5);
-        FlushInstructionCache(proc, (void*)0x5795c5, 5);
     }
 }
 
@@ -249,6 +246,13 @@ BOOL WINAPI DllMain(
         _In_ DWORD fdwReason,
         _In_ LPVOID lpvReserved
 ) {
+    if (fdwReason == DLL_PROCESS_DETACH) {
+        HANDLE proc = GetCurrentProcess();
+        int ptr = 0x40dd98 - (0x5795c5 + 5);
+        WriteProcessMemory(proc, (void*)(0x5795c5 + 1), &ptr, 4, nullptr);
+        FlushInstructionCache(proc, (void*)0x5795c5, 5);
+        return TRUE;
+    }
     if (fdwReason != DLL_PROCESS_ATTACH) return TRUE;
     my_handle = hinstDLL;
 
