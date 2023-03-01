@@ -22,6 +22,8 @@
     __name=argument0
     __w=argument1
     __h=argument2
+    
+    __gm82dx9_surface_was_new=false
 
     __s=ds_map_find_value(__gm82dx9_surfmap,__name)
     if (__s) {
@@ -42,9 +44,15 @@
         //create surf
         __s=surface_create(__w,__h)+1
         ds_map_add(__gm82dx9_surfmap,__name,__s)
+        __gm82dx9_surface_was_new=true
     }
 
     return __s-1
+
+
+#define surface_is_new
+    ///surface_is_new()
+    return __gm82dx9_surface_was_new
 
 
 #define surface_set

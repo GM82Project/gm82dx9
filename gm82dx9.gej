@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "26/02/2023",
+	"date": "28/02/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1991,6 +1991,15 @@
 						2,
 						2
 					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_is_new",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_is_new()",
+					"hidden": false,
+					"argtypes": [],
 					"returntype": 2
 				},
 				{

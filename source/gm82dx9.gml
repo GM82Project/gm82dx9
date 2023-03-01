@@ -21,6 +21,8 @@
     globalvar __gm82dx9_resw,__gm82dx9_resh;
     globalvar __gm82dx9_default_vs,__gm82dx9_default_ps;
     
+    globalvar __gm82dx9_surface_was_new;
+    
     globalvar d3d_transform_vertex;
     
     if (variable_global_get("__gm82core_version")>134) {
