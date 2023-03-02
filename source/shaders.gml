@@ -202,5 +202,27 @@
     var __uni;
     __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
     __gm82dx9_texture_set_stage_vertex_repeat(__uni,argument1,argument2,argument3)
+
+
+#define shader_draw_shadertoy
+    ///shader_draw_shadertoy(shader,x,y,w,h,time)
+    
+    shader_vertex_set_passthrough()
+
+    shader_pixel_set(argument0)
+    shader_pixel_uniform_f("_iGlobalTime",argument5)
+    shader_pixel_uniform_f("_iTime",argument5)
+    shader_pixel_uniform_f("_iResolution",argument3,argument4,0)
+    shader_pixel_uniform_f("_iMouse",x,y,0,0)
+    shader_pixel_uniform_f("_iFrameRate",room_speed)
+
+    draw_primitive_begin_texture(pr_trianglestrip,-1)
+    draw_vertex_texture(argument1,argument2,0,1)
+    draw_vertex_texture(argument1+argument3,argument2,1,1)
+    draw_vertex_texture(argument1,argument2+argument4,0,0)
+    draw_vertex_texture(argument1+argument3,argument2+argument4,1,0)
+    draw_primitive_end()
+    
+    shader_reset()
 //
 //
