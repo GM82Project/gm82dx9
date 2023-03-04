@@ -3,8 +3,6 @@
         show_error('GM8.2 DirectX9 Extension failed to link DLL. Make sure you have the latest DirectX runtimes installed: https://www.microsoft.com/en-us/download/details.aspx?id=35',1)
         exit
     }
-    
-    if (__gm82dx9_checkstart()) exit
 
     if (variable_global_exists("__gm82dx8_controller")) {
         if (variable_global_get("__gm82dx8_controller")!=0) {
@@ -24,6 +22,12 @@
     globalvar __gm82dx9_surface_was_new;
     
     globalvar d3d_transform_vertex;
+
+    //load default shaders
+    __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
+    __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")
+
+    if (__gm82dx9_checkstart()) exit
     
     if (variable_global_get("__gm82core_version")>134) {
         //recent enough core extension: we can work together
@@ -42,9 +46,11 @@
     //ignore first room frame
     object_event_add(__gm82dx9_controller,ev_other,ev_room_start,"if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
     object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
-    //load default shaders
-    __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
-    __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")   
+
+
+#define __gm82dx9_quit
+    shader_vertex_destroy(__gm82dx9_default_vs)
+    shader_pixel_destroy(__gm82dx9_default_vs)
 
 
 #define d3d_set_alphablend
