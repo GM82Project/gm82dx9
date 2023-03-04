@@ -899,7 +899,7 @@
 					"extname": "__gm82dx9_texture_set_mode",
 					"calltype": 12,
 					"helpline": "texture_set_mode(tm_mode)",
-					"hidden": true,
+					"hidden": false,
 					"argtypes": [
 						2
 					],
