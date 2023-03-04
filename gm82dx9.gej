@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "01/03/2023",
+	"date": "04/03/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1597,6 +1597,31 @@
 			"final": "",
 			"functions": [
 				{
+					"name": "draw_quad",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "draw_quad(x,y,w,h,tex,[u1,v1,u2,v2])",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "shader_draw_shadertoy",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_draw_shadertoy(shader,x,y,w,h,time)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_pixel_create_base64",
 					"extname": "",
 					"calltype": 2,
@@ -1836,22 +1861,6 @@
 					"helpline": "texture_set_stage_vertex_repeat(sampler,hrepeat,vrepeat,bordercolor)",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_draw_shadertoy",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "shader_draw_shadertoy(shader,x,y,w,h,time)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
 						2,
 						2,
 						2,
