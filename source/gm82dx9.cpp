@@ -68,6 +68,13 @@ GMREAL __gm82dx9_testfunc() {
     return 0;
 }
 
+GMREAL argb_get_color(double color) {
+    return (int)color & 0x00ffffff;
+}
+GMREAL argb_get_alpha(double color) {
+    return (((int)color & 0xff000000) >> 24) / 0xff;
+}
+
 GMREAL __gm82dx9_set_color_mask(double red, double green, double blue, double alpha) {
     UINT mask = 0;
     if (alpha>=0.5) mask += D3DCOLORWRITEENABLE_ALPHA;

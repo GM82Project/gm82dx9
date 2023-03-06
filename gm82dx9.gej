@@ -20,6 +20,28 @@
 			"final": "",
 			"functions": [
 				{
+					"name": "argb_get_alpha",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "argb_get_alpha(color)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "argb_get_color",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "argb_get_color(color)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_clear_depth",
 					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
