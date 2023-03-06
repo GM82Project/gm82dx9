@@ -19,10 +19,20 @@
     shader_pixel_set(__gm82dx9_default_ps)
 
 
+#define __gm82dx9_vertex_uniform
+    if (is_string(argument0)) return shader_vertex_uniform_get_address(argument0)
+    return argument0
+
+
+#define __gm82dx9_pixel_uniform
+    if (is_string(argument0)) return shader_pixel_uniform_get_address(argument0)
+    return argument0
+
+
 #define shader_vertex_uniform_f
     ///shader_vertex_uniform_f(uniform,...)
     var __i,__uni; __i=0
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __uni=__gm82dx9_vertex_uniform(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4f(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -37,7 +47,7 @@
 #define shader_pixel_uniform_f
     ///shader_pixel_uniform_f(uniform,...)
     var __i,__uni; __i=0
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
+    __uni=__gm82dx9_pixel_uniform(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4f(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -52,7 +62,7 @@
 #define shader_vertex_uniform_i
     ///shader_vertex_uniform_i(uniform,...)
     var __i,__uni; __i=0
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __uni=__gm82dx9_vertex_uniform(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4i(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -67,7 +77,7 @@
 #define shader_pixel_uniform_i
     ///shader_pixel_uniform_i(uniform,...)
     var __i,__uni; __i=0
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
+    __uni=__gm82dx9_pixel_uniform(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4i(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -82,7 +92,7 @@
 #define shader_vertex_uniform_b
     ///shader_vertex_uniform_b(uniform,...)
     var __i,__uni; __i=0
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
+    __uni=__gm82dx9_vertex_uniform(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: case 3: case 4: __gm82dx9_shader_vertex_uniform_b(__uni+__i,argument[1+__i]) __i+=1 continue
@@ -95,7 +105,7 @@
 #define shader_pixel_uniform_b
     ///shader_pixel_uniform_b(uniform,...)
     var __i,__uni; __i=0
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
+    __uni=__gm82dx9_pixel_uniform(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: case 3: case 4: __gm82dx9_shader_pixel_uniform_b(__uni+__i,argument[1+__i]) __i+=1 continue
@@ -107,16 +117,12 @@
 
 #define shader_vertex_uniform_matrix
     //shader_vertex_uniform_matrix(uniform,mtx_type)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
-    __gm82dx9_shader_vertex_uniform_matrix(__uni,argument1)
+    __gm82dx9_shader_vertex_uniform_matrix(__gm82dx9_vertex_uniform(argument0),argument1)
 
 
 #define shader_pixel_uniform_matrix
     //shader_pixel_uniform_matrix(uniform,mtx_type)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
-    __gm82dx9_shader_pixel_uniform_matrix(__uni,argument1)
+    __gm82dx9_shader_pixel_uniform_matrix(__gm82dx9_pixel_uniform(argument0),argument1)
 
 
 #define shader_vertex_uniform_color
@@ -164,44 +170,32 @@
 
 #define texture_set_stage
     ///texture_set_stage(sampler,texture)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
-    __gm82dx9_texture_stage_set(__uni,argument1)
+    __gm82dx9_texture_stage_set(__gm82dx9_pixel_uniform(argument0),argument1)
 
 
 #define texture_set_stage_interpolation
     ///texture_set_stage_interpolation(sampler,texture)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
-    __gm82dx9_texture_set_stage_interpolation(__uni,argument1)
+    __gm82dx9_texture_set_stage_interpolation(__gm82dx9_pixel_uniform(argument0),argument1)
 
 
 #define texture_set_stage_repeat
     ///texture_set_stage_repeat(sampler,hrepeat,vrepeat,bordercolor)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_pixel_uniform_get_address(__uni)
-    __gm82dx9_texture_set_stage_repeat(__uni,argument1,argument2,argument3)
+    __gm82dx9_texture_set_stage_repeat(__gm82dx9_pixel_uniform(argument0),argument1,argument2,argument3)
 
 
 #define texture_set_stage_vertex
     ///texture_set_stage_vertex(sampler,texture)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
-    __gm82dx9_texture_stage_vertex_set(__uni,argument1)
+    __gm82dx9_texture_stage_vertex_set(__gm82dx9_vertex_uniform(argument0),argument1)
 
 
 #define texture_set_stage_vertex_interpolation
     ///texture_set_stage_vertex_interpolation(sampler,texture)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
-    __gm82dx9_texture_set_stage_vertex_interpolation(__uni,argument1)
+    __gm82dx9_texture_set_stage_vertex_interpolation(__gm82dx9_vertex_uniform(argument0),argument1)
 
 
 #define texture_set_stage_vertex_repeat
     ///texture_set_stage_vertex_repeat(sampler,hrepeat,vrepeat,bordercolor)
-    var __uni;
-    __uni=argument0 if (is_string(__uni)) __uni=shader_vertex_uniform_get_address(__uni)
-    __gm82dx9_texture_set_stage_vertex_repeat(__uni,argument1,argument2,argument3)
+    __gm82dx9_texture_set_stage_vertex_repeat(__gm82dx9_vertex_uniform(argument0),argument1,argument2,argument3)
 
 
 #define shader_draw_shadertoy

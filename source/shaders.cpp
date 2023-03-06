@@ -278,8 +278,10 @@ GMREAL __gm82dx9_get_vconst(const char* name) {
     unsigned int count;
     D3DXCONSTANT_DESC desc;
 
-    if (!current_vshader.shader) return 0;
-    current_vshader.constants->GetConstantDesc(current_vshader.constants->GetConstantByName(0, name), &desc, &count);   
+    if (!current_vshader.shader) return -4;
+    if (current_vshader.constants->GetConstantDesc(current_vshader.constants->GetConstantByName(0, name), &desc, &count)!=D3D_OK) {
+        return -4;        
+    }
     
     return desc.RegisterIndex;
 }
@@ -288,8 +290,10 @@ GMREAL __gm82dx9_get_pconst(const char* name) {
     unsigned int count;
     D3DXCONSTANT_DESC desc;
 
-    if (!current_pshader.shader) return 0;
-    current_pshader.constants->GetConstantDesc(current_pshader.constants->GetConstantByName(0, name), &desc, &count);   
+    if (!current_pshader.shader) return -4;
+    if (current_pshader.constants->GetConstantDesc(current_pshader.constants->GetConstantByName(0, name), &desc, &count)!=D3D_OK) {
+        return -4;        
+    }
     
     return desc.RegisterIndex;
 }
