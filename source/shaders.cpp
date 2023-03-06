@@ -356,6 +356,16 @@ UNI_MATRIX(vertex, Vertex)
 UNI_MATRIX(pixel, Pixel)
 #undef UNI_MATRIX
 
+GMREAL texture_get_interpolation() {
+    DWORD retval;
+    
+    Device->GetSamplerState(0,D3DSAMP_MAGFILTER,&retval);
+    
+    if (retval==D3DTEXF_LINEAR) return 1;
+    
+    return 0;
+}
+
 void __gm82dx9_sampler_set(double stage, double tex_f) {
     int tex = tex_f;
     if (tex < 0) {

@@ -877,6 +877,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "texture_get_interpolation",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "texture_get_interpolation()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "texture_get_max_height",
 					"extname": "__gm82dx9_getmaxheight",
 					"calltype": 12,
