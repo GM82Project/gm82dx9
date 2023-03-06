@@ -972,7 +972,7 @@
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
-					"hidden": false,
+					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
 				},
@@ -981,7 +981,7 @@
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
-					"hidden": false,
+					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
 				},
@@ -1212,7 +1212,7 @@
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
-					"hidden": false,
+					"hidden": true,
 					"argtypes": [],
 					"returntype": 2
 				},

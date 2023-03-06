@@ -62,9 +62,12 @@
 
 #define draw_make_opaque
     ///draw_make_opaque()
-    draw_set_blend_mode(bm_add)
-    draw_rectangle_color(-9999999,-9999999,9999999,9999999,0,0,0,0,0)
-    draw_set_blend_mode(0)
+    var __a;
+    __a=draw_get_alpha()
+    d3d_set_color_mask(0,0,0,1)
+    draw_rectangle(-9999999,-9999999,9999999,9999999,0)
+    d3d_set_color_mask(1,1,1,1)
+    draw_set_alpha(__a)
 
 
 #define window_set_fullscreen_ext
