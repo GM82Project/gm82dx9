@@ -16,3 +16,7 @@ Optimized transforms by Lovey01.
     - set the screen clipping region (scissor test) and other viewport utilities
     - improved default lighting with specular highlights and spheremap reflections
     - plus dozens of extra advanced graphics api functions...
+
+## Documentation
+
+Preliminary help documentation can be found [here](help.txt).
