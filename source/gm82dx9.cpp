@@ -69,10 +69,13 @@ GMREAL __gm82dx9_testfunc() {
 }
 
 GMREAL argb_get_color(double color) {
-    return (int)color & 0x00ffffff;
+    return ((unsigned int)color) & 0x00ffffff;
 }
 GMREAL argb_get_alpha(double color) {
-    return (((int)color & 0xff000000) >> 24) / 0xff;
+    return ((double)((((unsigned int)color) & 0xff000000) >> 24)) / 0xff;
+}
+GMREAL argb_make_color(double color, double alpha) {
+    return (double)((((int)(alpha*0xff))<<24)|((unsigned int)color));
 }
 
 GMREAL __gm82dx9_set_color_mask(double red, double green, double blue, double alpha) {

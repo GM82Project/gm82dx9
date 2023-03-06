@@ -42,6 +42,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "argb_make_color",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "argb_make_color(color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_clear_depth",
 					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
