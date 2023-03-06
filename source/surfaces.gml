@@ -148,10 +148,9 @@
 #define application_surface_resize
     ///application_surface_resize(width,height)
     if (__gm82dx9_appsurfcompose!=noone) {
-        surface_forget("application_surface")
         __gm82dx9_resw=argument0
         __gm82dx9_resh=argument1
-        application_surface=surface_get("application_surface",__gm82dx9_resw,__gm82dx9_resh)
+        surface_resize("application_surface",__gm82dx9_resw,__gm82dx9_resh,1,1)
     }
 
 
