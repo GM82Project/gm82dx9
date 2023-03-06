@@ -1851,7 +1851,7 @@
 					"name": "texture_set_stage_interpolation",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "texture_set_stage_interpolation(stage,linear)",
+					"helpline": "texture_set_stage_interpolation(sampler,linear)",
 					"hidden": false,
 					"argtypes": [
 						2,
