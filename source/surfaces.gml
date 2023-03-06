@@ -50,6 +50,35 @@
     return __s-1
 
 
+#define surface_resize
+    ///surface_resize(name,w,h,scale,filter)
+    var __old,__new,__i;
+    
+    if (!ds_map_exists(__gm82dx9_surfmap,argument0)) {
+        show_error("Error trying to resize unknown surface: "+string(argument0),0)
+        return noone
+    }
+    __old=ds_map_find_value(__gm82dx9_surfmap,argument0)-1
+    
+    __new=surface_create(argument1,argument2)
+    
+    if (argument3) {
+        surface_set_target(__new)
+        d3d_set_projection_ortho(0,0,argument1,argument2,0)
+        __i=texture_get_interpolation()
+        texture_set_interpolation(argument4)
+        draw_surface_stretched(__old,0,0,argument1,argument2)
+        texture_set_interpolation(__i)
+        surface_reset()
+    } else {
+        surface_copy_part(__new,0,0,__old,0,0,min(surface_get_width(__old),argument1),min(surface_get_height(__old),argument2))
+    }
+    
+    surface_discard(__old) 
+    
+    ds_map_replace(__gm82dx9_surfmap,argument0,__new+1)    
+
+
 #define surface_is_new
     ///surface_is_new()
     return __gm82dx9_surface_was_new
