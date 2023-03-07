@@ -54,15 +54,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "d3d_clear_depth",
-					"extname": "__gm82dx9_cleardepth",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
 					"name": "d3d_clear_depth_buffer",
 					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
