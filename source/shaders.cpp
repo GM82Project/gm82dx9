@@ -1,4 +1,4 @@
-#include "shaders.h"
+#include "gm82dx9.h"
 
 ShaderData shader_data;
 VShaderWithTable current_vshader;
@@ -30,13 +30,6 @@ IDirect3DVertexDeclaration9 *decl_2d = nullptr;
 IDirect3DVertexDeclaration9 *decl_3d = nullptr;
 
 bool using_shader = false;
-
-void __show_error(const char* file, int line, const char* message) {
-    char buf[1024];
-    snprintf(buf, 1024, "DirectX9 error in file %s at line %i:\n%s",file,line,message);
-    MessageBox(0, buf, "Error", 0);
-    exit(1);
-}
 
 bool shader_bounds_check(const DWORD* data, size_t len) {
     if (len % 4 != 0 || len < 8) {

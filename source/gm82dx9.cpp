@@ -7,49 +7,8 @@ D3DRASTER_STATUS raster_status;
 XMMATRIX world_matrix;
 XMVECTOR vertex;
 
-IDirect3DDevice9** d3d9_device = (IDirect3DDevice9**)0x6886a8;
-
 create_c_function(void,runner_display_reset,0x61f9f4);
 create_c_function(void,runner_clear_depth,0x563a8c);
-
-int* dx9_backbuffer_format = (int*)0x85b394;
-
-bool __dx_vibe_check(const wchar_t* file, int line, HRESULT hr) {
-    if (SUCCEEDED(hr)) return false;    
-    wchar_t buf[1024];
-    wchar_t errbuf[1024];
-    DXGetErrorDescriptionW(hr, errbuf, 1024);
-    _snwprintf_s(buf, 1024, L"DirectX9 error in file %s at line %i:\n%s\n%s",file,line,DXGetErrorStringW(hr),errbuf);
-    MessageBoxW(0, buf, L"Warning", 0);
-    return true;
-}
-DWORD gm_col_to_dx9(double color) {
-    int col=(int)round(color);
-    return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
-}
-
-struct GMSurface {
-    int texture, width, height;
-    bool exists;
-    IDirect3DSurface9* zbuffer;
-};
-
-struct GMTexture {
-    IDirect3DTexture9* texture;
-    int width, height, width_pow2, height_pow2;
-    bool exists;
-};
-
-GMSurface** gm_surfaces = (GMSurface**)(0x84527c);
-GMTexture** gm_textures = (GMTexture**)(0x85b3c4);
-
-inline GMSurface* get_gm_surface(double id) {
-    return &(*gm_surfaces)[int(id)];
-}
-
-inline GMTexture* get_gm_texture(int id) {
-    return &(*gm_textures)[id];
-}
 
 //-//
 
