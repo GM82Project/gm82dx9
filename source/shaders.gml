@@ -252,5 +252,30 @@
         draw_vertex_texture(argument0+argument2,argument1+argument3,1,1)
     }
     draw_primitive_end()
+
+
+#define surface_set_target_ext
+    ///surface_set_target_ext(target,surface)
+    var surf;
+    if (is_string(argument1)) {
+        if (!ds_map_exists(__gm82dx9_surfmap,argument1)) {
+            show_error("Error trying to set target to unknown surface: "+string(argument1),0)
+            return noone
+        }
+        surf=ds_map_find_value(__gm82dx9_surfmap,argument1)-1
+    } else surf=argument1
+    
+    if (!surface_exists(surf)) {
+        show_error("Trying to set target to nonexisting surface("+string(argument1)+")",0)
+        return 0
+    }
+    if (argument0==0) surface_set_target(surf)
+    else __gm82dx9_surface_set_target_ext(argument0,surf)
+
+
+#define surface_reset_target_ext
+    ///surface_reset_target_ext(target)
+    if (argument0==0) surface_reset_target()
+    else __gm82dx9_surface_set_target_ext(argument0,-1)
 //
 //

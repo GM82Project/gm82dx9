@@ -478,3 +478,16 @@ HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf) {
         return dev->SetFVF(fvf);
     }
 }
+
+GMREAL __gm82dx9_surface_set_target_ext(double target, double surface) {
+    DWORD index = max(1,min(3,(DWORD)target));    
+    IDirect3DSurface9* surf = nullptr;
+    
+    if (surface>=0) {
+        if (vibe_check(get_gm_texture(get_gm_surface(surface)->texture)->texture->GetSurfaceLevel(0, &surf))) return 0;    
+    }
+    
+    if (vibe_check(Device->SetRenderTarget(index,surf))) return 0;
+    
+    return 1;
+}
