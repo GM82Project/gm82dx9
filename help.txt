@@ -340,6 +340,11 @@ shader_draw_shadertoy(shader,x,y,w,h,time)
        the source code and adapt it to your needs.
     -> For normal shaders, you should probably use draw_quad() instead.
 
+  
+  Additional considerations
+  
+    -> Be mindful of your number types! 1/1024 evaluates to 0 because they're
+       integers, while 1.0/1024.0 evaluates to 0.0009765625.
 
 --------------------------------------------------------------------------------
 
