@@ -61,8 +61,8 @@ GMREAL __gm82dx9_set_cull_mode(double mode) {
     return 0;
 }
 GMREAL __gm82dx9_set_zbias(double bias) {
-    DWORD newbias=(DWORD)round(max(0.0,min(16.0,bias)));
-    Device->SetRenderState(D3DRS_DEPTHBIAS,newbias);    
+    float newbias=(float)bias;
+    Device->SetRenderState(D3DRS_DEPTHBIAS,*(DWORD *)(&newbias));    
     return 0;
 }
 GMREAL __gm82dx9_set_alphatest(double enable,double value,double cmpfunc) {
