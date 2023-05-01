@@ -122,24 +122,117 @@ void WINAPI regain_device() {
     (*runner_display_reset)();
 }
 
+short old_cw = 0;
+short new_cw = 0;
+
 HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceType, HWND hFocusWindow, DWORD BehaviorFlags,
                             D3DPRESENT_PARAMETERS *pPresentationParameters, IDirect3DDevice9 **ppReturnedDeviceInterface
 ) {
-    // _control87 doesn't seem to let us reset the control word so we're going asm
-    short old_cw;
-    _asm {
-        fnstcw [old_cw]
-    }
-    short new_cw = old_cw | 0x3f;
-    _asm {
-        fldcw [new_cw]
+    // _control87 doesn't seem to let us reset the control word, so we're going asm
+    if (old_cw == 0) {
+        _asm fnstcw [old_cw];
+        new_cw = old_cw | 0x3f;
+        _asm fldcw [new_cw];
     }
     auto res = d3d9->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
-    _asm {
-            fldcw [old_cw]
-    }
     return res;
 }
+
+#define CW_INJ_START(name) \
+    __declspec(naked) void name##_inj() { __asm { \
+        __asm fldcw [old_cw]
+#define CW_INJ_END() \
+        __asm fldcw [new_cw] \
+        __asm ret 0xc\
+        }\
+    }
+#define CW_INJ_END2() \
+            __asm fldcw [new_cw] \
+            __asm ret 0x18 \
+        } \
+    }
+
+
+CW_INJ_START(sqrt)
+    _asm fld tbyte ptr [esp + 8]
+    _asm fsqrt
+CW_INJ_END()
+
+CW_INJ_START(ln)
+    fld tbyte ptr [esp + 8]
+    fldln2
+    fxch
+    fyl2x
+CW_INJ_END()
+
+CW_INJ_START(log2)
+    fld1
+    fld tbyte ptr [esp + 8]
+    fyl2x
+CW_INJ_END()
+
+CW_INJ_START(log10)
+    fldlg2
+    fld tbyte ptr [esp + 8]
+    fyl2x
+CW_INJ_END()
+
+CW_INJ_START(arcsin)
+    fld tbyte ptr [esp + 8]
+    fld1
+    fadd st(0), st(1)
+    fld1
+    fsub st(0), st(2)
+    fmulp st(1), st(0)
+    fsqrt
+    fpatan
+CW_INJ_END()
+
+CW_INJ_START(arccos)
+    fld tbyte ptr [esp + 8]
+    fld1
+    fadd st(0), st(1)
+    fld1
+    fadd st(0), st(2)
+    fmulp st(1), st(0)
+    fsqrt
+    fxch
+    fpatan
+CW_INJ_END()
+
+CW_INJ_START(arctan)
+    fld tbyte ptr [esp + 8]
+    fld1
+    fpatan
+CW_INJ_END()
+
+CW_INJ_START(arctan2)
+    fld tbyte ptr [esp + 0x14]
+    fld tbyte ptr [esp + 8]
+    fpatan
+CW_INJ_END2()
+
+CW_INJ_START(logn)
+    fld tbyte ptr [esp + 8]
+    fyl2x
+    fld1
+    fld tbyte ptr [esp + 0x14]
+    fyl2x
+    fdivp st(1), st(0)
+CW_INJ_END2()
+
+#define CW_INJ_CALL1(name, addr)          \
+    CW_INJ_START(name)                    \
+            __asm push dword ptr [esp + 0x10]   \
+            __asm push dword ptr [esp + 0x10]   \
+            __asm push dword ptr [esp + 0x10]   \
+            __asm mov eax, addr                 \
+            __asm call eax                      \
+            __asm add esp, 12                   \
+    CW_INJ_END()
+
+CW_INJ_CALL1(exp, 0x404844)
+CW_INJ_CALL1(power, 0x6343e4)
 
 IDirect3DTexture9 *white_pixel = nullptr;
 uint8_t white_pixel_tga[] = {
@@ -679,11 +772,25 @@ BOOL WINAPI DllMain(
     PATCH_D3DX(0x531253, D3DXCreateTextureFromFileInMemoryEx);
     PATCH_D3DX(0x531277, D3DXGetErrorStringA);
 
-    ptr = (char*)(&regain_device) - (0x620012 + 5);
-    WriteProcessMemory(proc, (void*)(0x620012 + 1), &ptr, 4, nullptr);
+#define PATCH(addr, func) \
+        ptr = (char*)(&func) - (addr + 5); \
+        WriteProcessMemory(proc, (void*)(addr + 1), &ptr, 4, nullptr);
 
-    ptr = (char*)(last_resort) - (0x5795c5 + 5);
-    WriteProcessMemory(proc, (void*)(0x5795c5 + 1), &ptr, 4, nullptr);
+    PATCH(0x620012, regain_device)
+    PATCH(0x5795c5, last_resort)
+
+    // maths
+    PATCH(0x633d70, sqrt_inj)
+    PATCH(0x633e3c, exp_inj)
+    PATCH(0x633ed4, ln_inj)
+    PATCH(0x633f68, log2_inj)
+    PATCH(0x634000, log10_inj)
+    PATCH(0x634110, arcsin_inj)
+    PATCH(0x6341a8, arccos_inj)
+    PATCH(0x634244, arctan_inj)
+    PATCH(0x6342ea, arctan2_inj)
+    PATCH(0x63440e, power_inj)
+    PATCH(0x6344b6, logn_inj)
 
     FlushInstructionCache(proc, nullptr, 0);
 
