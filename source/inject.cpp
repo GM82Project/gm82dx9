@@ -154,12 +154,12 @@ HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceTyp
 
 
 CW_INJ_START(sqrt)
-    _asm fld tbyte ptr [esp + 8]
+    _asm fld tbyte ptr [esp + 4]
     _asm fsqrt
 CW_INJ_END()
 
 CW_INJ_START(ln)
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fldln2
     fxch
     fyl2x
@@ -167,18 +167,18 @@ CW_INJ_END()
 
 CW_INJ_START(log2)
     fld1
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fyl2x
 CW_INJ_END()
 
 CW_INJ_START(log10)
     fldlg2
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fyl2x
 CW_INJ_END()
 
 CW_INJ_START(arcsin)
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fld1
     fadd st(0), st(1)
     fld1
@@ -189,7 +189,7 @@ CW_INJ_START(arcsin)
 CW_INJ_END()
 
 CW_INJ_START(arccos)
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fld1
     fadd st(0), st(1)
     fld1
@@ -201,31 +201,31 @@ CW_INJ_START(arccos)
 CW_INJ_END()
 
 CW_INJ_START(arctan)
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fld1
     fpatan
 CW_INJ_END()
 
 CW_INJ_START(arctan2)
-    fld tbyte ptr [esp + 0x14]
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 0x10]
+    fld tbyte ptr [esp + 4]
     fpatan
 CW_INJ_END2()
 
 CW_INJ_START(logn)
-    fld tbyte ptr [esp + 8]
+    fld tbyte ptr [esp + 4]
     fyl2x
     fld1
-    fld tbyte ptr [esp + 0x14]
+    fld tbyte ptr [esp + 0x10]
     fyl2x
     fdivp st(1), st(0)
 CW_INJ_END2()
 
 #define CW_INJ_CALL1(name, addr)          \
     CW_INJ_START(name)                    \
-            __asm push dword ptr [esp + 0x10]   \
-            __asm push dword ptr [esp + 0x10]   \
-            __asm push dword ptr [esp + 0x10]   \
+            __asm push dword ptr [esp + 0xc]   \
+            __asm push dword ptr [esp + 0xc]   \
+            __asm push dword ptr [esp + 0xc]   \
             __asm mov eax, addr                 \
             __asm call eax                      \
             __asm add esp, 12                   \
