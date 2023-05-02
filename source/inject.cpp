@@ -138,18 +138,23 @@ HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceTyp
     return res;
 }
 
-#define CW_INJ_START(name) \
+#define CW_INJ_START(name)                        \
     __declspec(naked) void name##_inj() { __asm { \
         __asm fldcw [old_cw]
 #define CW_INJ_END() \
         __asm fldcw [new_cw] \
-        __asm ret 0xc\
-        }\
+        __asm ret 0xc        \
+        }                    \
     }
-#define CW_INJ_END2() \
+#define CW_INJ_ENDD()        \
+        __asm fldcw [new_cw] \
+        __asm ret 0x8        \
+        }                    \
+    }
+#define CW_INJ_END2()            \
             __asm fldcw [new_cw] \
-            __asm ret 0x18 \
-        } \
+            __asm ret 0x18       \
+        }                        \
     }
 
 
@@ -178,7 +183,7 @@ CW_INJ_START(log10)
 CW_INJ_END()
 
 CW_INJ_START(arcsin)
-    fld tbyte ptr [esp + 4]
+    fld qword ptr [esp + 4]
     fld1
     fadd st(0), st(1)
     fld1
@@ -186,10 +191,10 @@ CW_INJ_START(arcsin)
     fmulp st(1), st(0)
     fsqrt
     fpatan
-CW_INJ_END()
+CW_INJ_ENDD()
 
 CW_INJ_START(arccos)
-    fld tbyte ptr [esp + 4]
+    fld qword ptr [esp + 4]
     fld1
     fadd st(0), st(1)
     fld1
@@ -198,7 +203,7 @@ CW_INJ_START(arccos)
     fsqrt
     fxch
     fpatan
-CW_INJ_END()
+CW_INJ_ENDD()
 
 CW_INJ_START(arctan)
     fld tbyte ptr [esp + 4]
@@ -213,6 +218,7 @@ CW_INJ_START(arctan2)
 CW_INJ_END2()
 
 CW_INJ_START(logn)
+    fld1
     fld tbyte ptr [esp + 4]
     fyl2x
     fld1
@@ -221,18 +227,24 @@ CW_INJ_START(logn)
     fdivp st(1), st(0)
 CW_INJ_END2()
 
-#define CW_INJ_CALL1(name, addr)          \
-    CW_INJ_START(name)                    \
-            __asm push dword ptr [esp + 0xc]   \
-            __asm push dword ptr [esp + 0xc]   \
-            __asm push dword ptr [esp + 0xc]   \
-            __asm mov eax, addr                 \
-            __asm call eax                      \
-            __asm add esp, 12                   \
-    CW_INJ_END()
+CW_INJ_START(exp)
+    __asm push dword ptr [esp + 0xc]
+    __asm push dword ptr [esp + 0xc]
+    __asm push dword ptr [esp + 0xc]
+    __asm mov eax, 0x404844
+    __asm call eax
+CW_INJ_END()
 
-CW_INJ_CALL1(exp, 0x404844)
-CW_INJ_CALL1(power, 0x6343e4)
+CW_INJ_START(power)
+    __asm push dword ptr [esp + 0x10]
+    __asm push dword ptr [esp + 0x10]
+    __asm push dword ptr [esp + 0x10]
+    __asm push dword ptr [esp + 0x10]
+    __asm mov eax, 0x4103d8
+    __asm call eax
+    __asm fldcw [new_cw]
+    __asm ret 0x10
+}}
 
 IDirect3DTexture9 *white_pixel = nullptr;
 uint8_t white_pixel_tga[] = {
