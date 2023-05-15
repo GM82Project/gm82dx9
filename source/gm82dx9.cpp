@@ -60,6 +60,10 @@ GMREAL __gm82dx9_set_cull_mode(double mode) {
     Device->SetRenderState(D3DRS_CULLMODE,newmode);    
     return 0;
 }
+GMREAL __gm82dx9_set_zcomp_mode(double cmpfunc) {
+    Device->SetRenderState(D3DRS_ZFUNC,(DWORD)(int)cmpfunc);    
+    return 0;
+}
 GMREAL __gm82dx9_set_zbias(double bias) {
     float newbias=(float)bias;
     Device->SetRenderState(D3DRS_DEPTHBIAS,*(DWORD *)(&newbias));    

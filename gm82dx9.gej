@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "10/03/2023",
+	"date": "15/05/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -241,6 +241,17 @@
 					"extname": "__gm82dx9_set_zbias",
 					"calltype": 12,
 					"helpline": "d3d_set_zbias(bias)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_set_zcomp_mode",
+					"extname": "__gm82dx9_set_zcomp_mode",
+					"calltype": 12,
+					"helpline": "d3d_set_zcomp_mode(cm_comparison)",
 					"hidden": false,
 					"argtypes": [
 						2
