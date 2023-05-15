@@ -1,5 +1,4 @@
 struct PS_INPUT {
-    float4 position: POSITION0;
     float2 texcoord: TEXCOORD0;
     float4 color: COLOR0;
 };
