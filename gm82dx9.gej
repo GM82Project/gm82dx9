@@ -1636,6 +1636,17 @@
 					"hidden": true,
 					"argtypes": null,
 					"returntype": 2
+				},
+				{
+					"name": "d3d_model_create_and_load",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_create_and_load(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
 				}
 			],
 			"constants": [

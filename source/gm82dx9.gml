@@ -193,5 +193,14 @@
     d3d_model_load(__m,buffer_make_pipe(__b))
     buffer_destroy(__b)
     return __m
+
+
+#define d3d_model_create_and_load
+    ///d3d_model_create_and_load(filename)
+    var __m;
+    if (!file_exists(argument0)) return -1
+    __m=d3d_model_create()
+    d3d_model_load(__m,argument0)
+    return __m
 //
 //
