@@ -89,11 +89,20 @@ struct PShaderWithTable {
     ID3DXConstantTable* constants;
 };
 
+struct VertexBuffer {
+    IDirect3DVertexBuffer9* vbuf;
+    UINT stride;
+};
+
 struct DXData {
     unsigned int idcounter_vertex, idcounter_pixel;
+    unsigned int idcounter_vbuf, idcounter_ibuf, idcounter_vformat;
 
     std::map<unsigned int, VShaderWithTable> vertex_shaders;
     std::map<unsigned int, PShaderWithTable> pixel_shaders;
+    std::map<unsigned int, VertexBuffer> vertex_buffers;
+    std::map<unsigned int, IDirect3DIndexBuffer9*> index_buffers;
+    std::map<unsigned int, IDirect3DVertexDeclaration9*> vertex_formats;
 
     ~DXData() {
         for (auto& shader : vertex_shaders) {            
@@ -103,6 +112,15 @@ struct DXData {
         for (auto& shader : pixel_shaders) {
             ((shader.second).shader)->Release();
             ((shader.second).constants)->Release();
+        }
+        for (auto& vbuf : vertex_buffers) {
+            vbuf.second.vbuf->Release();
+        }
+        for (auto& ibuf : index_buffers) {
+            ibuf.second->Release();
+        }
+        for (auto& vformat : vertex_formats) {
+            vformat.second->Release();
         }
     }
 };

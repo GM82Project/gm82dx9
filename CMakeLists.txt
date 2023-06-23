@@ -12,7 +12,7 @@ endif()
 include_directories("include")
 link_directories("lib")
 
-add_library(gm82dx9 SHARED source/gm_interface.cpp source/gm82dx9.cpp source/transform.cpp source/shaders.cpp source/inject.cpp source/dxerr/dxerr.cpp)
+add_library(gm82dx9 SHARED source/gm_interface.cpp source/gm82dx9.cpp source/transform.cpp source/shaders.cpp source/inject.cpp source/dxerr/dxerr.cpp source/vertex_buffers.cpp source/vertex_buffers.h)
 target_link_libraries(gm82dx9 d3d9 d3dx9)
 
 SET(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} /D \"SAFESEH:NO\"")

@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "15/05/2023",
+	"date": "23/06/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1349,6 +1349,135 @@
 					"argtypes": [
 						2,
 						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_vertex_create_buffer_from_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_bind_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_vertex_draw_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_delete_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_begin",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_add_custom",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_end",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_delete",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_index_create_buffer_from_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "index_set_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "index_delete_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
 						2
 					],
 					"returntype": 2
