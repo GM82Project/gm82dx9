@@ -108,6 +108,31 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_light_define_ext",
+					"extname": "__gm82dx9_set_light",
+					"calltype": 12,
+					"helpline": "d3d_light_define_ext(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,color_diffuse,diffuse_factor,color_specular,specular_factor)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_set_alphatest",
 					"extname": "__gm82dx9_set_alphatest",
 					"calltype": 12,
@@ -175,31 +200,6 @@
 					"helpline": "d3d_set_fog_ext(type,color,start,end)",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "d3d_set_light_ext",
-					"extname": "__gm82dx9_set_light",
-					"calltype": 12,
-					"helpline": "d3d_set_light_ext(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,color_diffuse,diffuse_factor,color_specular,specular_factor)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
 						2,
 						2,
 						2,
@@ -786,6 +786,28 @@
 					"returntype": 2
 				},
 				{
+					"name": "index_delete_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "index_set_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_pixel_create_file",
 					"extname": "",
 					"calltype": 12,
@@ -951,6 +973,71 @@
 					"returntype": 2
 				},
 				{
+					"name": "vertex_bind_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_delete_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_add_custom",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_begin",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_delete",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_end",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "window_resize_buffer",
 					"extname": "__gm82dx9_resize_backbuffer",
 					"calltype": 12,
@@ -1019,6 +1106,19 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_index_create_buffer_from_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -1367,18 +1467,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_bind_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "__gm82dx9_vertex_draw_buffer",
 					"extname": "",
 					"calltype": 12,
@@ -1390,94 +1478,6 @@
 						2,
 						2,
 						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_delete_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_format_begin",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_format_add_custom",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_format_end",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_format_delete",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_index_create_buffer_from_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "index_set_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "index_delete_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": false,
-					"argtypes": [
 						2
 					],
 					"returntype": 2
