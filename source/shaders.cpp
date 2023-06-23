@@ -197,7 +197,7 @@ GMREAL shader_vertex_destroy(double shader_id) {
     if (it == shader_data.vertex_shaders.end()) return 1;
     
     VShaderWithTable vsh=it->second;    
-    if (&current_vshader==&vsh) {
+    if (current_vshader.shader == vsh.shader) {
         Device->SetVertexShader(nullptr);
         using_shader = false;
     }    
