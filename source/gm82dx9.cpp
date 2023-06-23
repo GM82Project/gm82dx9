@@ -2,6 +2,8 @@
 
 int has_started = 0;
 
+DXData dx_data;
+
 D3DVIEWPORT9 viewport;
 D3DRASTER_STATUS raster_status;
 XMMATRIX world_matrix;

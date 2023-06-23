@@ -1,6 +1,5 @@
 #include "gm82dx9.h"
 
-ShaderData shader_data;
 VShaderWithTable current_vshader;
 PShaderWithTable current_pshader;
 
@@ -116,8 +115,8 @@ GMREAL shader_vertex_create_file(const char* filename) {
     shconst.shader=shader;
     shconst.constants=ppConstantTable;
     
-    shader_data.vertex_shaders.insert(std::pair{++shader_data.idcounter_vertex, shconst});
-    return shader_data.idcounter_vertex;
+    dx_data.vertex_shaders.insert(std::pair{++dx_data.idcounter_vertex, shconst});
+    return dx_data.idcounter_vertex;
 }
 
 GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer, double length) {
@@ -140,8 +139,8 @@ GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer, double length) {
     shconst.shader=shader;
     shconst.constants=ppConstantTable;
     
-    shader_data.vertex_shaders.insert(std::pair{++shader_data.idcounter_vertex, shconst});
-    return shader_data.idcounter_vertex;
+    dx_data.vertex_shaders.insert(std::pair{++dx_data.idcounter_vertex, shconst});
+    return dx_data.idcounter_vertex;
 }
 
 GMREAL shader_pixel_create_file(const char* filename) {
@@ -164,8 +163,8 @@ GMREAL shader_pixel_create_file(const char* filename) {
     shconst.shader=shader;
     shconst.constants=ppConstantTable;
 
-    shader_data.pixel_shaders.insert(std::pair{++shader_data.idcounter_pixel, shconst});
-    return shader_data.idcounter_pixel;
+    dx_data.pixel_shaders.insert(std::pair{++dx_data.idcounter_pixel, shconst});
+    return dx_data.idcounter_pixel;
 }
 
 GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer, double length) {
@@ -188,13 +187,13 @@ GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer, double length) {
     shconst.shader=shader;
     shconst.constants=ppConstantTable;
 
-    shader_data.pixel_shaders.insert(std::pair{++shader_data.idcounter_pixel, shconst});
-    return shader_data.idcounter_pixel;
+    dx_data.pixel_shaders.insert(std::pair{++dx_data.idcounter_pixel, shconst});
+    return dx_data.idcounter_pixel;
 }
 
 GMREAL shader_vertex_destroy(double shader_id) {
-    auto it = shader_data.vertex_shaders.find(shader_id);
-    if (it == shader_data.vertex_shaders.end()) return 1;
+    auto it = dx_data.vertex_shaders.find(shader_id);
+    if (it == dx_data.vertex_shaders.end()) return 1;
     
     VShaderWithTable vsh=it->second;    
     if (current_vshader.shader == vsh.shader) {
@@ -204,13 +203,13 @@ GMREAL shader_vertex_destroy(double shader_id) {
     
     vsh.shader->Release();
     vsh.constants->Release();
-    shader_data.vertex_shaders.erase(it);
+    dx_data.vertex_shaders.erase(it);
     return 0;
 }
 
 GMREAL shader_pixel_destroy(double shader_id) {
-    auto it = shader_data.pixel_shaders.find(shader_id);
-    if (it == shader_data.pixel_shaders.end()) return 1;
+    auto it = dx_data.pixel_shaders.find(shader_id);
+    if (it == dx_data.pixel_shaders.end()) return 1;
     
     PShaderWithTable psh=it->second;    
     if (&current_pshader==&psh) {
@@ -219,14 +218,14 @@ GMREAL shader_pixel_destroy(double shader_id) {
     
     psh.shader->Release();
     psh.constants->Release();
-    shader_data.pixel_shaders.erase(it);
+    dx_data.pixel_shaders.erase(it);
     return 0;
 }
 
 GMREAL shader_pixel_set(double shader_id) {
     if (shader_id < 0) return 1;
-    auto it = shader_data.pixel_shaders.find(shader_id);
-    if (it == shader_data.pixel_shaders.end()) return 1;
+    auto it = dx_data.pixel_shaders.find(shader_id);
+    if (it == dx_data.pixel_shaders.end()) return 1;
     current_pshader = it->second;
     vibe_check(Device->SetPixelShader(current_pshader.shader));
     current_pshader.constants->SetDefaults(Device);
@@ -235,8 +234,8 @@ GMREAL shader_pixel_set(double shader_id) {
 
 GMREAL shader_vertex_set(double shader_id) {
     if (shader_id < 0) return 1;
-    auto it = shader_data.vertex_shaders.find(shader_id);
-    if (it == shader_data.vertex_shaders.end()) return 1;
+    auto it = dx_data.vertex_shaders.find(shader_id);
+    if (it == dx_data.vertex_shaders.end()) return 1;
     current_vshader = it->second;
     if (vibe_check(Device->SetVertexShader(current_vshader.shader))) return 1;
     using_shader = true;

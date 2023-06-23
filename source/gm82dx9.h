@@ -89,13 +89,13 @@ struct PShaderWithTable {
     ID3DXConstantTable* constants;
 };
 
-struct ShaderData {
+struct DXData {
     unsigned int idcounter_vertex, idcounter_pixel;
 
     std::map<unsigned int, VShaderWithTable> vertex_shaders;
     std::map<unsigned int, PShaderWithTable> pixel_shaders;
 
-    ~ShaderData() {
+    ~DXData() {
         for (auto& shader : vertex_shaders) {            
             ((shader.second).shader)->Release();
             ((shader.second).constants)->Release();
@@ -106,3 +106,5 @@ struct ShaderData {
         }
     }
 };
+
+extern DXData dx_data;
