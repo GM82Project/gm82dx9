@@ -35,6 +35,11 @@ GMREAL vertex_bind_buffer(double slot, double vbuf_id) {
     return 0;
 }
 
+GMREAL vertex_set_instance_size(double bufslot, double size) {
+    if (vibe_check(Device->SetStreamSourceFreq(bufslot, size))) return 1;
+    return 0;
+}
+
 // PRECONDITIONS: must draw with shader, texture must exist
 GMREAL __gm82dx9_vertex_draw_buffer(double vbuf_id, double vformat_id, double primitive_type, double texture_id, double prim_count, double indexed) {
     auto bit = dx_data.vertex_buffers.find(vbuf_id);

@@ -985,6 +985,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "vertex_set_instance_size",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_set_instance_size(slot,size)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "vertex_buffer_delete",
 					"extname": "vertex_delete_buffer",
 					"calltype": 12,
