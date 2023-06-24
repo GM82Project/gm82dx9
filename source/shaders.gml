@@ -282,5 +282,44 @@
 #define vertex_buffer_create
     ///vertex_buffer_create(buffer,stride)
     __gm82dx9_vertex_create_buffer_from_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0),argument1)
+
+
+#define vertex_format_add_position
+    ///vertex_format_add_position(slot)
+    vertex_format_add_custom(vf_type_float4,vf_usage_position,argument0)
+
+
+#define vertex_format_add_texcoord
+    ///vertex_format_add_texcoord(slot)
+    vertex_format_add_custom(vf_type_float2,vf_usage_texcoord,argument0)
+
+
+#define vertex_format_add_colour
+    ///vertex_format_add_colour(slot)
+    vertex_format_add_custom(vf_type_d3dcolor,vf_usage_colour,argument0)
+
+
+#define vertex_format_add_normal
+    ///vertex_format_add_normal(slot)
+    vertex_format_add_custom(vf_type_float4,vf_usage_normal,argument0)
+
+
+#define buffer_write_format_position
+    ///buffer_write_format_position(buffer,x,y,z)
+    buffer_write_float(argument0,argument1)
+    buffer_write_float(argument0,argument2)
+    buffer_write_float(argument0,argument3)
+    buffer_write_float(argument0,0)
+
+
+#define buffer_write_format_texcoord
+    ///buffer_write_format_texcoord(buffer,u,v)
+    buffer_write_float(argument0,argument1)
+    buffer_write_float(argument0,argument2)
+
+
+#define buffer_write_format_colour
+    ///buffer_write_format_colour(buffer,color,alpha)
+    buffer_write_u32(argument0,((argument1 & $ff)<<16)+(argument1 & $ff00)+((argument1 & $ff0000)>>16)+((argument2*255)<<24))
 //
 //

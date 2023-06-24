@@ -1775,11 +1775,6 @@
 					"hidden": false
 				},
 				{
-					"name": "vf_usage_color",
-					"value": "10",
-					"hidden": false
-				},
-				{
 					"name": "vf_usage_depth",
 					"value": "12",
 					"hidden": false
@@ -2278,6 +2273,90 @@
 					"helpline": "vertex_buffer_create(buffer,stride)",
 					"hidden": false,
 					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_add_position",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_format_add_position(slot)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_add_texcoord",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_format_add_texcoord(slot)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_add_colour",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_format_add_colour(slot)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_add_normal",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_format_add_normal(slot)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_write_format_position",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_position(buffer,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_write_format_texcoord",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_texcoord(buffer,u,v)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_write_format_colour",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_colour(buffer,color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
 						2,
 						2
 					],
