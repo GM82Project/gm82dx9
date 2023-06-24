@@ -12,6 +12,7 @@
 #include <math.h>
 #include <windows.h>
 #include <versionhelpers.h>
+#include <array>
 #include <map>
 
 #include "d3dx9.h"
@@ -94,6 +95,11 @@ struct VertexBuffer {
     UINT stride;
 };
 
+struct VertexFormat {
+    IDirect3DVertexDeclaration9* decl;
+    std::array<WORD, 16> sizes;
+};
+
 struct DXData {
     unsigned int idcounter_vertex, idcounter_pixel;
     unsigned int idcounter_vbuf, idcounter_ibuf, idcounter_vformat;
@@ -102,7 +108,7 @@ struct DXData {
     std::map<unsigned int, PShaderWithTable> pixel_shaders;
     std::map<unsigned int, VertexBuffer> vertex_buffers;
     std::map<unsigned int, IDirect3DIndexBuffer9*> index_buffers;
-    std::map<unsigned int, IDirect3DVertexDeclaration9*> vertex_formats;
+    std::map<unsigned int, VertexFormat> vertex_formats;
 
     ~DXData() {
         for (auto& shader : vertex_shaders) {            
@@ -120,7 +126,7 @@ struct DXData {
             ibuf.second->Release();
         }
         for (auto& vformat : vertex_formats) {
-            vformat.second->Release();
+            vformat.second.decl->Release();
         }
     }
 };

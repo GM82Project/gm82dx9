@@ -3,7 +3,7 @@
 #include <vector>
 
 std::vector<D3DVERTEXELEMENT9> vformat_building;
-WORD vformat_offsets[16];
+std::array<WORD, 16> vformat_offsets;
 
 GMREAL __gm82dx9_vertex_create_buffer_from_buffer(double buffer, double length, double stride) {
     // create vertex buffer
@@ -49,7 +49,7 @@ GMREAL __gm82dx9_vertex_draw_buffer(double vbuf_id, double vformat_id, double pr
     if (vibe_check(Device->SetStreamSource(0, bit->second.vbuf, 0, bit->second.stride))) {
         return 1;
     }
-    Device->SetVertexDeclaration(fit->second);
+    Device->SetVertexDeclaration(fit->second.decl);
     Device->SetTexture(0, get_gm_texture(texture_id)->texture);
     if (indexed >= 0.5) {
         int vert_count;
@@ -80,7 +80,7 @@ GMREAL vertex_delete_buffer(double vbuf_id) {
 
 GMREAL vertex_format_begin() {
     vformat_building.clear();
-    memset(vformat_offsets, 0, sizeof(vformat_offsets));
+    vformat_offsets.fill(0);
     return 0;
 }
 
@@ -137,15 +137,28 @@ GMREAL vertex_format_end() {
     }
     // remove terminator
     vformat_building.pop_back();
-    dx_data.vertex_formats.insert(std::pair{++dx_data.idcounter_vformat, vformat});
+    VertexFormat format = {vformat, vformat_offsets};
+    dx_data.vertex_formats.insert(std::pair{++dx_data.idcounter_vformat, format});
     return dx_data.idcounter_vformat;
+}
+
+// TODO
+GMREAL vertex_format_get_size(double vformat_id, double bufslot) {
+    if (bufslot<0 || bufslot>15) {
+        show_error("Incorrect slot for vertex format custom (0-15).");
+        return -1;
+    }
+    auto it = dx_data.vertex_formats.find(vformat_id);
+    if (it == dx_data.vertex_formats.end()) return -1;
+
+    return it->second.sizes[bufslot];
 }
 
 GMREAL vertex_format_delete(double vformat_id) {
     auto it = dx_data.vertex_formats.find(vformat_id);
     if (it == dx_data.vertex_formats.end()) return 1;
 
-    it->second->Release();
+    it->second.decl->Release();
     dx_data.vertex_formats.erase(it);
     return 0;
 }
