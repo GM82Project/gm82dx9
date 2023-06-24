@@ -1044,7 +1044,7 @@
 					"name": "vertex_format_delete",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "vertex_format_delete(vformat)",
+					"helpline": "vertex_format_delete(format)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1064,7 +1064,7 @@
 					"name": "vertex_format_get_size",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "vertex_format_get_size(vformat,slot)",
+					"helpline": "vertex_format_get_size(format,slot)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1159,8 +1159,8 @@
 					"name": "__gm82dx9_index_create_buffer_from_buffer",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "__gm82dx9_index_create_buffer_from_buffer(buffer,length,format)",
-					"hidden": false,
+					"helpline": "",
+					"hidden": true,
 					"argtypes": [
 						2,
 						2,
@@ -1517,8 +1517,8 @@
 					"name": "__gm82dx9_vertex_draw_buffer",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "__gm82dx9_vertex_draw_buffer(vbuffer,vformat,prim,texture,count,indexed)",
-					"hidden": false,
+					"helpline": "",
+					"hidden": true,
 					"argtypes": [
 						2,
 						2,
@@ -1835,6 +1835,26 @@
 					"name": "vf_usage_arbitrary",
 					"value": "5",
 					"hidden": false
+				},
+				{
+					"name": "ib_format_16",
+					"value": "101",
+					"hidden": false
+				},
+				{
+					"name": "ib_format_32",
+					"value": "102",
+					"hidden": false
+				},
+				{
+					"name": "ss_indexeddata",
+					"value": "1<<30",
+					"hidden": false
+				},
+				{
+					"name": "ss_instancedata",
+					"value": "2<<30",
+					"hidden": false
 				}
 			]
 		},
@@ -2073,6 +2093,18 @@
 					"helpline": "draw_quad(x,y,w,h,tex,[u1,v1,u2,v2])",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "index_buffer_create",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "index_buffer_create(buffer,ib_...)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -2377,7 +2409,7 @@
 					"name": "vertex_buffer_draw",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "vertex_buffer_draw(vbuffer,vformat,primitive,texture)",
+					"helpline": "vertex_buffer_draw(vbuffer,format,primitive,texture)",
 					"hidden": false,
 					"argtypes": [
 						2,
