@@ -3,9 +3,9 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "23/06/2023",
+	"date": "24/06/2023",
 	"license": "Free to use, also for commercial games.",
-	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
+	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
 	"hidden": false,
 	"dependencies": [
@@ -789,7 +789,7 @@
 					"name": "index_delete_buffer",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "index_delete_buffer(ibuffer)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -800,7 +800,7 @@
 					"name": "index_set_buffer",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "index_set_buffer(ibuffer)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -973,10 +973,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_bind_buffer",
-					"extname": "",
+					"name": "vertex_buffer_bind",
+					"extname": "vertex_bind_buffer",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "vertex_buffer_bind(slot,vbuffer)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -985,10 +985,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_delete_buffer",
-					"extname": "",
+					"name": "vertex_buffer_delete",
+					"extname": "vertex_delete_buffer",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "vertex_buffer_delete(vbuffer)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -999,7 +999,7 @@
 					"name": "vertex_format_add_custom",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "vertex_format_add_custom(type,usage,slot)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1012,7 +1012,7 @@
 					"name": "vertex_format_begin",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "vertex_format_begin()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
@@ -1021,7 +1021,7 @@
 					"name": "vertex_format_delete",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "vertex_format_delete(vformat)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1032,7 +1032,7 @@
 					"name": "vertex_format_end",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "vertex_format_end()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
@@ -1112,7 +1112,7 @@
 					"name": "__gm82dx9_index_create_buffer_from_buffer",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "__gm82dx9_index_create_buffer_from_buffer(buffer,length,format)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1458,7 +1458,7 @@
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
-					"hidden": false,
+					"hidden": true,
 					"argtypes": [
 						2,
 						2,
@@ -1470,7 +1470,7 @@
 					"name": "__gm82dx9_vertex_draw_buffer",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "",
+					"helpline": "__gm82dx9_vertex_draw_buffer(vbuffer,vformat,prim,texture,count,indexed)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -1622,6 +1622,171 @@
 				{
 					"name": "cm_notequal",
 					"value": "6",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float1",
+					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float2",
+					"value": "1",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float3",
+					"value": "",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float4",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_d3dcolor",
+					"value": "4",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_ubyte4",
+					"value": "5",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_short2",
+					"value": "6",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_short4",
+					"value": "7",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_ubyte4n",
+					"value": "8",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_short2n",
+					"value": "9",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_short4n",
+					"value": "10",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_ushort2n",
+					"value": "11",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_ushort4n",
+					"value": "12",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_udec3",
+					"value": "13",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_dec3n",
+					"value": "14",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float16_2",
+					"value": "15",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float16_4",
+					"value": "16",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_unused",
+					"value": "17",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_position",
+					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_blendweight",
+					"value": "1",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_blendindices",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_normal",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_psize",
+					"value": "4",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_texcoord",
+					"value": "5",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_tangent",
+					"value": "6",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_binormal",
+					"value": "7",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_tessfactor",
+					"value": "8",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_positiont",
+					"value": "9",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_colour",
+					"value": "10",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_fog",
+					"value": "11",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_color",
+					"value": "10",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_depth",
+					"value": "12",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_sample",
+					"value": "13",
 					"hidden": false
 				}
 			]
@@ -2104,6 +2269,18 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "vertex_buffer_create",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_buffer_create(buffer,stride)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
 					"returntype": 2
 				}
 			],

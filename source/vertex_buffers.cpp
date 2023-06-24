@@ -80,7 +80,10 @@ GMREAL vertex_format_begin() {
 }
 
 GMREAL vertex_format_add_custom(double type, double usage, double bufslot) {
-    // TODO bounds check bufslot 0-16
+    if (bufslot<0 || bufslot>15) {
+        show_error("Incorrect slot for vertex format custom (0-15).");
+        return 0;
+    }
     vformat_building.push_back({
         .Stream = WORD(bufslot),
         .Offset = vformat_offsets[int(bufslot)],

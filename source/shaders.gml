@@ -277,5 +277,10 @@
     ///surface_reset_target_ext(target)
     if (argument0==0) surface_reset_target()
     else __gm82dx9_surface_set_target_ext(argument0,-1)
+
+
+#define vertex_buffer_create
+    ///vertex_buffer_create(buffer,stride)
+    __gm82dx9_vertex_create_buffer_from_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0),argument1)
 //
 //
