@@ -1,13 +1,14 @@
 # gm82dx9
 This extension upgrades Game Maker 8.2 to DirectX version 9.0.
 
-Shader support by Floogle.
+Shader and vertex buffer support by Floogle.
 Optimized transforms by Lovey01.
 
 ## What this enables
 
     - better window compositing and performance due to using a modern api
     - use HLSL9 vertex and pixel shaders
+    - create and use vertex buffers and vertex formats for faster drawing
     - safe surface functions that won't crash the game
     - separate blend mode for the alpha channel
     - resize the backbuffer so you can have proper pixel aspect and good fullscreen
