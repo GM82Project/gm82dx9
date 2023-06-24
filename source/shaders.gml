@@ -304,6 +304,25 @@
     vertex_format_add_custom(vf_type_float4,vf_usage_normal,argument0)
 
 
+#define buffer_write_format_default
+    ///buffer_write_format_default(buffer,x,y,z,nx,ny,nz,u,v,color,alpha)
+
+    buffer_write_float(argument0,argument1)
+    buffer_write_float(argument0,argument2)
+    buffer_write_float(argument0,argument3)
+    buffer_write_float(argument0,0)
+    
+    buffer_write_float(argument0,argument4)
+    buffer_write_float(argument0,argument5)
+    buffer_write_float(argument0,argument6)
+    buffer_write_float(argument0,0)
+    
+    buffer_write_u32(argument0,((argument9 & $ff)<<16)+(argument9 & $ff00)+((argument9 & $ff0000)>>16)+((argument10*255)<<24))
+    
+    buffer_write_float(argument0,argument7)
+    buffer_write_float(argument0,argument8)
+
+
 #define buffer_write_format_position
     ///buffer_write_format_position(buffer,x,y,z)
     buffer_write_float(argument0,argument1)
@@ -321,5 +340,44 @@
 #define buffer_write_format_colour
     ///buffer_write_format_colour(buffer,color,alpha)
     buffer_write_u32(argument0,((argument1 & $ff)<<16)+(argument1 & $ff00)+((argument1 & $ff0000)>>16)+((argument2*255)<<24))
+
+
+#define vertex_format_create_simple
+    ///vertex_format_create_simple(vf_usage_...)
+    vertex_format_begin()
+    i=0 repeat (argument_count) {
+        if (argument[i]==vf_usage_position) vertex_format_add_position(0)
+        else if (argument[i]==vf_usage_texcoord) vertex_format_add_texcoord(0)
+        else if (argument[i]==vf_usage_normal) vertex_format_add_normal(0)
+        else if (argument[i]==vf_usage_colour) vertex_format_add_colour(0)
+        else show_error("invalid usage semantic passed to vertex_format_simple",0)
+    i+=1}
+    return vertex_format_end()
+
+
+#define vertex_format_create_default
+    ///vertex_format_create_default()
+    vertex_format_begin()
+    vertex_format_add_position(0)
+    vertex_format_add_normal(0)
+    vertex_format_add_colour(0)
+    vertex_format_add_texcoord(0)    
+    return vertex_format_end()
+
+
+#define vertex_buffer_draw
+    ///vertex_buffer_draw(vbuffer,vformat,primitive,texture)
+    var vertices,count;
+    
+    vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
+        
+    if (argument2==pr_pointlist    ) count=vertices
+    if (argument2==pr_linelist     ) count=vertices div 2
+    if (argument2==pr_linestrip    ) count=vertices-1    
+    if (argument2==pr_trianglelist ) count=vertices div 3
+    if (argument2==pr_trianglefan
+    ||  argument2==pr_trianglestrip) count=vertices-2      
+
+    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,count,false)
 //
 //

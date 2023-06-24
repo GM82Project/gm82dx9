@@ -985,18 +985,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_set_instance_size",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "vertex_set_instance_size(slot,size)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "vertex_buffer_delete",
 					"extname": "vertex_delete_buffer",
 					"calltype": 12,
@@ -1047,6 +1035,30 @@
 					"helpline": "vertex_format_end()",
 					"hidden": false,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_get_size",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_format_get_size(vformat,slot)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_set_instance_size",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_set_instance_size(slot,size)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -1493,6 +1505,17 @@
 						2
 					],
 					"returntype": 2
+				},
+				{
+					"name": "vertex_buffer_get_size",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_buffer_get_size(vbuffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
 				}
 			],
 			"constants": [
@@ -1795,6 +1818,11 @@
 					"name": "vf_usage_sample",
 					"value": "13",
 					"hidden": false
+				},
+				{
+					"name": "vf_usage_arbitrary",
+					"value": "5",
+					"hidden": false
 				}
 			]
 		},
@@ -1965,6 +1993,67 @@
 			"init": "",
 			"final": "",
 			"functions": [
+				{
+					"name": "buffer_write_format_colour",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_colour(buffer,color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_write_format_default",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_default(buffer,x,y,z,nx,ny,nz,u,v,color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_write_format_position",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_position(buffer,x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "buffer_write_format_texcoord",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_write_format_texcoord(buffer,u,v)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
 				{
 					"name": "draw_quad",
 					"extname": "",
@@ -2261,24 +2350,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_pixel_uniform",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_vertex_uniform",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
 					"name": "vertex_buffer_create",
 					"extname": "",
 					"calltype": 2,
@@ -2291,23 +2362,15 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_format_add_position",
+					"name": "vertex_buffer_draw",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "vertex_format_add_position(slot)",
+					"helpline": "vertex_buffer_draw(vbuffer,vformat,primitive,texture)",
 					"hidden": false,
 					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_format_add_texcoord",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "vertex_format_add_texcoord(slot)",
-					"hidden": false,
-					"argtypes": [
+						2,
+						2,
+						2,
 						2
 					],
 					"returntype": 2
@@ -2335,43 +2398,61 @@
 					"returntype": 2
 				},
 				{
-					"name": "buffer_write_format_position",
+					"name": "vertex_format_add_position",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "buffer_write_format_position(buffer,x,y,z)",
+					"helpline": "vertex_format_add_position(slot)",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
-						2,
 						2
 					],
 					"returntype": 2
 				},
 				{
-					"name": "buffer_write_format_texcoord",
+					"name": "vertex_format_add_texcoord",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "buffer_write_format_texcoord(buffer,u,v)",
+					"helpline": "vertex_format_add_texcoord(slot)",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
 						2
 					],
 					"returntype": 2
 				},
 				{
-					"name": "buffer_write_format_colour",
+					"name": "vertex_format_create_default",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "buffer_write_format_colour(buffer,color,alpha)",
+					"helpline": "vertex_format_create_default()",
 					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_format_create_simple",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_format_create_simple(vf_usage_...)",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_pixel_uniform",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_vertex_uniform",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": null,
 					"returntype": 2
 				}
 			],

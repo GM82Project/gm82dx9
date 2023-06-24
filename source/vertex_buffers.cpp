@@ -22,6 +22,15 @@ GMREAL __gm82dx9_vertex_create_buffer_from_buffer(double buffer, double length, 
     return dx_data.idcounter_vbuf;
 }
 
+GMREAL vertex_buffer_get_size(double vbuf_id) {
+    if (vbuf_id<0) return -1;
+    auto it = dx_data.vertex_buffers.find(vbuf_id);
+    if (it == dx_data.vertex_buffers.end()) return -1;
+    D3DVERTEXBUFFER_DESC desc;
+    it->second.vbuf->GetDesc(&desc);
+    return (double)desc.Size;
+}
+
 GMREAL vertex_bind_buffer(double slot, double vbuf_id) {
     if (vbuf_id < 0) {
         Device->SetStreamSource(slot, nullptr, 0, 1);
