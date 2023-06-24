@@ -1073,15 +1073,35 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_set_instance_size",
+					"name": "vertex_set_instance_count",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "vertex_set_instance_size(slot,size)",
+					"helpline": "vertex_set_instance_count(count)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_set_instances_per_vertex",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_set_instances_per_vertex(slot,count)",
 					"hidden": false,
 					"argtypes": [
 						2,
 						2
 					],
+					"returntype": 2
+				},
+				{
+					"name": "vertex_instance_reset",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_instance_reset()",
+					"hidden": false,
+					"argtypes": [],
 					"returntype": 2
 				},
 				{

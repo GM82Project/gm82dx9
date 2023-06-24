@@ -44,9 +44,19 @@ GMREAL vertex_bind_buffer(double slot, double vbuf_id) {
     return 0;
 }
 
-GMREAL vertex_set_instance_size(double bufslot, double size) {
-    if (vibe_check(Device->SetStreamSourceFreq(bufslot, size))) return 1;
+GMREAL vertex_set_instance_count(double count) {
+    if (vibe_check(Device->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | int(count)))) return 1;
     return 0;
+}
+
+GMREAL vertex_set_instances_per_vertex(double bufslot, double size) {
+    if (vibe_check(Device->SetStreamSourceFreq(bufslot, D3DSTREAMSOURCE_INSTANCEDATA | int(size)))) return 1;
+    return 0;
+}
+
+GMREAL vertex_instance_reset() {
+	for (int i = 0; i < 16; i++) Device->SetStreamSourceFreq(i, 1);
+	return 0;
 }
 
 // PRECONDITIONS: must draw with shader, texture must exist
