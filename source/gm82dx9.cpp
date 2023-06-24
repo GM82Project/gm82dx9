@@ -39,6 +39,11 @@ GMREAL argb_make_color(double color, double alpha) {
     return (double)((((int)(alpha*0xff))<<24)|((unsigned int)color));
 }
 
+GMREAL color_to_d3dcolor(double color, double alpha) {
+    int col=(unsigned int)color;
+    return (double)(((col & 0xff)<<16)+(col & 0xff00)+((col & 0xff0000)>>16)+(((unsigned int)(alpha*0xff))<<24));
+}
+
 GMREAL __gm82dx9_set_color_mask(double red, double green, double blue, double alpha) {
     UINT mask = 0;
     if (alpha>=0.5) mask += D3DCOLORWRITEENABLE_ALPHA;

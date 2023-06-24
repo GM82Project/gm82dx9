@@ -54,6 +54,18 @@
 					"returntype": 2
 				},
 				{
+					"name": "color_to_d3dcolor",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "color_to_d3dcolor(color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_clear_depth_buffer",
 					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
@@ -996,6 +1008,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "vertex_buffer_get_size",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "vertex_buffer_get_size(vbuffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "vertex_format_add_custom",
 					"extname": "",
 					"calltype": 12,
@@ -1502,17 +1525,6 @@
 						2,
 						2,
 						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_buffer_get_size",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "vertex_buffer_get_size(vbuffer)",
-					"hidden": false,
-					"argtypes": [
 						2
 					],
 					"returntype": 2

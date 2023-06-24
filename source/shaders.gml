@@ -317,7 +317,7 @@
     buffer_write_float(argument0,argument6)
     buffer_write_float(argument0,0)
     
-    buffer_write_u32(argument0,((argument9 & $ff)<<16)+(argument9 & $ff00)+((argument9 & $ff0000)>>16)+((argument10*255)<<24))
+    buffer_write_u32(argument0,color_to_d3dcolor(argument9,argument10))
     
     buffer_write_float(argument0,argument7)
     buffer_write_float(argument0,argument8)
@@ -339,7 +339,7 @@
 
 #define buffer_write_format_colour
     ///buffer_write_format_colour(buffer,color,alpha)
-    buffer_write_u32(argument0,((argument1 & $ff)<<16)+(argument1 & $ff00)+((argument1 & $ff0000)>>16)+((argument2*255)<<24))
+    buffer_write_u32(argument0,color_to_d3dcolor(argument1,argument2))
 
 
 #define vertex_format_create_simple
