@@ -187,7 +187,7 @@ GMREAL vertex_format_delete(double vformat_id) {
 GMREAL __gm82dx9_index_create_buffer_from_buffer(double buffer, double length, double format) {
     // create index buffer
     IDirect3DIndexBuffer9* ibuf;
-    if (vibe_check(Device->CreateIndexBuffer(length, 0, D3DFORMAT(format), D3DPOOL_DEFAULT, &ibuf, NULL))) {
+    if (vibe_check(Device->CreateIndexBuffer(length, D3DUSAGE_WRITEONLY, D3DFORMAT(format), D3DPOOL_MANAGED, &ibuf, 0))) {
         return -1;
     }
     // populate index buffer
