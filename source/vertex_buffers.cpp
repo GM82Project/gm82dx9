@@ -4,6 +4,7 @@
 
 std::vector<D3DVERTEXELEMENT9> vformat_building;
 std::array<WORD, 16> vformat_offsets;
+std::array<BYTE, 14> usage_indices;
 
 GMREAL __gm82dx9_vertex_create_buffer_from_buffer(double buffer, double length, double stride) {
     // create vertex buffer
@@ -100,6 +101,7 @@ GMREAL vertex_delete_buffer(double vbuf_id) {
 GMREAL vertex_format_begin() {
     vformat_building.clear();
     vformat_offsets.fill(0);
+	usage_indices.fill(0);
     return 0;
 }
 
@@ -114,7 +116,7 @@ GMREAL vertex_format_add_custom(double type, double usage, double bufslot) {
         .Type = BYTE(type),
         .Method = D3DDECLMETHOD_DEFAULT,
         .Usage = BYTE(usage),
-        .UsageIndex = BYTE(bufslot),
+        .UsageIndex = usage_indices[usage]++,
     });
     int size = 0;
     switch (D3DDECLTYPE(type)) {
