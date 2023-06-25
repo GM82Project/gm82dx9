@@ -1865,16 +1865,6 @@
 					"name": "ib_format_32",
 					"value": "102",
 					"hidden": false
-				},
-				{
-					"name": "ss_indexeddata",
-					"value": "1<<30",
-					"hidden": false
-				},
-				{
-					"name": "ss_instancedata",
-					"value": "2<<30",
-					"hidden": false
 				}
 			]
 		},

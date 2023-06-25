@@ -45,12 +45,12 @@ GMREAL vertex_bind_buffer(double slot, double vbuf_id) {
 }
 
 GMREAL vertex_set_instance_count(double count) {
-    if (vibe_check(Device->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | int(count)))) return 1;
+    if (vibe_check(Device->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | (unsigned int)count))) return 1;
     return 0;
 }
 
 GMREAL vertex_set_instances_per_vertex(double bufslot, double size) {
-    if (vibe_check(Device->SetStreamSourceFreq(bufslot, D3DSTREAMSOURCE_INSTANCEDATA | int(size)))) return 1;
+    if (vibe_check(Device->SetStreamSourceFreq((unsigned int)bufslot, D3DSTREAMSOURCE_INSTANCEDATA | (unsigned int)size))) return 1;
     return 0;
 }
 
@@ -114,7 +114,7 @@ GMREAL vertex_format_add_custom(double type, double usage, double bufslot) {
         .Type = BYTE(type),
         .Method = D3DDECLMETHOD_DEFAULT,
         .Usage = BYTE(usage),
-        .UsageIndex = 0,
+        .UsageIndex = BYTE(bufslot),
     });
     int size = 0;
     switch (D3DDECLTYPE(type)) {
