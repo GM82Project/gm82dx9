@@ -311,16 +311,9 @@
 
 #define buffer_write_format_default
     ///buffer_write_format_default(buffer,x,y,z,nx,ny,nz,u,v,color,alpha)
-
-    buffer_write_float(argument0,argument1)
-    buffer_write_float(argument0,argument2)
-    buffer_write_float(argument0,argument3)
-    buffer_write_float(argument0,0)
+    buffer_write_float4(argument0,argument1,argument2,argument3,0)
     
-    buffer_write_float(argument0,argument4)
-    buffer_write_float(argument0,argument5)
-    buffer_write_float(argument0,argument6)
-    buffer_write_float(argument0,0)
+    buffer_write_float4(argument0,argument4,argument5,argument6,0)
     
     buffer_write_u32(argument0,color_to_d3dcolor(argument9,argument10))
     
@@ -330,10 +323,7 @@
 
 #define buffer_write_format_position
     ///buffer_write_format_position(buffer,x,y,z)
-    buffer_write_float(argument0,argument1)
-    buffer_write_float(argument0,argument2)
-    buffer_write_float(argument0,argument3)
-    buffer_write_float(argument0,0) //w
+    buffer_write_float4(argument0,argument1,argument2,argument3,0)
 
 
 #define buffer_write_format_texcoord

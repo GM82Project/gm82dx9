@@ -2070,6 +2070,20 @@
 					"returntype": 2
 				},
 				{
+					"name": "buffer_write_format_normal",
+					"extname": "buffer_write_format_position",
+					"calltype": 2,
+					"helpline": "buffer_write_format_normal(buffer,nx,ny,nz)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "buffer_write_format_position",
 					"extname": "",
 					"calltype": 2,
@@ -2488,6 +2502,19 @@
 					"returntype": 2
 				},
 				{
+					"name": "vertex_instance_set",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_instance_set(instbuffer,format,slot)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_pixel_uniform",
 					"extname": "",
 					"calltype": 2,
@@ -2503,19 +2530,6 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "vertex_instance_set",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "vertex_instance_set(instbuffer,format,slot)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
 					"returntype": 2
 				}
 			],
