@@ -988,7 +988,7 @@
 					"name": "vertex_buffer_bind",
 					"extname": "vertex_bind_buffer",
 					"calltype": 12,
-					"helpline": "vertex_buffer_bind(slot,vbuffer)",
+					"helpline": "vertex_buffer_bind(vbuffer,slot)",
 					"hidden": false,
 					"argtypes": [
 						2,

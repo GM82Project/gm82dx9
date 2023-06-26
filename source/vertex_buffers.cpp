@@ -32,7 +32,7 @@ GMREAL vertex_buffer_get_size(double vbuf_id) {
     return (double)desc.Size;
 }
 
-GMREAL vertex_bind_buffer(double slot, double vbuf_id) {
+GMREAL vertex_bind_buffer(double vbuf_id, double slot) {
     if (vbuf_id < 0) {
         Device->SetStreamSource(slot, nullptr, 0, 1);
     } else {

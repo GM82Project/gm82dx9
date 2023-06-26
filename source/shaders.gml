@@ -333,7 +333,7 @@
     buffer_write_float(argument0,argument1)
     buffer_write_float(argument0,argument2)
     buffer_write_float(argument0,argument3)
-    buffer_write_float(argument0,1) //w
+    buffer_write_float(argument0,0) //w
 
 
 #define buffer_write_format_texcoord
@@ -398,7 +398,7 @@
     vertex_set_instance_count(vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,argument2))
     vertex_set_instances_per_vertex(1,1)
     
-    vertex_buffer_bind(argument2,argument0)
+    vertex_buffer_bind(argument0,argument2)
 
 //
 //
