@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "24/06/2023",
+	"date": "26/06/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1022,7 +1022,7 @@
 					"name": "vertex_format_add_custom",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "vertex_format_add_custom(type,usage,slot)",
+					"helpline": "vertex_format_add_custom(vf_type_...,vf_usage_...,slot)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -2407,9 +2407,10 @@
 					"name": "vertex_buffer_create",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "vertex_buffer_create(buffer,stride)",
+					"helpline": "vertex_buffer_create(buffer,format,slot)",
 					"hidden": false,
 					"argtypes": [
+						2,
 						2,
 						2
 					],
@@ -2419,14 +2420,9 @@
 					"name": "vertex_buffer_draw",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "vertex_buffer_draw(vbuffer,format,primitive,texture)",
+					"helpline": "vertex_buffer_draw(vbuffer,format,primitive,texture,[ibuffer])",
 					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2
-					],
+					"argtypes": null,
 					"returntype": 2
 				},
 				{
@@ -2507,6 +2503,19 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "vertex_instance_set",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "vertex_instance_set(instbuffer,format,slot)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				}
 			],

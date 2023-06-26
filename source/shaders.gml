@@ -285,8 +285,8 @@
 
 
 #define vertex_buffer_create
-    ///vertex_buffer_create(buffer,stride)
-    __gm82dx9_vertex_create_buffer_from_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0),argument1)
+    ///vertex_buffer_create(buffer,format,slot)
+    __gm82dx9_vertex_create_buffer_from_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0),vertex_format_get_size(argument1,argument2))
 
 
 #define vertex_format_add_position
@@ -333,7 +333,7 @@
     buffer_write_float(argument0,argument1)
     buffer_write_float(argument0,argument2)
     buffer_write_float(argument0,argument3)
-    buffer_write_float(argument0,0)
+    buffer_write_float(argument0,1) //w
 
 
 #define buffer_write_format_texcoord
@@ -371,8 +371,8 @@
 
 
 #define vertex_buffer_draw
-    ///vertex_buffer_draw(vbuffer,vformat,primitive,texture)
-    var vertices,count;
+    ///vertex_buffer_draw(vbuffer,vformat,primitive,texture,[ibuffer])
+    var vertices,count,indexed;
     
     vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
         
@@ -383,6 +383,22 @@
     if (argument2==pr_trianglefan
     ||  argument2==pr_trianglestrip) count=vertices-2      
 
-    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,count,false)
+    indexed=false
+    if (argument_count>4) {
+        index_set_buffer(argument4)
+        indexed=true
+    }
+    
+    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,count,indexed)
+
+
+#define vertex_instance_set
+    ///vertex_instance_set(instbuffer,format,slot)
+
+    vertex_set_instance_count(vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,argument2))
+    vertex_set_instances_per_vertex(1,1)
+    
+    vertex_buffer_bind(argument2,argument0)
+
 //
 //
