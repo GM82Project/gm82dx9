@@ -36,7 +36,7 @@ compile_shader(ps_pass.hlsl ps_pass.ps3 ps_3_0)
 set(UPX_PATH "" CACHE STRING "Path to upx.exe if applicable")
 if(NOT UPX_PATH STREQUAL "")
 	add_custom_command(
-		TARGET gm82core
+		TARGET gm82dx9
 		POST_BUILD	
 		COMMAND ${UPX_PATH} --lzma ${CMAKE_BINARY_DIR}/$<CONFIG>/gm82dx9.dll
 	)
