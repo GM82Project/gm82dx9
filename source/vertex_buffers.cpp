@@ -9,7 +9,7 @@ std::array<BYTE, 14> usage_indices;
 GMREAL __gm82dx9_vertex_create_buffer_from_buffer(double buffer, double length, double stride) {
     // create vertex buffer
     IDirect3DVertexBuffer9* vbuf;
-    if (vibe_check(Device->CreateVertexBuffer(length, 0, 0, D3DPOOL_DEFAULT, &vbuf, NULL))) {
+    if (vibe_check(Device->CreateVertexBuffer(length, 0, 0, D3DPOOL_MANAGED, &vbuf, NULL))) {
         return -1;
     }
     // populate vertex buffer
