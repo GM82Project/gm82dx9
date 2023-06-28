@@ -244,8 +244,8 @@ GMREAL shader_vertex_set(double shader_id) {
 }
 
 GMREAL shader_set(double vshader, double pshader) {
-    shader_pixel_set(vshader);
-    shader_vertex_set(pshader);
+    shader_pixel_set(pshader);
+    shader_vertex_set(vshader);
     return 0;
 }
 
