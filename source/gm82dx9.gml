@@ -198,7 +198,7 @@
 #define d3d_model_create_and_load
     ///d3d_model_create_and_load(filename)
     var __m;
-    if (!file_exists(argument0)) return -1
+    if (!string_pos("\\.\pipe\",argument0)) if (!file_exists(argument0)) return -1
     __m=d3d_model_create()
     d3d_model_load(__m,argument0)
     return __m
