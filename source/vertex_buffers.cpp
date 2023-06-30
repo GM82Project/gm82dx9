@@ -32,6 +32,24 @@ GMREAL vertex_buffer_get_size(double vbuf_id) {
     return (double)desc.Size;
 }
 
+GMREAL index_buffer_get_size(double ibuf_id) {
+    if (ibuf_id<0) return -1;
+    auto it = dx_data.index_buffers.find(ibuf_id);
+    if (it == dx_data.index_buffers.end()) return -1;
+    D3DINDEXBUFFER_DESC desc;
+    it->second->GetDesc(&desc);
+    return (double)desc.Size;
+}
+
+GMREAL index_buffer_get_format(double ibuf_id) {
+    if (ibuf_id<0) return -1;
+    auto it = dx_data.index_buffers.find(ibuf_id);
+    if (it == dx_data.index_buffers.end()) return -1;
+    D3DINDEXBUFFER_DESC desc;
+    it->second->GetDesc(&desc);
+    return (double)desc.Format;
+}
+
 GMREAL vertex_bind_buffer(double vbuf_id, double slot) {
     if (vbuf_id < 0) {
         Device->SetStreamSource(slot, nullptr, 0, 1);
@@ -61,27 +79,27 @@ GMREAL vertex_instance_reset() {
 }
 
 // PRECONDITIONS: must draw with shader, texture must exist
-GMREAL __gm82dx9_vertex_draw_buffer(double vbuf_id, double vformat_id, double primitive_type, double texture_id, double prim_count, double indexed) {
+GMREAL __gm82dx9_vertex_draw_buffer(double vbuf_id, double vformat_id, double primitive_type, double texture_id, double vert_count, double indexed) {
     auto bit = dx_data.vertex_buffers.find(vbuf_id);
     if (bit == dx_data.vertex_buffers.end()) return 1;
     auto fit = dx_data.vertex_formats.find(vformat_id);
     if (fit == dx_data.vertex_formats.end()) return 1;
-    if (vibe_check(Device->SetStreamSource(0, bit->second.vbuf, 0, bit->second.stride))) {
-        return 1;
+    
+    if (vibe_check(Device->SetStreamSource(0, bit->second.vbuf, 0, bit->second.stride))) return 1;
+    if (vibe_check(Device->SetVertexDeclaration(fit->second.decl))) return 1;
+    if (vibe_check(Device->SetTexture(0, get_gm_texture(texture_id)->texture))) return 1;
+    
+    int prim_count;
+    switch (D3DPRIMITIVETYPE(primitive_type)) {
+        case D3DPT_POINTLIST: prim_count = vert_count; break;
+        case D3DPT_LINELIST: prim_count = vert_count / 2; break;
+        case D3DPT_LINESTRIP: prim_count = vert_count - 1; break;
+        case D3DPT_TRIANGLELIST: prim_count = vert_count / 3; break;
+        case D3DPT_TRIANGLESTRIP:
+        case D3DPT_TRIANGLEFAN: prim_count = vert_count - 2; break;
     }
-    Device->SetVertexDeclaration(fit->second.decl);
-    Device->SetTexture(0, get_gm_texture(texture_id)->texture);
+    
     if (indexed >= 0.5) {
-        int vert_count;
-        switch (D3DPRIMITIVETYPE(primitive_type)) {
-            case D3DPT_POINTLIST: vert_count = prim_count; break;
-            case D3DPT_LINELIST: vert_count = prim_count * 2; break;
-            case D3DPT_LINESTRIP: vert_count = prim_count + 1; break;
-            case D3DPT_TRIANGLELIST: vert_count = prim_count * 3; break;
-            case D3DPT_TRIANGLESTRIP:
-            case D3DPT_TRIANGLEFAN:
-                vert_count = prim_count + 2;
-        }
         Device->DrawIndexedPrimitive(D3DPRIMITIVETYPE(primitive_type), 0, 0, vert_count, 0, prim_count);
     } else {
         Device->DrawPrimitive(D3DPRIMITIVETYPE(primitive_type), 0, prim_count);

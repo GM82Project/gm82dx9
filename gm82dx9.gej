@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "26/06/2023",
+	"date": "30/06/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -798,10 +798,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "index_delete_buffer",
-					"extname": "",
+					"name": "index_buffer_delete",
+					"extname": "index_delete_buffer",
 					"calltype": 12,
-					"helpline": "index_delete_buffer(ibuffer)",
+					"helpline": "index_buffer_delete(ibuffer)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -809,10 +809,32 @@
 					"returntype": 2
 				},
 				{
-					"name": "index_set_buffer",
+					"name": "index_buffer_get_format",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "index_set_buffer(ibuffer)",
+					"helpline": "index_buffer_get_format(ibuffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "index_buffer_get_size",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "index_buffer_get_size(ibuffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "index_buffer_set",
+					"extname": "index_set_buffer",
+					"calltype": 12,
+					"helpline": "index_buffer_set(ibuffer)",
 					"hidden": false,
 					"argtypes": [
 						2
@@ -1073,14 +1095,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_set_instance_count",
+					"name": "vertex_instance_reset",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "vertex_set_instance_count(count)",
+					"helpline": "vertex_instance_reset()",
 					"hidden": false,
-					"argtypes": [
-						2
-					],
+					"argtypes": [],
 					"returntype": 2
 				},
 				{
@@ -1096,12 +1116,14 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_instance_reset",
+					"name": "vertex_set_instance_count",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "vertex_instance_reset()",
+					"helpline": "vertex_set_instance_count(count)",
 					"hidden": false,
-					"argtypes": [],
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				},
 				{

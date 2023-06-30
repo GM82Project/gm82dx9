@@ -362,24 +362,19 @@
 
 #define vertex_buffer_draw
     ///vertex_buffer_draw(vbuffer,vformat,primitive,texture,[ibuffer])
-    var vertices,count,indexed;
+    var vertices,count,indexed,stride;
     
-    vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
-        
-    if (argument2==pr_pointlist    ) count=vertices
-    if (argument2==pr_linelist     ) count=vertices div 2
-    if (argument2==pr_linestrip    ) count=vertices-1    
-    if (argument2==pr_trianglelist ) count=vertices div 3
-    if (argument2==pr_trianglefan
-    ||  argument2==pr_trianglestrip) count=vertices-2      
-
-    indexed=false
     if (argument_count>4) {
-        index_set_buffer(argument4)
+        index_buffer_set(argument4)
+        if (index_buffer_get_format(argument4)==ib_format_32) vertices=index_buffer_get_size(argument4)/4
+        else vertices=index_buffer_get_size(argument4)/2
         indexed=true
+    } else {
+        vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
+        indexed=false
     }
     
-    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,count,indexed)
+    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,vertices,indexed)
 
 
 #define vertex_instance_set
