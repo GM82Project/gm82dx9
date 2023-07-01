@@ -87,7 +87,8 @@ GMREAL __gm82dx9_vertex_draw_buffer(double vbuf_id, double vformat_id, double pr
     
     if (vibe_check(Device->SetStreamSource(0, bit->second.vbuf, 0, bit->second.stride))) return 1;
     if (vibe_check(Device->SetVertexDeclaration(fit->second.decl))) return 1;
-    if (vibe_check(Device->SetTexture(0, get_gm_texture(texture_id)->texture))) return 1;
+    
+    __gm82dx9_sampler_set(0, texture_id);
     
     int prim_count;
     switch (D3DPRIMITIVETYPE(primitive_type)) {

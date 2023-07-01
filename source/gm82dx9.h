@@ -132,3 +132,5 @@ struct DXData {
 };
 
 extern DXData dx_data;
+
+void __gm82dx9_sampler_set(double stage, double tex_f);
