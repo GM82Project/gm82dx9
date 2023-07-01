@@ -291,7 +291,7 @@
 
 #define vertex_format_add_position
     ///vertex_format_add_position(slot)
-    vertex_format_add_custom(vf_type_float4,vf_usage_position,argument0)
+    vertex_format_add_custom(vf_type_float3,vf_usage_position,argument0)
 
 
 #define vertex_format_add_texcoord
@@ -306,14 +306,14 @@
 
 #define vertex_format_add_normal
     ///vertex_format_add_normal(slot)
-    vertex_format_add_custom(vf_type_float4,vf_usage_normal,argument0)
+    vertex_format_add_custom(vf_type_float3,vf_usage_normal,argument0)
 
 
 #define buffer_write_format_default
     ///buffer_write_format_default(buffer,x,y,z,nx,ny,nz,u,v,color,alpha)
-    buffer_write_float4(argument0,argument1,argument2,argument3,0)
+    buffer_write_float3(argument0,argument1,argument2,argument3)
     
-    buffer_write_float4(argument0,argument4,argument5,argument6,0)
+    buffer_write_float3(argument0,argument4,argument5,argument6)
     
     buffer_write_u32(argument0,color_to_d3dcolor(argument9,argument10))
     
@@ -323,7 +323,7 @@
 
 #define buffer_write_format_position
     ///buffer_write_format_position(buffer,x,y,z)
-    buffer_write_float4(argument0,argument1,argument2,argument3,0)
+    buffer_write_float3(argument0,argument1,argument2,argument3)
 
 
 #define buffer_write_format_texcoord
@@ -340,23 +340,23 @@
 #define vertex_format_create_simple
     ///vertex_format_create_simple(vf_usage_...)
     vertex_format_begin()
-    i=0 repeat (argument_count) {
-        if (argument[i]==vf_usage_position) vertex_format_add_position(0)
-        else if (argument[i]==vf_usage_texcoord) vertex_format_add_texcoord(0)
-        else if (argument[i]==vf_usage_normal) vertex_format_add_normal(0)
-        else if (argument[i]==vf_usage_color) vertex_format_add_color(0)
-        else show_error("invalid usage semantic passed to vertex_format_simple",0)
-    i+=1}
+        i=0 repeat (argument_count) {
+            if (argument[i]==vf_usage_position) vertex_format_add_position(0)
+            else if (argument[i]==vf_usage_texcoord) vertex_format_add_texcoord(0)
+            else if (argument[i]==vf_usage_normal) vertex_format_add_normal(0)
+            else if (argument[i]==vf_usage_color) vertex_format_add_color(0)
+            else show_error("invalid usage semantic passed to vertex_format_simple",0)
+        i+=1}
     return vertex_format_end()
 
 
 #define vertex_format_create_default
     ///vertex_format_create_default()
     vertex_format_begin()
-    vertex_format_add_position(0)
-    vertex_format_add_normal(0)
-    vertex_format_add_color(0)
-    vertex_format_add_texcoord(0)    
+        vertex_format_add_position(0)
+        vertex_format_add_normal(0)
+        vertex_format_add_color(0)
+        vertex_format_add_texcoord(0)    
     return vertex_format_end()
 
 
