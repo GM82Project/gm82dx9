@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "30/06/2023",
+	"date": "01/07/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1854,7 +1854,7 @@
 					"hidden": false
 				},
 				{
-					"name": "vf_usage_colour",
+					"name": "vf_usage_color",
 					"value": "10",
 					"hidden": false
 				},
@@ -2058,10 +2058,10 @@
 			"final": "",
 			"functions": [
 				{
-					"name": "buffer_write_format_colour",
+					"name": "buffer_write_format_color",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "buffer_write_format_colour(buffer,color,alpha)",
+					"helpline": "buffer_write_format_color(buffer,color,alpha)",
 					"hidden": false,
 					"argtypes": [
 						2,
@@ -2462,10 +2462,10 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_format_add_colour",
+					"name": "vertex_format_add_color",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "vertex_format_add_colour(slot)",
+					"helpline": "vertex_format_add_color(slot)",
 					"hidden": false,
 					"argtypes": [
 						2

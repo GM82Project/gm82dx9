@@ -299,9 +299,9 @@
     vertex_format_add_custom(vf_type_float2,vf_usage_texcoord,argument0)
 
 
-#define vertex_format_add_colour
-    ///vertex_format_add_colour(slot)
-    vertex_format_add_custom(vf_type_d3dcolor,vf_usage_colour,argument0)
+#define vertex_format_add_color
+    ///vertex_format_add_color(slot)
+    vertex_format_add_custom(vf_type_d3dcolor,vf_usage_color,argument0)
 
 
 #define vertex_format_add_normal
@@ -332,8 +332,8 @@
     buffer_write_float(argument0,argument2)
 
 
-#define buffer_write_format_colour
-    ///buffer_write_format_colour(buffer,color,alpha)
+#define buffer_write_format_color
+    ///buffer_write_format_color(buffer,color,alpha)
     buffer_write_u32(argument0,color_to_d3dcolor(argument1,argument2))
 
 
@@ -344,7 +344,7 @@
         if (argument[i]==vf_usage_position) vertex_format_add_position(0)
         else if (argument[i]==vf_usage_texcoord) vertex_format_add_texcoord(0)
         else if (argument[i]==vf_usage_normal) vertex_format_add_normal(0)
-        else if (argument[i]==vf_usage_colour) vertex_format_add_colour(0)
+        else if (argument[i]==vf_usage_color) vertex_format_add_color(0)
         else show_error("invalid usage semantic passed to vertex_format_simple",0)
     i+=1}
     return vertex_format_end()
@@ -355,7 +355,7 @@
     vertex_format_begin()
     vertex_format_add_position(0)
     vertex_format_add_normal(0)
-    vertex_format_add_colour(0)
+    vertex_format_add_color(0)
     vertex_format_add_texcoord(0)    
     return vertex_format_end()
 
