@@ -1,10 +1,31 @@
 
     Game Maker 8.2 DirectX 9
     ========================
-    Preliminary Documentation
-    version 1 - March 2023
+    Extension Documentation
+    version 2 - July 2023
 
     Written by Floogle & renex
+
+
+--------------------------------------------------------------------------------
+
+  General considerations
+  
+    -> This extension requires the Game Maker 8.2 Network extension. If it is
+       not added to the project, it will be automatically added when compiling,
+       so make sure your project is compatible with it.
+    -> This extension makes extensive in-memory modifications to the Game Runner
+       when launching the game, in order to activate DirectX 9. Any extensions
+       that inject DirectX state, like Game Maker 8.2 DirectX8, are not
+       compatible by definition.
+    -> While the extension aims to improve your control over the graphics
+       pipeline, making incorrect assumptions or changing the wrong settings
+       has the potential to decrease performance. Carefully measure your
+       render times, and fine-tune things to find the fastest configuration.
+    -> Shaders and Vertex Buffers take a lot of effort to use, so be prepared to
+       pour in when you decide to use them. Feel free to reach out to us on the
+       Discord server if you run into any issues.
+
 
 --------------------------------------------------------------------------------
 
@@ -22,6 +43,32 @@ application_surface_resize(width,height)
     Resizes the application surface.
 application_surface_disable()
     Disables the application surface.
+
+
+--------------------------------------------------------------------------------
+
+  Multiple Render Targets
+  
+    It is possible to make a shader setup to render to multiple surfaces simultaneously. There are a few requirements however:
+    -> All surfaces must have the same dimensions, or it behaves strangely.
+    -> You have to use a shader, or only the first surface receives output.
+
+surface_set_target_ext(target,surface)
+    Binds a surface to a target.
+surface_reset_target_ext(target)
+    Resets the target and unbinds the surface.
+
+  Notes
+  
+    -> The default target used normally by Game Maker is target 0.
+    -> The HLSL syntax for render targets is as follows:
+    
+    (pixel shader)
+    struct PS_OUTPUT {
+        float4 target0: COLOR0;
+        float4 target1: COLOR1;
+        etc.
+    };
 
 
 --------------------------------------------------------------------------------
@@ -82,11 +129,21 @@ buffer_set_surface(buffer,surface)
        using argb_make_color(color,alpha).
     -> Do note that this function is very slow, so use it sparingly.
 
+argb_make_color(color,alpha)
+    Turns a color into a u32 the way surface data expects it. Useful for writing
+    buffers for use with buffer_set_surface().
+argb_get_color(color)
+    Gets the color out of a u32 returned by buffer_get_surface().
+argb_get_alpha(color)
+    Gets the alpha out of a u32 returned by buffer_get_surface().
+
 
 --------------------------------------------------------------------------------
 
-  Packed Models
+  D3D Model tools
 
+d3d_model_create_and_load(filename)
+    Creates, loads and returns a model from the filename.
 d3d_model_load_g3z(model,filename)
     Loads a packed 3d model.
 d3d_model_save_g3z(model,filename)
@@ -120,18 +177,25 @@ draw_set_blend_alphamode(enable,mode or [src,dest])
     -> Must be disabled separately from the normal blend mode.
 
 argb_get_color(color), argb_get_alpha(color)
-    Unpacks color and alpha from a u32 returned from the buffer functions.
+    Unpacks color and alpha from a u32 returned from the surface to buffer
+    functions.
 argb_make_color(color,alpha)
-    Packs color and alpha into a u32 for use with the buffer functions.
+    Packs color and alpha into a u32 for use with the buffer to surface
+    functions.
+color_to_d3dcolor(color,alpha)
+    Returns a u32 with the color packed as a DirectX color for use in a vertex
+    buffer.
 
 d3d_clear_depth_buffer()
     Clears the depth buffer of the current render target, allowing new geometry
     to be drawn to it with depth occlusion.
 d3d_fog_trick([color,amount])
     Enables the fog trick for tinting graphics towards a color.
-    -> Only works in orthographic projections.
+    -> Only works in orthographic projections. To use in a 3d projection with
+    full blend, omit the amount argument.
 d3d_get_free_video_memory()
-    Gets a rough estimate of free video memory in megabytes.
+    Gets a rough estimate of free video memory in megabytes. Not very precise,
+    always assume a safe margin of a few megabytes.
 d3d_set_viewport(x,y,width,height)
     Sets the viewport for drawing as a rectangle region on the screen.
     -> This allows drawing only to a specific part of the screen, e.g. a
@@ -139,6 +203,23 @@ d3d_set_viewport(x,y,width,height)
 d3d_get_viewport_x(), d3d_get_viewport_y(),
 d3d_get_viewport_w(), d3d_get_viewport_h()
     Returns the currently set viewport dimensions.
+d3d_light_define_ext(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,
+                  color_diffuse,diffuse_factor,color_specular,specular_factor)
+    Sets a 3d light with advanced options.
+    index: light number (use small integers)
+    type: one of lt_point, lt_spotlight, or lt_sun
+    x,y,z: light position (unused for sun lights)
+    dx,dy,dz: direction vector (unused for point lights)
+    range: maximum light range (unused for sun lights)
+    inner_rad: inner aperture angle of spotlights (unused for sun and point)
+    outer_rad: outer penumbra angle of spotlights (unused for sun and point)
+    color_diffuse: light color
+    diffuse_factor: light scaling factor, default 1.
+        -> can be used for cool effects f.ex. larger values cause "cel shading".
+    color_specular: specular highlight color.
+        -> Used for shiny reflections. Set to black to disable.
+    specular_factor: exponent factor for specular highlights.
+        -> Use values between 10 and 50 depending on the intended effect.
 d3d_set_alphatest(enable,value,cm_comparison)
     Sets the alpha test reference value and comparison mode.
     Valid comparison modes include:
@@ -187,23 +268,6 @@ d3d_set_fog_ext(type,color,start,end)
     fog_vertex
         Use spherical vertex distance-based fog.
         -> Looks better, but needs small polygons to work correctly.    
-d3d_set_light_ext(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,
-                  color_diffuse,diffuse_factor,color_specular,specular_factor)
-    Sets a 3d light with advanced options.
-    index: light number (use small integers)
-    type: one of lt_point, lt_spotlight, or lt_sun
-    x,y,z: light position (unused for sun lights)
-    dx,dy,dz: direction vector (unused for point lights)
-    range: maximum light range (unused for sun lights)
-    inner_rad: inner aperture angle of spotlights (unused for sun and point)
-    outer_rad: outer penumbra angle of spotlights (unused for sun and point)
-    color_diffuse: light color
-    diffuse_factor: light scaling factor, default 1.
-        -> can be used for cool effects f.ex. larger values cause "cel shading".
-    color_specular: specular highlight color.
-        -> Used for shiny reflections. Set to black to disable.
-    specular_factor: exponent factor for specular highlights.
-        -> Use values between 10 and 50 depending on the intended effect.
 d3d_set_point_options(size,scaled,minscale,maxscale,spritemode)
     Sets graphics card options for drawing points.
     size: point size, default 1.
@@ -222,11 +286,32 @@ d3d_set_projection_simple(x,y,w,h,angle,dollyzoom,
     depthmin: lowest depth to clamp.
     depthfocus: focus point of the projection.
     depthmax: largest depth to clamp.
-    spin: angle to spin the cameraa round the focal point.
+    spin: angle to spin the camera around the focal point.
+d3d_set_viewport(x,y,width,height)
+    Sets the current viewport for rendering to a part of the screen.
+    Particularly useful for map widgets or scrolling list boxes.
 d3d_set_zbias(bias)
     Sets the zbias value used to sort polygons that are close to each other.
     -> The zbias is added to fragment depth when computing overlap,
        to help polygons sort in front or behind of other polygons.
+    -> The unit for zbias is in frustum size, so if your znear is 1 and zfar
+    is 1000, then to get a zbias of 1 pixel you would set it to 1/999.
+d3d_set_zcomp_mode(cm_comparison)
+    Sets the z comparison mode when drawing pixels.
+    Valid comparison modes include:
+    cm_less
+        Draws pixels if the z value is less than the zbuffer value.
+    cm_equal
+        Draws pixels if the z value is equal to the zbuffer value.
+    cm_lessequal
+        Draws pixels if the z value is less or equal to the zbuffer value.
+        This is the default mode.
+    cm_greater
+        Draws pixels if the z value is greater than the zbuffer value.
+    cm_greaterequal
+        Draws pixels if the z value is greater or equal to the zbuffer value.
+    cm_notequal
+        Draws pixels if the z value is different to the zbuffer value.
 
 
 --------------------------------------------------------------------------------
@@ -345,6 +430,10 @@ shader_draw_shadertoy(shader,x,y,w,h,time)
   
     -> Be mindful of your number types! 1/1024 evaluates to 0 because they're
        integers, while 1.0/1024.0 evaluates to 0.0009765625.
+    -> Whenever you modify a position-type vec4, make sure that the w coordinate
+       is set to 1.0 before multiplying with a matrix, or your coordinates may
+       become completely corrupted.
+
 
 --------------------------------------------------------------------------------
 
@@ -581,5 +670,142 @@ texture_set_stage_repeat(sampler,hrepeat,vrepeat,bordercolor)
 shader_pixel_destroy(shader)
     shader: a pixel shader
     Deletes a given pixel shader from memory.
+
+
+--------------------------------------------------------------------------------
+
+  Vertex, Index, and Instance Buffers, and their Formats
+  
+    Vertex buffers are memory streams of vertex data. They're what d3d models
+    are made of internally, but instead you can choose whatever format you want
+    to store your vertices as.
+    
+    Before using a vertex buffer, remember that you will need a Format to go
+    with it, and also a vertex shader that will expect that format.
+    Additionally, you can use index buffers and instanced rendering to further
+    speed up drawing by up to a factor of 10000%. More on that later.
+
+
+  Vertex Formats
+  
+    Formats are instruction sets for DirectX so that it knows how your vertex
+    buffers are formatted. Formats are required for using any of the following
+    advanced rendering features.
+
+vertex_format_create_default()
+    Creates and returns the default format used by game maker:
+    vf_type_float3,vf_usage_position;
+    vf_type_float3,vf_usage_normal;
+    vf_type_float4,vf_usage_color;
+    vf_type_float2,vf_usage_texcoord;
+    All usages are assigned to slot 0.
+vertex_format_create_simple(vf_usage_...)
+    Creates and returns a format built from a list of vf_usage constants.
+    All usages are assigned to slot 0.
+
+vertex_format_begin()
+    Starts describing a custom format.
+vertex_format_add_custom(vf_type_...,vf_usage_...,slot)
+    Adds a completely custom type to the format. When using a format slot for
+    arbitrary data (f.ex. tile index in an atlas), use a vf_usage_arbitrary.
+    The slot index defines which format slot the usage is bound to. More on
+    format slots later.
+vertex_format_add_position(slot)
+    Adds a standard position component to the format:
+    vf_type_float3,vf_usage_position;
+vertex_format_add_normal(slot)
+    Adds a standard normal component to the format:
+    vf_type_float3,vf_usage_normal;
+vertex_format_add_color(slot)
+    Adds a standard color component to the format:
+    vf_type_float4,vf_usage_color;
+vertex_format_add_texcoord(slot)
+    Adds a standard texture coordinate component to the format:
+    vf_type_float2,vf_usage_texcoord;
+vertex_format_end()
+    Finishes a custom format description and returns a format index for use.
+
+vertex_format_get_size(format,slot)
+    Returns the size in bytes of one of the format's slots.
+    This advanced function is used for figuring out vertex buffer stride for
+    controlling indexed and instanced rendering.
+vertex_format_delete(format)
+    Deletes the format and frees the memory associated with it.
+
+    
+  Vertex Buffers
+
+    Vertex buffers are memory streams containing vertex data for describing
+    polygons directly in the video ram. They're much faster than d3d models and
+    primitives when used correctly. There are a number of functions to create
+    and manage vertex buffers:
+
+vertex_buffer_create(buffer,format,slot)
+    Creates a vbuffer from a gm82net buffer using the supplied format and slot
+    as a template.
+vertex_buffer_bind(vbuffer,slot)
+    Binds a vbuffer to a specific buffer slot. More on slots later.
+vertex_buffer_get_size(vbuffer)
+    Returns the size of the vbuffer in bytes.
+vertex_buffer_draw(vbuffer,format,primitive,texture,[ibuffer])
+    Draws a vbuffer with a format, a primitive type, a texture, and optionally
+    an index buffer. More on this later.
+vertex_buffer_delete(vbuffer)
+    Deletes a vbuffer and frees all memory associated with it.
+
+
+  Index Buffers
+
+    Index buffers are auxiliary buffers which are used to describe how vertices
+    are connected to form primitives. The use of an index buffer can reduce the
+    total amount of memory required by meshes, and is required for indexed and
+    instanced rendering modes.
+
+index_buffer_create(buffer,ib_...)
+    Creates an index buffer from a gm82net buffer, using the specified format
+    constant (either ib_format_16 using buffer u16, or ib_format_32 using
+    buffer u32).
+index_buffer_delete(ibuffer)
+    Deletes an ibuffer and frees all memory associated with it.
+
+
+  Indexed rendering
+  
+    Indexed rendering is a different way to render, using a separate buffer to
+    instruct the system on how to combine vertices into primitives. Indexed
+    rendering is also a required step for Instanced Rendering, described later.
+    
+    An example of indexed rendering is provided in the examples folder.
+  
+
+  Instance Buffers
+  
+    Instance buffers are used for instanced rendering mode, which is a way to
+    efficiently draw many copies of a mesh with just one draw call.
+
+vertex_instance_set(instbuffer,format,slot)
+    Configures an instance buffer for instanced rendering, using a format and
+    slot. Further indexed rendering will use the instance buffer.
+vertex_instance_reset()
+    Resets the instanced rendering options. Further indexed rendering will not
+    use instanced rendering.
+
+
+  Instanced rendering
+
+    An instance buffer contains custom data that can be used to modify each
+    instance drawn, such as position, rotation, color etc. All of the modifying
+    work is done in an accompanying vertex shader, which is required.
+    
+    Instanced rendering can be hundreds of times faster than drawing normally,
+    and an example of instanced rendering is provided in the examples folder.
+
+
+  Miscellaneous functions
+  
+color_to_d3dcolor(color,alpha)
+    Converts a color into a u32 formatted the way DirectX expects it. Useful
+    for writing vertex buffers.
+
 
 --------------------------------------------------------------------------------
