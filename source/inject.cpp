@@ -1,5 +1,7 @@
 #include "gm82dx9.h"
 
+extern IDirect3DTexture9 *white_pixel = nullptr;
+
 D3DCAPS9 d3d_caps;
 D3DPRESENT_PARAMETERS d3d_parameters = {
         .BackBufferCount = 1,
@@ -246,7 +248,6 @@ CW_INJ_START(power)
     __asm ret 0x10
 }}
 
-IDirect3DTexture9 *white_pixel = nullptr;
 uint8_t white_pixel_tga[] = {
     0, 0, 2, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 1, 0, 1, 0,

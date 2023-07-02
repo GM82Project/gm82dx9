@@ -78,7 +78,6 @@ GMREAL vertex_instance_reset() {
 	return 0;
 }
 
-// PRECONDITIONS: must draw with shader, texture must exist
 GMREAL __gm82dx9_vertex_draw_buffer(double vbuf_id, double vformat_id, double primitive_type, double texture_id, double vert_count, double indexed) {
     auto bit = dx_data.vertex_buffers.find(vbuf_id);
     if (bit == dx_data.vertex_buffers.end()) return 1;

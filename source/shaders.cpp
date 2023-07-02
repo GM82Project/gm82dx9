@@ -28,6 +28,8 @@ IDirect3DVertexDeclaration9 *decl_shape = nullptr;
 IDirect3DVertexDeclaration9 *decl_2d = nullptr;
 IDirect3DVertexDeclaration9 *decl_3d = nullptr;
 
+extern IDirect3DTexture9 *white_pixel;
+
 bool using_shader = false;
 
 bool shader_bounds_check(const DWORD* data, size_t len) {
@@ -361,7 +363,7 @@ GMREAL texture_get_interpolation() {
 void __gm82dx9_sampler_set(double stage, double tex_f) {
     int tex = tex_f;
     if (tex < 0) {
-        Device->SetTexture(stage, nullptr);
+        Device->SetTexture(stage, white_pixel);
     } else {
         bool exists;
         __asm {

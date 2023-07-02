@@ -133,4 +133,6 @@ struct DXData {
 
 extern DXData dx_data;
 
+extern IDirect3DTexture9 *white_pixel;
+
 void __gm82dx9_sampler_set(double stage, double tex_f);
