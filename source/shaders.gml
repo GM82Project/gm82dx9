@@ -363,9 +363,9 @@
     var vertices,count,indexed,stride;
     
     if (argument_count>4) {
-        index_buffer_set(argument4)
-        if (index_buffer_get_format(argument4)==ib_format_32) vertices=index_buffer_get_size(argument4)/4
-        else vertices=index_buffer_get_size(argument4)/2
+        __gm82dx9_index_buffer_set(argument4)
+        if (__gm82dx9_index_buffer_get_format(argument4)==ib_format_32) vertices=__gm82dx9_index_buffer_get_size(argument4)/4
+        else vertices=__gm82dx9_index_buffer_get_size(argument4)/2
         indexed=true
     } else {
         vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
@@ -378,8 +378,8 @@
 #define vertex_instance_set
     ///vertex_instance_set(instbuffer,format,slot)
 
-    vertex_set_instance_count(vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,argument2))
-    vertex_set_instances_per_vertex(1,1)
+    __gm82dx9_vertex_set_instance_count(vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,argument2))
+    __gm82dx9_vertex_set_instances_per_vertex(1,1)
     
     vertex_buffer_bind(argument0,argument2)
 

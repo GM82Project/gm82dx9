@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "01/07/2023",
+	"date": "02/07/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -809,39 +809,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "index_buffer_get_format",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "index_buffer_get_format(ibuffer)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "index_buffer_get_size",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "index_buffer_get_size(ibuffer)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "index_buffer_set",
-					"extname": "index_set_buffer",
-					"calltype": 12,
-					"helpline": "index_buffer_set(ibuffer)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_pixel_create_file",
 					"extname": "",
 					"calltype": 12,
@@ -1104,29 +1071,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "vertex_set_instances_per_vertex",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "vertex_set_instances_per_vertex(slot,count)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "vertex_set_instance_count",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "vertex_set_instance_count(count)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "window_resize_buffer",
 					"extname": "__gm82dx9_resize_backbuffer",
 					"calltype": 12,
@@ -1195,6 +1139,39 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_index_buffer_get_format",
+					"extname": "index_buffer_get_format",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_index_buffer_get_size",
+					"extname": "index_buffer_get_size",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_index_buffer_set",
+					"extname": "index_set_buffer",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -1570,9 +1547,62 @@
 						2
 					],
 					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_vertex_set_instances_per_vertex",
+					"extname": "vertex_set_instances_per_vertex",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_vertex_set_instance_count",
+					"extname": "vertex_set_instance_count",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
 				}
 			],
 			"constants": [
+				{
+					"name": "cm_equal",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "cm_greater",
+					"value": "5",
+					"hidden": false
+				},
+				{
+					"name": "cm_greaterequal",
+					"value": "7",
+					"hidden": false
+				},
+				{
+					"name": "cm_less",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "cm_lessequal",
+					"value": "4",
+					"hidden": false
+				},
+				{
+					"name": "cm_notequal",
+					"value": "6",
+					"hidden": false
+				},
 				{
 					"name": "cull_clockwise",
 					"value": "1",
@@ -1619,53 +1649,13 @@
 					"hidden": false
 				},
 				{
-					"name": "tm_regular",
-					"value": "0",
+					"name": "ib_format_16",
+					"value": "101",
 					"hidden": false
 				},
 				{
-					"name": "tm_csnormal",
-					"value": "$10000",
-					"hidden": false
-				},
-				{
-					"name": "tm_csposition",
-					"value": "$20000",
-					"hidden": false
-				},
-				{
-					"name": "tm_csreflect",
-					"value": "$30000",
-					"hidden": false
-				},
-				{
-					"name": "tm_spheremap",
-					"value": "$40000",
-					"hidden": false
-				},
-				{
-					"name": "tr_wrap",
-					"value": "1",
-					"hidden": false
-				},
-				{
-					"name": "tr_mirror",
-					"value": "2",
-					"hidden": false
-				},
-				{
-					"name": "tr_clamp",
-					"value": "3",
-					"hidden": false
-				},
-				{
-					"name": "tr_border",
-					"value": "4",
-					"hidden": false
-				},
-				{
-					"name": "tr_mirroronce",
-					"value": "5",
+					"name": "ib_format_32",
+					"value": "102",
 					"hidden": false
 				},
 				{
@@ -1684,38 +1674,78 @@
 					"hidden": false
 				},
 				{
-					"name": "cm_less",
-					"value": "2",
+					"name": "tm_csnormal",
+					"value": "$10000",
 					"hidden": false
 				},
 				{
-					"name": "cm_equal",
-					"value": "3",
+					"name": "tm_csposition",
+					"value": "$20000",
 					"hidden": false
 				},
 				{
-					"name": "cm_lessequal",
+					"name": "tm_csreflect",
+					"value": "$30000",
+					"hidden": false
+				},
+				{
+					"name": "tm_regular",
+					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "tm_spheremap",
+					"value": "$40000",
+					"hidden": false
+				},
+				{
+					"name": "tr_border",
 					"value": "4",
 					"hidden": false
 				},
 				{
-					"name": "cm_greater",
+					"name": "tr_clamp",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "tr_mirror",
+					"value": "2",
+					"hidden": false
+				},
+				{
+					"name": "tr_mirroronce",
 					"value": "5",
 					"hidden": false
 				},
 				{
-					"name": "cm_greaterequal",
-					"value": "7",
+					"name": "tr_wrap",
+					"value": "1",
 					"hidden": false
 				},
 				{
-					"name": "cm_notequal",
-					"value": "6",
+					"name": "vf_type_d3dcolor",
+					"value": "4",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_dec3n",
+					"value": "14",
 					"hidden": false
 				},
 				{
 					"name": "vf_type_float1",
 					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float16_2",
+					"value": "15",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_float16_4",
+					"value": "16",
 					"hidden": false
 				},
 				{
@@ -1734,28 +1764,8 @@
 					"hidden": false
 				},
 				{
-					"name": "vf_type_d3dcolor",
-					"value": "4",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_ubyte4",
-					"value": "5",
-					"hidden": false
-				},
-				{
 					"name": "vf_type_short2",
 					"value": "6",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_short4",
-					"value": "7",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_ubyte4n",
-					"value": "8",
 					"hidden": false
 				},
 				{
@@ -1764,8 +1774,33 @@
 					"hidden": false
 				},
 				{
+					"name": "vf_type_short4",
+					"value": "7",
+					"hidden": false
+				},
+				{
 					"name": "vf_type_short4n",
 					"value": "10",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_ubyte4",
+					"value": "5",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_ubyte4n",
+					"value": "8",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_udec3",
+					"value": "13",
+					"hidden": false
+				},
+				{
+					"name": "vf_type_unused",
+					"value": "17",
 					"hidden": false
 				},
 				{
@@ -1779,63 +1814,8 @@
 					"hidden": false
 				},
 				{
-					"name": "vf_type_udec3",
-					"value": "13",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_dec3n",
-					"value": "14",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_float16_2",
-					"value": "15",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_float16_4",
-					"value": "16",
-					"hidden": false
-				},
-				{
-					"name": "vf_type_unused",
-					"value": "17",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_position",
-					"value": "0",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_blendweight",
-					"value": "1",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_blendindices",
-					"value": "2",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_normal",
-					"value": "3",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_psize",
-					"value": "4",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_texcoord",
+					"name": "vf_usage_arbitrary",
 					"value": "5",
-					"hidden": false
-				},
-				{
-					"name": "vf_usage_tangent",
-					"value": "6",
 					"hidden": false
 				},
 				{
@@ -1844,13 +1824,13 @@
 					"hidden": false
 				},
 				{
-					"name": "vf_usage_tessfactor",
-					"value": "8",
+					"name": "vf_usage_blendindices",
+					"value": "2",
 					"hidden": false
 				},
 				{
-					"name": "vf_usage_positiont",
-					"value": "9",
+					"name": "vf_usage_blendweight",
+					"value": "1",
 					"hidden": false
 				},
 				{
@@ -1859,13 +1839,33 @@
 					"hidden": false
 				},
 				{
+					"name": "vf_usage_depth",
+					"value": "12",
+					"hidden": false
+				},
+				{
 					"name": "vf_usage_fog",
 					"value": "11",
 					"hidden": false
 				},
 				{
-					"name": "vf_usage_depth",
-					"value": "12",
+					"name": "vf_usage_normal",
+					"value": "3",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_position",
+					"value": "0",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_positiont",
+					"value": "9",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_psize",
+					"value": "4",
 					"hidden": false
 				},
 				{
@@ -1874,18 +1874,18 @@
 					"hidden": false
 				},
 				{
-					"name": "vf_usage_arbitrary",
+					"name": "vf_usage_tangent",
+					"value": "6",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_tessfactor",
+					"value": "8",
+					"hidden": false
+				},
+				{
+					"name": "vf_usage_texcoord",
 					"value": "5",
-					"hidden": false
-				},
-				{
-					"name": "ib_format_16",
-					"value": "101",
-					"hidden": false
-				},
-				{
-					"name": "ib_format_32",
-					"value": "102",
 					"hidden": false
 				}
 			]
@@ -1904,6 +1904,17 @@
 					"helpline": "d3d_fog_trick([color,amount])",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_create_and_load",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_create_and_load(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -2028,17 +2039,6 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "d3d_model_create_and_load",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "d3d_model_create_and_load(filename)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
 					"returntype": 2
 				}
 			],
