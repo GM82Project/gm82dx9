@@ -137,11 +137,13 @@
 
 
 #define d3d_fog_trick
-    ///d3d_fog_trick(color,amount)
+    ///d3d_fog_trick([color,amount])
     ///d3d_fog_trick()
-
-    if (argument_count==2) {
-        d3d_set_fog(1,argument[0],0.5-argument[1],1.5-argument[1])
+    
+    if (argument_count==1) {
+        d3d_set_fog(1,argument0,0,0)
+    } else if (argument_count==2) {
+        d3d_set_fog(1,argument0,0.5-argument1,1.5-argument1)
     } else d3d_set_fog(0,0,0,0)
 
 
