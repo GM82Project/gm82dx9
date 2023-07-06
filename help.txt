@@ -49,7 +49,8 @@ application_surface_disable()
 
   Multiple Render Targets
   
-    It is possible to make a shader setup to render to multiple surfaces simultaneously. There are a few requirements however:
+    It is possible to make a shader setup to render to multiple surfaces
+    simultaneously. There are a few requirements however:
     -> All surfaces must have the same dimensions, or it behaves strangely.
     -> You have to use a shader, or only the first surface receives output.
 

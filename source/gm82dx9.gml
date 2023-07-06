@@ -27,14 +27,14 @@
     __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
     __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")
 
-    if (variable_global_get("__gm82core_version")>134) {
+    if (variable_global_get("gm82core_version")>134) {
         //recent enough core extension: we can work together
         __gm82dx9_controller=gm82core_object
     }
 
     if (__gm82dx9_checkstart()) exit
     
-    if (variable_global_get("__gm82core_version")<=134) {
+    if (variable_global_get("gm82core_version")<=134) {
         //core extension not detected: let's do it ourselves
         object_event_add(__gm82dx9_controller,ev_destroy,0,"instance_copy(0)")
         object_event_add(__gm82dx9_controller,ev_other,ev_room_end,"persistent=true")
