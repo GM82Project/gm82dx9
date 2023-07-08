@@ -204,5 +204,10 @@
     __m=d3d_model_create()
     d3d_model_load(__m,argument0)
     return __m
+
+
+#define d3d_model_bake
+    ///d3d_model_bake(model)
+    d3d_model_draw(argument0,0,0,0,-1)
 //
 //
