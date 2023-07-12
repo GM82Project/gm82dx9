@@ -15,9 +15,21 @@
     }    
 
 
+#define surface_forget_all
+    ///surface_forget_all()
+    var __s,__key;
+    __key=ds_map_find_first(__gm82dx9_surfmap)
+    repeat (ds_map_size(__gm82dx9_surfmap)) {
+        __s=ds_map_find_value(__gm82dx9_surfmap,__key)
+        if (surface_exists(__s-1)) surface_free(__s-1)
+        __key=ds_map_find_next(__gm82dx9_surfmap,__key)
+    }
+    ds_map_clear(__gm82dx9_surfmap)
+
+
 #define surface_get
     ///(name,width,height)
-    var __s,__name,__w,__h,__key;
+    var __s,__name,__w,__h;
 
     __name=argument0
     __w=argument1
@@ -28,14 +40,7 @@
     __s=ds_map_find_value(__gm82dx9_surfmap,__name)
     if (__s) {
         if (!surface_exists(__s-1)) {
-            //clear map & surfaces
-            __key=ds_map_find_first(__gm82dx9_surfmap)
-            repeat (ds_map_size(__gm82dx9_surfmap)) {
-                __s=ds_map_find_value(__gm82dx9_surfmap,__key)
-                if (surface_exists(__s-1)) surface_free(__s-1)
-                __key=ds_map_find_next(__gm82dx9_surfmap,__key)
-            }
-            ds_map_clear(__gm82dx9_surfmap)
+            surface_forget_all()
             __s=0
         }
     }
