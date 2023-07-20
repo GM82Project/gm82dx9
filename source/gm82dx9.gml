@@ -202,7 +202,8 @@
     var __m;
     if (!string_pos("\\.\pipe\",argument0)) if (!file_exists(argument0)) return -1
     __m=d3d_model_create()
-    d3d_model_load(__m,argument0)
+    if (filename_ext(argument0)==".g3z") d3d_model_load_g3z(__m,argument0)
+    else d3d_model_load(__m,argument0)
     return __m
 
 
