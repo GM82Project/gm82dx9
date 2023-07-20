@@ -116,16 +116,16 @@ GMREAL __gm82dx9_set_light(
     
     int col=(int)round(color);
     
-    light.Diffuse.r=((col & 0xff)/0xff)*color_factor;
-    light.Diffuse.g=(((col & 0xff00)>>8)/0xff)*color_factor;
-    light.Diffuse.b=(((col & 0xff0000)>>16)/0xff)*color_factor;
+    light.Diffuse.r=((col & 0xff)/255.0)*color_factor;
+    light.Diffuse.g=(((col & 0xff00)>>8)/255.0)*color_factor;
+    light.Diffuse.b=(((col & 0xff0000)>>16)/255.0)*color_factor;
     light.Diffuse.a=1.0f;
     
     col=(int)round(specular);
     
-    light.Specular.r=(col & 0xff)/0xff;
-    light.Specular.g=((col & 0xff00)>>8)/0xff;
-    light.Specular.b=((col & 0xff0000)>>16)/0xff;
+    light.Specular.r=(col & 0xff)/255.0;
+    light.Specular.g=((col & 0xff00)>>8)/255.0;
+    light.Specular.b=((col & 0xff0000)>>16)/255.0;
     light.Specular.a=1.0f;
     
     Device->SetLight((int)index,&light);
