@@ -33,7 +33,7 @@ endmacro()
 compile_shader(vs_pass.hlsl vs_pass.vs3 vs_3_0)
 compile_shader(ps_pass.hlsl ps_pass.ps3 ps_3_0)
 
-set(UPX_PATH "" CACHE STRING "Path to upx.exe if applicable")
+set(UPX_PATH "upx" CACHE STRING "Path to upx.exe if applicable")
 if(NOT UPX_PATH STREQUAL "")
 	add_custom_command(
 		TARGET gm82dx9
