@@ -210,5 +210,11 @@
 #define d3d_model_bake
     ///d3d_model_bake(model)
     d3d_model_draw(argument0,0,0,0,-1)
+
+
+#define d3d_set_viewport
+    //d3d_set_viewport(x,y,width,height)
+    __gm82dx9_setviewport(argument0,argument1,argument2,argument3)
+    d3d_set_projection_ortho(0,0,argument2,argument3,0)
 //
 //

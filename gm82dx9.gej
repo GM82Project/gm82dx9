@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "08/07/2023",
+	"date": "23/07/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -227,20 +227,6 @@
 					"hidden": false,
 					"argtypes": [
 						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "d3d_set_viewport",
-					"extname": "__gm82dx9_setviewport",
-					"calltype": 12,
-					"helpline": "d3d_set_viewport(x,y,width,height)",
-					"hidden": false,
-					"argtypes": [
 						2,
 						2,
 						2,
@@ -1223,6 +1209,20 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_setviewport",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_pixel_create_buffer",
 					"extname": "",
 					"calltype": 12,
@@ -1907,6 +1907,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_model_bake",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bake(model)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_model_create_and_load",
 					"extname": "",
 					"calltype": 2,
@@ -1982,6 +1993,20 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_set_viewport",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_set_viewport(x,y,width,height)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_transform_vertex",
 					"extname": "",
 					"calltype": 2,
@@ -2039,17 +2064,6 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "d3d_model_bake",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "d3d_model_bake(model)",
-					"hidden": false,
-					"argtypes": [
-						2
-					],
 					"returntype": 2
 				}
 			],
