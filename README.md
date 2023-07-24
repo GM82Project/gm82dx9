@@ -20,4 +20,4 @@ Optimized transforms by Lovey01.
 
 ## Documentation
 
-Preliminary help documentation can be found [here](help.txt).
+Preliminary help documentation can be found [here](Game Maker 8.2 DirectX 9.txt).

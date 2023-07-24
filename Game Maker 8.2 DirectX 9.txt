@@ -94,6 +94,8 @@ surface_resize(name,w,h,scale,filter)
     -> If scaling is disabled, the surface will just be trimmed to fit.
 surface_forget(name)
     Forgets a managed surface and frees up the memory used.
+surface_forget_all()
+    Discards and forgets all managed surfaces.
 
 
 --------------------------------------------------------------------------------
@@ -145,6 +147,7 @@ argb_get_alpha(color)
 
 d3d_model_create_and_load(filename)
     Creates, loads and returns a model from the filename.
+    Filename can only be either a g3d model, or a packed g3z model.
 d3d_model_load_g3z(model,filename)
     Loads a packed 3d model.
 d3d_model_save_g3z(model,filename)
@@ -201,6 +204,7 @@ d3d_set_viewport(x,y,width,height)
     Sets the viewport for drawing as a rectangle region on the screen.
     -> This allows drawing only to a specific part of the screen, e.g. a
        HUD element, textbox, minimap etc.
+    -> An appropriate ortho projection fitting the viewport is set for you.
 d3d_get_viewport_x(), d3d_get_viewport_y(),
 d3d_get_viewport_w(), d3d_get_viewport_h()
     Returns the currently set viewport dimensions.
