@@ -23,6 +23,7 @@ GMREAL __gm82dx9_checkstart() {
     return 0;
 }
 GMREAL __gm82dx9_abort() {
+    MessageBox(NULL,"The GM82 DX8 and DX9 extensions\ncannot be combined.",NULL,MB_ICONSTOP);
     exit(1);
 }
 GMREAL __gm82dx9_testfunc() {

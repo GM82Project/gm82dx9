@@ -4,13 +4,6 @@
         exit
     }
 
-    if (variable_global_exists("__gm82dx8_controller")) {
-        if (variable_global_get("__gm82dx8_controller")!=0) {
-            show_error("The GM82 DX8 and DX9 extensions cannot be combined.",true)
-            __gm82dx9_abort()
-        }
-    }
-    
     globalvar __gm82dx9_cross_detect;
     
     globalvar __gm82dx9_controller;     __gm82dx9_controller=__gm82dx9_obj
@@ -46,7 +39,13 @@
     //finally after all draw events, compose the window
     object_event_add(__gm82dx9_controller,ev_other,ev_animation_end,"__gm82dx9_compose()")  
     //ignore first room frame
-    object_event_add(__gm82dx9_controller,ev_other,ev_room_start,"if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
+    object_event_add(__gm82dx9_controller,ev_other,ev_room_start,"
+    if (variable_global_exists('__gm82dx8_controller')) {
+        if (variable_global_get('__gm82dx8_controller')!=0) {
+            __gm82dx9_abort()
+        }
+    }
+    if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
     object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
 
 
