@@ -147,7 +147,7 @@
 
 
 #define draw_set_blend_alphamode
-    ///draw_set_blend_alphamode(enable,mode or [src,dest])
+    ///draw_set_blend_alphamode(enable,[mode or [src,dest]])
     if (argument_count<2) {
         __gm82dx9_setsepalphablend(0,0,0)
     }

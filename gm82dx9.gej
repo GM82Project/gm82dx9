@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "23/07/2023",
+	"date": "02/08/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -2032,7 +2032,7 @@
 					"name": "draw_set_blend_alphamode",
 					"extname": "",
 					"calltype": 2,
-					"helpline": "draw_set_blend_alphamode(enable,mode or [src,dest])",
+					"helpline": "draw_set_blend_alphamode(enable,[mode or [src,dest]])",
 					"hidden": false,
 					"argtypes": null,
 					"returntype": 2
