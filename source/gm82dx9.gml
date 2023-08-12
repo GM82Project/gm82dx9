@@ -6,7 +6,7 @@
 
     globalvar __gm82dx9_cross_detect;
     
-    globalvar __gm82dx9_controller;     __gm82dx9_controller=__gm82dx9_obj
+    globalvar __gm82dx9_controller;
     globalvar __gm82dx9_appsurfcompose; __gm82dx9_appsurfcompose=noone
 
     globalvar __gm82dx9_resw,__gm82dx9_resh;
@@ -20,20 +20,10 @@
     __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
     __gm82dx9_default_ps=shader_pixel_create_file(temp_directory+"\gm82\ps_pass.ps3")
 
-    if (variable_global_get("gm82core_version")>134) {
-        //recent enough core extension: we can work together
-        __gm82dx9_controller=gm82core_object
-    }
+    __gm82dx9_controller=gm82core_object
 
     if (__gm82dx9_checkstart()) exit
     
-    if (variable_global_get("gm82core_version")<=134) {
-        //core extension not detected: let's do it ourselves
-        object_event_add(__gm82dx9_controller,ev_destroy,0,"instance_copy(0)")
-        object_event_add(__gm82dx9_controller,ev_other,ev_room_end,"persistent=true")
-        object_set_persistent(__gm82dx9_controller,1)
-        room_instance_add(room_first,0,0,__gm82dx9_controller)
-    }
     //set target to appsurf at end step, to catch view setup and all draw events
     object_event_add(__gm82dx9_controller,ev_step,ev_step_end,"__gm82dx9_prepare()")
     //finally after all draw events, compose the window
