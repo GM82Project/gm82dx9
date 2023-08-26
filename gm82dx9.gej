@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "12/08/2023",
+	"date": "26/08/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1058,11 +1058,11 @@
 					"returntype": 2
 				},
 				{
-					"name": "window_resize_buffer",
-					"extname": "__gm82dx9_resize_backbuffer",
+					"name": "__gm82dx9_resize_backbuffer",
+					"extname": "",
 					"calltype": 12,
-					"helpline": "window_resize_buffer(w,h)",
-					"hidden": false,
+					"helpline": "",
+					"hidden": true,
 					"argtypes": [
 						2,
 						2
@@ -2036,6 +2036,20 @@
 					"helpline": "draw_set_blend_alphamode(enable,[mode or [src,dest]])",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "window_resize_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "window_resize_buffer(w,h,reset,aa)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
 					"returntype": 2
 				},
 				{

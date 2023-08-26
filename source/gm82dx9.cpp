@@ -2,6 +2,8 @@
 
 int has_started = 0;
 
+D3DPRESENT_PARAMETERS* present_params;
+
 DXData dx_data;
 
 D3DVIEWPORT9 viewport;
@@ -295,6 +297,8 @@ GMREAL __gm82dx9_resize_backbuffer(double width, double height) {
         mov edx, iheight
         call fun
     }
+    present_params->BackBufferWidth = (UINT)iwidth;
+    present_params->BackBufferHeight = (UINT)iheight;
     return 0;
 }
 GMREAL __gm82dx9_setpointscale(double size,double scaling,double minscale,double maxscale,double sprite) {

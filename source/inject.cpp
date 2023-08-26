@@ -1,6 +1,7 @@
 #include "gm82dx9.h"
 
 extern IDirect3DTexture9 *white_pixel = nullptr;
+extern D3DPRESENT_PARAMETERS* present_params;
 
 D3DCAPS9 d3d_caps;
 D3DPRESENT_PARAMETERS d3d_parameters = {
@@ -136,6 +137,9 @@ HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceTyp
         new_cw = old_cw | 0x3f;
         _asm fldcw [new_cw];
     }
+    
+    present_params = pPresentationParameters;
+    
     auto res = d3d9->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
     return res;
 }

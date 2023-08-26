@@ -37,6 +37,9 @@
     }
     if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
     object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
+    object_event_add(__gm82dx9_controller,ev_other,ev_game_start,"
+        window_resize_buffer(window_get_width(),window_get_height(),1,0)
+    ")
 
 
 #define __gm82dx9_quit
@@ -205,5 +208,11 @@
     //d3d_set_viewport(x,y,width,height)
     __gm82dx9_setviewport(argument0,argument1,argument2,argument3)
     d3d_set_projection_ortho(0,0,argument2,argument3,0)
+
+
+#define window_resize_buffer
+    ///(w,h,reset,aa)
+    __gm82dx9_resize_backbuffer(argument0,argument1)
+    if (argument2) display_reset(argument3)
 //
 //

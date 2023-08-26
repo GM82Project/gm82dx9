@@ -35,6 +35,8 @@ extern int has_started;
 extern IDirect3DDevice9** d3d9_device;
 #define Device (*d3d9_device)
 
+extern D3DPRESENT_PARAMETERS* present_params;
+
 extern int* dx9_backbuffer_format;
 
 extern void (*runner_display_reset)();
