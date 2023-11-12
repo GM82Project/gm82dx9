@@ -36,9 +36,8 @@
         }
     }
     if (__gm82dx9_appsurfcompose!=noone) {set_automatic_draw(false) alarm[0]=1}")
-    object_event_add(__gm82dx9_controller,ev_alarm,0,"if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)")
-    object_event_add(__gm82dx9_controller,ev_other,ev_game_start,"
-        window_resize_buffer(window_get_width(),window_get_height(),1,0)
+    object_event_add(__gm82dx9_controller,ev_alarm,0,"
+        if (__gm82dx9_appsurfcompose!=noone) set_automatic_draw(true)
     ")
 
 

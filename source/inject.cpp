@@ -139,6 +139,31 @@ HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceTyp
     }
     
     present_params = pPresentationParameters;
+	
+	// get window size from first room
+	int first_room_id = **(int**)0x8452d4;
+	char *room_ptr = (*(char***)0x686a4c)[first_room_id];
+	int desired_width = 0, desired_height = 0;
+	if (room_ptr[0x40]) {
+		// views
+		for (int i = 0; i < 8; i++) {
+			int *view_ptr = *(int**)(room_ptr + 0x44 + i * 4);
+			int port_width = view_ptr[6] + view_ptr[8];
+			int port_height = view_ptr[7] + view_ptr[9];
+			if (port_width > desired_width)
+				desired_width = port_width;
+			if (port_height > desired_height)
+				desired_height = port_height;
+		}
+	} else {
+		// no views
+		desired_width = ((int*)room_ptr)[3];
+		desired_height = ((int*)room_ptr)[4];
+	}
+	if (desired_width != 0 && desired_height != 0 && desired_width < present_params->BackBufferWidth && desired_height < present_params->BackBufferHeight) {
+		present_params->BackBufferWidth = desired_width;
+		present_params->BackBufferHeight = desired_height;
+	}
     
     auto res = d3d9->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
     return res;
