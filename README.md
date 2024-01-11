@@ -22,4 +22,4 @@ Optimized transforms by Lovey01.
 
 Function help and best practices can be found [here](Game%20Maker%208.2%20DirectX%209.txt).
 
-This extension requires [gm82core](https://github.com/omicronrex/gm82core).
+This extension requires [gm82core](https://github.com/GM82Project/gm82core) and [gm82net](https://github.com/GM82Project/gm82net).
