@@ -9,6 +9,8 @@ DXData dx_data;
 D3DVIEWPORT9 viewport;
 D3DRASTER_STATUS raster_status;
 XMMATRIX world_matrix;
+XMMATRIX view_matrix;
+XMMATRIX proj_matrix;
 XMVECTOR vertex;
 
 create_c_function(void,runner_display_reset,0x61f9f4);
@@ -373,8 +375,16 @@ GMREAL __gm82dx9_getmaxheight() {
 }
 GMREAL __gm82dx9_transformvertex(double inx, double iny, double inz) {
 	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
-    Device->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
+    Device->GetTransform(D3DTS_WORLD,reinterpret_cast<D3DMATRIX*>(&world_matrix));
     vertex = XMVector3TransformCoord(in_vec,world_matrix);
+    return (double)XMVectorGetX(vertex);
+}
+GMREAL __gm82dx9_projectvertex(double inx, double iny, double inz) {
+	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
+    Device->GetTransform(D3DTS_VIEW,reinterpret_cast<D3DMATRIX*>(&view_matrix));
+    Device->GetTransform(D3DTS_PROJECTION,reinterpret_cast<D3DMATRIX*>(&proj_matrix));    
+    XMMATRIX finalmat = XMMatrixMultiply(view_matrix,proj_matrix);    
+    vertex = XMVector3TransformCoord(in_vec,finalmat);
     return (double)XMVectorGetX(vertex);
 }
 GMREAL __gm82dx9_getvertexy() {
