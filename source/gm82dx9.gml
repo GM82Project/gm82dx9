@@ -122,9 +122,25 @@
 
 #define d3d_transform_vertex
     ///d3d_transform_vertex(x,y,z)
+    //x,y,z: input coordinates in 3d space
+    //returns: array[3] with transformed world coordinates
+    //This function will take the 3d object-space coordinates and apply the
+    //current world-matrix to it.
+    
     d3d_transform_vertex[0]=__gm82dx9_transformvertex(argument0,argument1,argument2)
     d3d_transform_vertex[1]=__gm82dx9_getvertexy()
     d3d_transform_vertex[2]=__gm82dx9_getvertexz()
+
+
+#define d3d_project_vertex
+    ///d3d_project_vertex(x,y,z)
+    //x,y,z: input coordinates in 3d space
+    //returns: array[2] with screen-space coordinates
+    //This function will take the 3d object-space coordinates and apply the
+    //current view-proj-matrix to it, returning a 2d coordinate.
+    
+    d3d_project_vertex[0]=__gm82dx9_projectvertex(argument0,argument1,argument2)
+    d3d_project_vertex[1]=__gm82dx9_getvertexy()
 
 
 #define d3d_fog_trick
@@ -210,7 +226,12 @@
 
 
 #define window_resize_buffer
-    ///(w,h,reset,aa)
+    ///window_resize_buffer(w,h,reset,aa)
+    //w,h: window size
+    //reset: whether to reset the device
+    //aa: antialias value for device reset
+    //Call this with reset true at least once in game start.
+    
     __gm82dx9_resize_backbuffer(argument0,argument1)
     if (argument2) display_reset(argument3)
 //

@@ -112,3 +112,16 @@ CCST_FUNC(y, x)
 CST_FUNC(x)
 CST_FUNC(y)
 CST_FUNC(z)
+
+//ghost johnny functions
+    ///d3d_transform_set_matrix(m11,m12,m13,m14,m21,m22,m23,m24,m31,m32,m33,m34,m41,m42,m43,m44)
+    //arguments: matrix components
+    //Sets the World matrix directly.
+    
+    ///d3d_transform_...()
+    //These functions will apply many transforms at once. The letters at the end of the function etermine which transforms can be applied:
+    //xyz - rotations
+    //s - scale
+    //t - transform
+    //The transformations are applied in the order of the letters.
+//

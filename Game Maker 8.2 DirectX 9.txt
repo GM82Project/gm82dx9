@@ -180,16 +180,6 @@ draw_set_blend_alphamode(enable,mode or [src,dest])
     Enable separate blend modes for the alpha channel.
     -> Must be disabled separately from the normal blend mode.
 
-argb_get_color(color), argb_get_alpha(color)
-    Unpacks color and alpha from a u32 returned from the surface to buffer
-    functions.
-argb_make_color(color,alpha)
-    Packs color and alpha into a u32 for use with the buffer to surface
-    functions.
-color_to_d3dcolor(color,alpha)
-    Returns a u32 with the color packed as a DirectX color for use in a vertex
-    buffer.
-
 d3d_clear_depth_buffer()
     Clears the depth buffer of the current render target, allowing new geometry
     to be drawn to it with depth occlusion.
@@ -373,9 +363,20 @@ d3d_transform_vertex(x,y,z)
     and then returns it in an array using the function name.
     Example:
     d3d_transform_vertex(a,b,c)
-    _a=d3d_transform_vertex[0]
-    _b=d3d_transform_vertex[1]
-    _c=d3d_transform_vertex[2]
+    _x=d3d_transform_vertex[0]
+    _y=d3d_transform_vertex[1]
+    _z=d3d_transform_vertex[2]
+d3d_project_vertex(x,y,z)
+    Applies the current view-projection transform matrix to the passed vertex
+    and then returns it in a 2d array using the function name.
+    The returned value is in screen-space coordinates, so you must multiply it
+    by the current ortho projection dimensions before usage.
+    Example:
+    d3d_project_vertex(a,b,c)
+    (if the view is 800x600)
+    _x=400+400*d3d_project_vertex[0]
+    _y=300-300*d3d_project_vertex[1]    
+    draw_circle(_x,_y,10,1)
 d3d_transform_?(????????)
     Shortcut function for applying many transforms in a sequence.
     Combine which transforms you want:

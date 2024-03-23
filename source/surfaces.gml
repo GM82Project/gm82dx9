@@ -28,7 +28,7 @@
 
 
 #define surface_get
-    ///(name,width,height)
+    ///surface_get(name,width,height)
     var __s,__name,__w,__h;
 
     __name=argument0
@@ -90,7 +90,7 @@
 
 
 #define surface_set
-    ///(name,width,height)
+    ///surface_set(name,width,height)
     var __s;
 
     __s=surface_get(argument0,argument1,argument2)
@@ -101,7 +101,7 @@
 
 
 #define surface_forget
-    ///(name)
+    ///surface_forget(name)
     var __s,__name;
 
     __name=argument0
@@ -120,6 +120,9 @@
 
 #define application_surface_enable
     ///application_surface_enable(postdraw script id)
+    //Enables the automatic use and management of an application surface.
+    //The postdraw script will be called when the screen is being composed, so any post-processing effects can be applied to it.
+    
     //envelope engine v5
     //renex 2023
 
@@ -138,6 +141,8 @@
 
 #define application_surface_disable
     ///application_surface_disable()
+    //Disables the application surface.
+    
     if (__gm82dx9_appsurfcompose!=noone) {
         __gm82dx9_appsurfcompose=noone
         surface_forget("application_surface")
@@ -147,11 +152,15 @@
 
 #define application_surface_is_enabled
     ///application_surface_is_enabled()
+    //returns: whether the application surface is enabled.
+    
     return __gm82dx9_appsurfcompose!=noone
 
 
 #define application_surface_resize
     ///application_surface_resize(width,height)
+    //width,height: new size
+    //Resizes the application surface.
     if (__gm82dx9_appsurfcompose!=noone) {
         __gm82dx9_resw=argument0
         __gm82dx9_resh=argument1
@@ -161,11 +170,13 @@
 
 #define application_surface_get_width
     ///application_surface_get_width()
+    //returns: The current width of the application surface.
     return __gm82dx9_resw
 
 
 #define application_surface_get_height
-    ///application_surface_is_enabled()
+    ///application_surface_get_height()
+    //returns: The current height of the application surface.
     return __gm82dx9_resh
 
 
@@ -187,6 +198,13 @@
 
 #define buffer_set_surface
     ///buffer_set_surface(buffer,surface)
+    //buffer: a gm82net buffer with the color data.
+    //surface: a surface to receive the contents.
+    //This function will push the buffer's color data to the surface.
+    //The bufer must have enough data in it (at least width*height*4 bytes).
+    //You can pack a color and alpha value into u32s for use with buffers using argb_make_color(color,alpha).
+    //Do note that this function is very slow, so use it sparingly.
+    
     var __buf,__surf;
     
     __buf=argument0
@@ -213,6 +231,18 @@
 
 #define buffer_get_surface
     ///buffer_get_surface(buffer,surface)
+    //buffer: a gm82net buffer to receive the surface contents.
+    //surface: a surface to get the contents from.
+    //This function will retrieve the surface's color data into the buffer.
+    //Each pixel is stored as an u32 0xAABBGGRR color value.
+    //The buffer will be resized to fit the surface's contents (new size is width*height*4 bytes).
+    //-> To get a specific (x,y) pixel from the buffer, the address would be: ((y * width) + x) * 4
+    //To get the alpha and color values of a pixel:
+    //   pixel_u32 = buffer_read_u32(b)
+    //   alpha = argb_get_alpha(pixel_u32)
+    //   color = argb_get_color(pixel_u32)
+    //Do note that this function is very slow, so use it sparingly.
+    
     var __buf,__surf;
     
     __buf=argument0

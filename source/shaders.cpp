@@ -485,7 +485,7 @@ GMREAL __gm82dx9_surface_set_target_ext(double target, double surface) {
     IDirect3DSurface9* surf = nullptr;
     
     if (surface>=0) {
-        if (vibe_check(get_gm_texture(get_gm_surface(surface)->texture)->texture->GetSurfaceLevel(0, &surf))) return 0;    
+        if (vibe_check(get_gm_texture(get_gm_surface(surface)->texture)->texture->GetSurfaceLevel(0, &surf))) return 0;
     }
     
     if (vibe_check(Device->SetRenderTarget(index,surf))) return 0;
