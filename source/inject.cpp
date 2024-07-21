@@ -229,7 +229,7 @@ CW_INJ_START(arccos)
     fld1
     fadd st(0), st(1)
     fld1
-    fadd st(0), st(2)
+    fsub st(0), st(2)
     fmulp st(1), st(0)
     fsqrt
     fxch
