@@ -490,5 +490,7 @@ GMREAL __gm82dx9_surface_set_target_ext(double target, double surface) {
     
     if (vibe_check(Device->SetRenderTarget(index,surf))) return 0;
     
+    if (surf!=NULL) surf->Release();
+    
     return 1;
 }

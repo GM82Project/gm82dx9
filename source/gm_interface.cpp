@@ -10,6 +10,7 @@ extern bool __vibe_check(const wchar_t* file, int line, HRESULT hr) {
     DXGetErrorDescriptionW(hr, errbuf, 1024);
     _snwprintf_s(buf, 1024, L"DirectX9 error in file %s at line %i:\n%s\n%s",file,line,DXGetErrorStringW(hr),errbuf);
     MessageBoxW(0, buf, L"Warning", 0);
+    exit(1);
     return true;
 }
 
