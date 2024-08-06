@@ -291,6 +291,8 @@ GMREAL __gm82dx9_buffer_to_surface(double buffer, double id, double gm_width, do
 
     tex->AddDirtyRect(&rect);
     
+    surf->Release();
+    
     return 0;    
 }
 GMREAL __gm82dx9_surface_to_buffer(double buffer, double id, double gm_width, double gm_height) {    
