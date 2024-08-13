@@ -16,6 +16,17 @@ GMREAL d3d_transform_set_matrix(
     return 0;
 }
 
+GMREAL d3d_transform_add_stack_top() {
+    int stack_top = *(int*)0x686434;
+    XMMATRIX *stack = (XMMATRIX*)0x71234c;
+    if (stack_top >= 0) {
+        Device->GetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
+        world_matrix = XMMatrixMultiply(world_matrix, stack[stack_top]);
+        Device->SetTransform(D3DTS_WORLDMATRIX(0),reinterpret_cast<D3DMATRIX*>(&world_matrix));
+    }
+    return 0;
+}
+
 // Glossary:
 //   C: rotation component (either x, y or z)
 //   CC: 2 rotation components (different components in any order)

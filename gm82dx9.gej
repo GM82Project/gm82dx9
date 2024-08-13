@@ -284,6 +284,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_transform_add_stack_top",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_add_stack_top()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_transform_xst",
 					"extname": "",
 					"calltype": 12,

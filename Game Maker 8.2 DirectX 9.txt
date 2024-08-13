@@ -358,6 +358,8 @@ texture_set_repeat_ext(hrepeat,vrepeat,bordercolor)
 d3d_transform_set_matrix(m11,m12,m13,m14,m21,m22,m23,m24,
                          m31,m32,m33,m34,m41,m42,m43,m44)
     Sets the world transform matrix.
+d3d_transform_add_stack_top()
+    Applies the transform at the top of the stack to the current transform.
 d3d_transform_vertex(x,y,z)
     Applies the current world transform matrix to the passed vertex
     and then returns it in an array using the function name.
