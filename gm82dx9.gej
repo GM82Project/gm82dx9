@@ -1305,6 +1305,45 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_pixel_uniform_f_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_pixel_uniform_i_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_pixel_uniform_b_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_vertex_create_buffer",
 					"extname": "",
 					"calltype": 12,
@@ -1380,6 +1419,45 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_f_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_i_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_uniform_b_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
 						2,
 						2
 					],
@@ -2309,6 +2387,42 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_pixel_uniform_f_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_f_buffer(uniform,buffer)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_i_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_i_buffer(uniform,buffer)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_pixel_uniform_b_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_b_buffer(uniform,buffer)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_vertex_create_base64",
 					"extname": "",
 					"calltype": 2,
@@ -2380,6 +2494,42 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "shader_vertex_uniform_matrix(uniform,mtx_type)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_f_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_uniform_f_buffer(uniform,buffer)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_i_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_uniform_i_buffer(uniform,buffer)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_b_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_uniform_b_buffer(uniform,buffer)",
 					"hidden": false,
 					"argtypes": [
 						2,

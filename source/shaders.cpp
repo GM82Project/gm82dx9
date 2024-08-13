@@ -350,6 +350,22 @@ UNI_MATRIX(vertex, Vertex)
 UNI_MATRIX(pixel, Pixel)
 #undef UNI_MATRIX
 
+#define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
+    GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_ ## ty_lo ## _buffer(double reg, double buffer, double size) { \
+        ty_name *data = (ty_name*)(int)buffer; \
+        Device->Set ## st_up ## ShaderConstant ## ty_up (reg, data, (int)size / 16); \
+        return 0; \
+    }
+
+CONSTANT_FUNC(vertex,Vertex,float,f,F)
+CONSTANT_FUNC(pixel,Pixel,float,f,F)
+CONSTANT_FUNC(vertex,Vertex,int,i,I)
+CONSTANT_FUNC(pixel,Pixel,int,i,I)
+CONSTANT_FUNC(vertex,Vertex,BOOL,b,B)
+CONSTANT_FUNC(pixel,Pixel,int,b,B)
+
+#undef CONSTANT_FUNC
+
 GMREAL texture_get_interpolation() {
     DWORD retval;
     

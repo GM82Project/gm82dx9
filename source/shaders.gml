@@ -151,6 +151,35 @@
         shader_pixel_uniform_f(argument[0],color_get_red(argument[1])/255,color_get_green(argument[1])/255,color_get_blue(argument[1])/255,1)
 
 
+#define shader_vertex_uniform_f_buffer
+    ///shader_vertex_uniform_f_buffer(uniform,buffer)
+    __gm82dx9_shader_vertex_uniform_f_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+
+
+#define shader_pixel_uniform_f_buffer
+    ///shader_pixel_uniform_f_buffer(uniform,buffer)
+    __gm82dx9_shader_pixel_uniform_f_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+
+
+#define shader_vertex_uniform_i_buffer
+    ///shader_vertex_uniform_i_buffer(uniform,buffer)
+    __gm82dx9_shader_vertex_uniform_i_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+
+
+#define shader_pixel_uniform_i_buffer
+    ///shader_pixel_uniform_i_buffer(uniform,buffer)
+    __gm82dx9_shader_pixel_uniform_i_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+
+
+#define shader_vertex_uniform_b_buffer
+    ///shader_vertex_uniform_b_buffer(uniform,buffer)
+    __gm82dx9_shader_vertex_uniform_b_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+
+
+#define shader_pixel_uniform_b_buffer
+    ///shader_pixel_uniform_b_buffer(uniform,buffer)
+    __gm82dx9_shader_pixel_uniform_b_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+
 #define shader_pixel_create_base64
     ///shader_pixel_create_base64(string)
     var __buf,__shd;

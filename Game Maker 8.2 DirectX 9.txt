@@ -534,6 +534,36 @@ shader_vertex_uniform_matrix(uniform,mtx_type)
     -> Accepted matrices are: mtx_world, mtx_view, mtx_projection,
        mtx_world_view, mtx_view_projection, mtx_world_view_projection
     -> Notice that the world matrix will change whenever a transform is applied.
+shader_vertex_uniform_f_buffer(uniform,buffer)
+    uniform: a uniform name, or its register ID
+    buffer: a gm82net containing the uniform data
+    Copies the given buffer data into the float uniform in the vertex shader.
+    -> Buffers must contain sets of 4 32-bit floats.
+    -> Uniform names are accepted as strings.
+       If a name is invalid, an error will be thrown.
+    -> Struct and array accessors are also accepted, e.g. "a.b[5]".
+    -> There are 256 numerical register IDs, from 0 through 255.
+    -> This function should be called after setting the relevant vertex shader.
+shader_vertex_uniform_b_buffer(uniform,buffer)
+    uniform: a uniform name, or its register ID
+    buffer: a gm82net containing the uniform data
+    Copies the given buffer data into the boolean uniform in the vertex shader.
+    -> Buffers must contain sets of 4 32-bit booleans (0 or 1 integers).
+    -> Uniform names are accepted as strings.
+       If a name is invalid, an error will be thrown.
+    -> Struct and array accessors are also accepted, e.g. "a.b[5]".
+    -> There are 256 numerical register IDs, from 0 through 255.
+    -> This function should be called after setting the relevant vertex shader.
+shader_vertex_uniform_i_buffer(uniform,buffer)
+    uniform: a uniform name, or its register ID
+    buffer: a gm82net containing the uniform data
+    Copies the given buffer data into the integer uniform in the vertex shader.
+    -> Buffers must contain sets of 4 32-bit integers.
+    -> Uniform names are accepted as strings.
+       If a name is invalid, an error will be thrown.
+    -> Struct and array accessors are also accepted, e.g. "a.b[5]".
+    -> There are 256 numerical register IDs, from 0 through 255.
+    -> This function should be called after setting the relevant vertex shader.
 texture_set_stage_vertex(sampler,texture)
     sampler: a uniform name, or its sampler ID
     Sets the given texture as a uniform in the vertex shader.
@@ -652,6 +682,36 @@ shader_pixel_uniform_matrix(uniform,mtx_type)
     -> Accepted matrices are: mtx_world, mtx_view, mtx_projection,
        mtx_world_view, mtx_view_projection, mtx_world_view_projection
     -> Notice that the world matrix will change whenever a transform is applied.
+shader_pixel_uniform_f_buffer(uniform,buffer)
+    uniform: a uniform name, or its register ID
+    buffer: a gm82net containing the uniform data
+    Copies the given buffer data into the float uniform in the pixel shader.
+    -> Buffers must contain sets of 4 32-bit floats.
+    -> Uniform names are accepted as strings.
+       If a name is invalid, an error will be thrown.
+    -> Struct and array accessors are also accepted, e.g. "a.b[5]".
+    -> There are 256 numerical register IDs, from 0 through 255.
+    -> This function should be called after setting the relevant pixel shader.
+shader_pixel_uniform_b_buffer(uniform,buffer)
+    uniform: a uniform name, or its register ID
+    buffer: a gm82net containing the uniform data
+    Copies the given buffer data into the boolean uniform in the pixel shader.
+    -> Buffers must contain sets of 4 32-bit booleans (0 or 1 integers).
+    -> Uniform names are accepted as strings.
+       If a name is invalid, an error will be thrown.
+    -> Struct and array accessors are also accepted, e.g. "a.b[5]".
+    -> There are 256 numerical register IDs, from 0 through 255.
+    -> This function should be called after setting the relevant pixel shader.
+shader_pixel_uniform_i_buffer(uniform,buffer)
+    uniform: a uniform name, or its register ID
+    buffer: a gm82net containing the uniform data
+    Copies the given buffer data into the integer uniform in the pixel shader.
+    -> Buffers must contain sets of 4 32-bit integers.
+    -> Uniform names are accepted as strings.
+       If a name is invalid, an error will be thrown.
+    -> Struct and array accessors are also accepted, e.g. "a.b[5]".
+    -> There are 256 numerical register IDs, from 0 through 255.
+    -> This function should be called after setting the relevant pixel shader.
 texture_set_stage(sampler,texture)
     sampler: a uniform name, or its sampler ID
     Sets the given texture as a uniform in the pixel shader.
