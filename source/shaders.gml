@@ -256,21 +256,21 @@
 
 #define surface_set_target_ext
     ///surface_set_target_ext(target,surface)
-    var surf;
+    var __surf;
     if (is_string(argument1)) {
         if (!ds_map_exists(__gm82dx9_surfmap,argument1)) {
             show_error("Error trying to set target to unknown surface: "+string(argument1),0)
             return noone
         }
-        surf=ds_map_find_value(__gm82dx9_surfmap,argument1)-1
-    } else surf=argument1
+        __surf=ds_map_find_value(__gm82dx9_surfmap,argument1)-1
+    } else __surf=argument1
     
-    if (!surface_exists(surf)) {
+    if (!surface_exists(__surf)) {
         show_error("Trying to set target to nonexisting surface("+string(argument1)+")",0)
         return 0
     }
-    if (argument0==0) surface_set_target(surf)
-    else __gm82dx9_surface_set_target_ext(argument0,surf)
+    if (argument0==0) surface_set_target(__surf)
+    else __gm82dx9_surface_set_target_ext(argument0,__surf)
 
 
 #define surface_reset_target_ext
@@ -360,19 +360,19 @@
 
 #define vertex_buffer_draw
     ///vertex_buffer_draw(vbuffer,vformat,primitive,texture,[ibuffer])
-    var vertices,count,indexed,stride;
+    var __vertices,__indexed;
     
     if (argument_count>4) {
         __gm82dx9_index_buffer_set(argument4)
-        if (__gm82dx9_index_buffer_get_format(argument4)==ib_format_32) vertices=__gm82dx9_index_buffer_get_size(argument4)/4
-        else vertices=__gm82dx9_index_buffer_get_size(argument4)/2
-        indexed=true
+        if (__gm82dx9_index_buffer_get_format(argument4)==ib_format_32) __vertices=__gm82dx9_index_buffer_get_size(argument4)/4
+        else __vertices=__gm82dx9_index_buffer_get_size(argument4)/2
+        __indexed=true
     } else {
-        vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
-        indexed=false
+        __vertices=vertex_buffer_get_size(argument0)/vertex_format_get_size(argument1,0)
+        __indexed=false
     }
     
-    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,vertices,indexed)
+    __gm82dx9_vertex_draw_buffer(argument0,argument1,argument2,argument3,__vertices,__indexed)
 
 
 #define vertex_instance_set
