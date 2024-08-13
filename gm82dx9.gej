@@ -1856,7 +1856,7 @@
 				},
 				{
 					"name": "vf_type_float3",
-					"value": "",
+					"value": "2",
 					"hidden": false
 				},
 				{
