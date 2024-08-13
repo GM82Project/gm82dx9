@@ -293,6 +293,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_transform_get_determinant",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_get_determinant()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_transform_xst",
 					"extname": "",
 					"calltype": 12,

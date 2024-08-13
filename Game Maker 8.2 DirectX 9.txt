@@ -390,6 +390,9 @@ d3d_transform_?(????????)
     -> Any combination of rotations is valid, but scale must be last,
        and translate is mandatory. For example, d3d_transform_yxzst(),
        or d3d_transform_xt() are valid.
+d3d_transform_get_determinant()
+    Returns the determinant of the current world matrix.
+    Useful for determining cull mode. <TODO: how?>
 
 
 --------------------------------------------------------------------------------
