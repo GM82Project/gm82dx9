@@ -392,7 +392,8 @@ d3d_transform_?(????????)
        or d3d_transform_xt() are valid.
 d3d_transform_get_determinant()
     Returns the determinant of the current world matrix.
-    Useful for determining cull mode. <TODO: how?>
+    If negative, the current transform is mirrored.
+    This can be useful for determining which cull mode to use.
 
 
 --------------------------------------------------------------------------------
