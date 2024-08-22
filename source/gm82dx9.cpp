@@ -145,6 +145,25 @@ GMREAL __gm82dx9_set_alphatest(double enable,double value,double cmpfunc) {
     Device->SetRenderState(D3DRS_ALPHAFUNC,(DWORD)(int)cmpfunc);      
     return 0;
 }
+GMREAL d3d_light_get_enabled(double index) {
+    ///d3d_light_get_enabled(index)
+    //Returns: whether the light with index is enabled.
+    
+    BOOL enabled;
+    vibe_check(Device->GetLightEnable((int)index,&enabled));
+    return enabled?1:0;
+}
+GMREAL __gm82dx9_buffer_get_lights(double buffer) {
+    D3DLIGHT9 light;
+    char* dest=(char*)(int)buffer;    
+    
+    for (int i=0;i<8;i++) {    
+        vibe_check(Device->GetLight(i,&light));
+        memcpy(dest+i*104,&light,104);
+    }
+    
+    return 0;
+}
 GMREAL __gm82dx9_set_light(
     double index, double type,
     double x, double y, double z,

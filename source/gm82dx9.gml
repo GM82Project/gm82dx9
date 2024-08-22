@@ -24,6 +24,8 @@
 
     if (__gm82dx9_checkstart()) exit
     
+    var __i; __i=0 repeat (8) {d3d_light_define_direction(__i,0,0,1,0) __i+=1}
+    
     //set target to appsurf at end step, to catch view setup and all draw events
     object_event_add(__gm82dx9_controller,ev_step,ev_step_end,"__gm82dx9_prepare()")
     //finally after all draw events, compose the window
@@ -152,6 +154,22 @@
     } else if (argument_count==2) {
         d3d_set_fog(1,argument0,0.5-argument1,1.5-argument1)
     } else d3d_set_fog(0,0,0,0)
+
+
+#define buffer_get_lights
+    ///buffer_get_lights(buffer)
+    var __buf;
+    
+    __buf=argument0
+    
+    if (!buffer_exists(__buf)) {
+        show_error("Trying to get lights data into a nonexisting buffer("+string(__buf)+").",0)
+        return 0
+    }
+    
+    buffer_set_size(__buf,104*8)
+    buffer_set_pos(__buf,0)
+    __gm82dx9_buffer_get_lights(buffer_get_address(__buf,0))
 
 
 #define draw_set_blend_alphamode

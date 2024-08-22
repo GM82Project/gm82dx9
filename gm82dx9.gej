@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "21/08/2024",
+	"date": "22/08/2024",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -82,6 +82,17 @@
 					"helpline": "d3d_get_free_video_memory()",
 					"hidden": false,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_light_get_enabled",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_light_get_enabled(index)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -258,6 +269,24 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_transform_add_stack_top",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_add_stack_top()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_transform_get_determinant",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_transform_get_determinant()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_transform_set_matrix",
 					"extname": "",
 					"calltype": 12,
@@ -281,24 +310,6 @@
 						2,
 						2
 					],
-					"returntype": 2
-				},
-				{
-					"name": "d3d_transform_add_stack_top",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "d3d_transform_add_stack_top()",
-					"hidden": false,
-					"argtypes": [],
-					"returntype": 2
-				},
-				{
-					"name": "d3d_transform_get_determinant",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "d3d_transform_get_determinant()",
-					"hidden": false,
-					"argtypes": [],
 					"returntype": 2
 				},
 				{
@@ -1076,24 +1087,23 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_resize_backbuffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
 					"name": "__gm82dx9_abort",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_buffer_get_lights",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				},
 				{
@@ -1187,6 +1197,31 @@
 					"hidden": true,
 					"argtypes": [
 						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_projectvertex",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_resize_backbuffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
 						2,
 						2
 					],
@@ -1311,12 +1346,13 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_pixel_uniform_matrix",
+					"name": "__gm82dx9_shader_pixel_uniform_b_buffer",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
+						2,
 						2,
 						2
 					],
@@ -1349,13 +1385,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_pixel_uniform_b_buffer",
+					"name": "__gm82dx9_shader_pixel_uniform_matrix",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
-						2,
 						2,
 						2
 					],
@@ -1431,12 +1466,13 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_vertex_uniform_matrix",
+					"name": "__gm82dx9_shader_vertex_uniform_b_buffer",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
+						2,
 						2,
 						2
 					],
@@ -1469,13 +1505,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "__gm82dx9_shader_vertex_uniform_b_buffer",
+					"name": "__gm82dx9_shader_vertex_uniform_matrix",
 					"extname": "",
 					"calltype": 12,
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
-						2,
 						2,
 						2
 					],
@@ -1664,19 +1699,6 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": [
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_projectvertex",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "",
-					"hidden": true,
-					"argtypes": [
-						2,
-						2,
 						2
 					],
 					"returntype": 2
@@ -2008,6 +2030,17 @@
 			"final": "__gm82dx9_quit",
 			"functions": [
 				{
+					"name": "buffer_get_lights",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "buffer_get_lights(buffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_fog_trick",
 					"extname": "",
 					"calltype": 2,
@@ -2057,6 +2090,19 @@
 					"helpline": "d3d_model_save_g3z(model,filename)",
 					"hidden": false,
 					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_project_vertex",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_project_vertex(x,y,z)",
+					"hidden": false,
+					"argtypes": [
+						2,
 						2,
 						2
 					],
@@ -2188,19 +2234,6 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "d3d_project_vertex",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "d3d_project_vertex(x,y,z)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2
-					],
 					"returntype": 2
 				}
 			],
