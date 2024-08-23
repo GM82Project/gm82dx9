@@ -331,6 +331,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_set_matrix_from_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "__gm82dx9_set_matrix_from_buffer(address)",
+					"hidden": true,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_transform_xst",
 					"extname": "",
 					"calltype": 12,

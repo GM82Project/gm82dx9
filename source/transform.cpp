@@ -16,6 +16,11 @@ GMREAL d3d_transform_set_matrix(
     return 0;
 }
 
+GMREAL __gm82dx9_set_matrix_from_buffer(double address) {
+    Device->SetTransform(D3DTS_WORLD, (D3DMATRIX*)(int)address);
+    return 0;
+}
+
 GMREAL d3d_transform_add_stack_top() {
     int stack_top = *(int*)0x686434;
     XMMATRIX *stack = (XMMATRIX*)0x71234c;
