@@ -145,8 +145,8 @@ GMREAL __gm82dx9_set_alphatest(double enable,double value,double cmpfunc) {
     Device->SetRenderState(D3DRS_ALPHAFUNC,(DWORD)(int)cmpfunc);      
     return 0;
 }
-GMREAL d3d_light_get_enabled(double index) {
-    ///d3d_light_get_enabled(index)
+GMREAL d3d_light_enabled(double index) {
+    ///d3d_light_enabled(index)
     //Returns: whether the light with index is enabled.
     
     BOOL enabled;
