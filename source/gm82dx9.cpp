@@ -153,6 +153,11 @@ GMREAL d3d_light_get_enabled(double index) {
     vibe_check(Device->GetLightEnable((int)index,&enabled));
     return enabled?1:0;
 }
+GMREAL d3d_get_lighting(double index) {
+    DWORD enabled;
+    Device->GetRenderState(D3DRS_LIGHTING,&enabled);
+    return enabled?1:0;
+}
 GMREAL __gm82dx9_buffer_get_lights(double buffer) {
     D3DLIGHT9 light;
     char* dest=(char*)(int)buffer;    
@@ -163,6 +168,11 @@ GMREAL __gm82dx9_buffer_get_lights(double buffer) {
     }
     
     return 0;
+}
+GMREAL d3d_light_get_ambient() {
+    DWORD color;
+    Device->GetRenderState(D3DRS_AMBIENT,&color);
+    return (double)(((color&0xff)<<16) + (color&0xff00) + ((color&0xff0000)>>16));
 }
 GMREAL __gm82dx9_set_light(
     double index, double type,

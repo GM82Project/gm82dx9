@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "22/08/2024",
+	"date": "23/08/2024",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -85,14 +85,12 @@
 					"returntype": 2
 				},
 				{
-					"name": "d3d_light_get_enabled",
+					"name": "d3d_get_lighting",
 					"extname": "",
 					"calltype": 12,
-					"helpline": "d3d_light_get_enabled(index)",
+					"helpline": "d3d_get_lighting()",
 					"hidden": false,
-					"argtypes": [
-						2
-					],
+					"argtypes": [],
 					"returntype": 2
 				},
 				{
@@ -154,6 +152,26 @@
 						2,
 						2
 					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_light_enabled",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_light_enabled(index)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_light_get_ambient",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_light_get_ambient()",
+					"hidden": false,
+					"argtypes": [],
 					"returntype": 2
 				},
 				{
