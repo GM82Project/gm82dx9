@@ -492,6 +492,12 @@ GMREAL __gm82dx9_transformvertex(double inx, double iny, double inz) {
     vertex = XMVector3TransformCoord(in_vec,world_matrix);
     return (double)XMVectorGetX(vertex);
 }
+GMREAL __gm82dx9_geteyepos() {
+	Device->GetTransform(D3DTS_VIEW,reinterpret_cast<D3DMATRIX*>(&view_matrix));
+    XMMATRIX inverse = XMMatrixInverse(NULL,view_matrix);    
+    vertex = inverse.r[3];
+    return (double)XMVectorGetX(vertex);
+}
 GMREAL __gm82dx9_projectvertex(double inx, double iny, double inz) {
 	XMVECTOR in_vec = XMVectorSet(inx, iny, inz, 0.0);
     Device->GetTransform(D3DTS_VIEW,reinterpret_cast<D3DMATRIX*>(&view_matrix));

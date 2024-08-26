@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "23/08/2024",
+	"date": "26/08/2024",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -326,17 +326,6 @@
 						2,
 						2,
 						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "__gm82dx9_set_matrix_from_buffer",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "__gm82dx9_set_matrix_from_buffer(address)",
-					"hidden": true,
-					"argtypes": [
 						2
 					],
 					"returntype": 2
@@ -1168,6 +1157,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_geteyepos",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_getvertexy",
 					"extname": "",
 					"calltype": 12,
@@ -1301,6 +1299,17 @@
 						2,
 						2,
 						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_set_matrix_from_buffer",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "__gm82dx9_set_matrix_from_buffer(address)",
+					"hidden": true,
+					"argtypes": [
 						2
 					],
 					"returntype": 2
@@ -2076,6 +2085,15 @@
 					"helpline": "d3d_fog_trick([color,amount])",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "d3d_get_projection_origin",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_get_projection_origin()",
+					"hidden": false,
+					"argtypes": [],
 					"returntype": 2
 				},
 				{

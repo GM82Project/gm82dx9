@@ -14,7 +14,7 @@
     
     globalvar __gm82dx9_surface_was_new;
     
-    globalvar d3d_transform_vertex,d3d_project_vertex;
+    globalvar d3d_transform_vertex,d3d_project_vertex,d3d_get_projection_origin;
 
     //load default shaders
     __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")
@@ -132,6 +132,15 @@
     d3d_transform_vertex[0]=__gm82dx9_transformvertex(argument0,argument1,argument2)
     d3d_transform_vertex[1]=__gm82dx9_getvertexy()
     d3d_transform_vertex[2]=__gm82dx9_getvertexz()
+    
+
+#define d3d_get_projection_origin
+    ///d3d_get_projection_origin()
+    //returns: array[3] with projection's 'from' coordinates
+    
+    d3d_get_projection_origin[0]=__gm82dx9_geteyepos()
+    d3d_get_projection_origin[1]=__gm82dx9_getvertexy()
+    d3d_get_projection_origin[2]=__gm82dx9_getvertexz()
 
 
 #define d3d_project_vertex
