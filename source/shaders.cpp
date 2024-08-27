@@ -280,6 +280,18 @@ GMREAL __gm82dx9_get_vconst(const char* name) {
     return desc.RegisterIndex;
 }
 
+GMREAL __gm82dx9_get_vconst_size(const char* name) {
+    unsigned int count;
+    D3DXCONSTANT_DESC desc;
+
+    if (!current_vshader.shader) return -4;
+    if (current_vshader.constants->GetConstantDesc(current_vshader.constants->GetConstantByName(0, name), &desc, &count)!=D3D_OK) {
+        return -4;        
+    }
+    
+    return desc.RegisterCount;
+}
+
 GMREAL __gm82dx9_get_pconst(const char* name) {
     unsigned int count;
     D3DXCONSTANT_DESC desc;
@@ -290,6 +302,18 @@ GMREAL __gm82dx9_get_pconst(const char* name) {
     }
     
     return desc.RegisterIndex;
+}
+
+GMREAL __gm82dx9_get_pconst_size(const char* name) {
+    unsigned int count;
+    D3DXCONSTANT_DESC desc;
+
+    if (!current_pshader.shader) return -4;
+    if (current_pshader.constants->GetConstantDesc(current_pshader.constants->GetConstantByName(0, name), &desc, &count)!=D3D_OK) {
+        return -4;        
+    }
+    
+    return desc.RegisterCount;
 }
 
 #define CONSTANT_FUNC(st_lo,st_up,ty_name,ty_lo,ty_up) \
@@ -324,8 +348,9 @@ CONSTANT_BOOL(pixel,Pixel)
 #undef CONSTANT_BOOL
 
 #define UNI_MATRIX(st_lo, st_up) \
-    GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_matrix(double reg, double mask_f) { \
+    GMREAL __gm82dx9_shader_ ## st_lo ## _uniform_matrix(double reg, double mask_f, double size_f) { \
         int mask = mask_f; \
+        int size = size_f; \
         XMMATRIX matrix; \
         if (mask & 1) { \
             Device->GetTransform(D3DTS_WORLD, (D3DMATRIX*)&matrix); \
@@ -342,7 +367,7 @@ CONSTANT_BOOL(pixel,Pixel)
             Device->GetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&projection); \
             matrix = DirectX::XMMatrixMultiply(matrix, projection); \
         } \
-        Device->Set ## st_up ## ShaderConstantF(reg, matrix.r->m128_f32, 4); \
+        Device->Set ## st_up ## ShaderConstantF(reg, matrix.r->m128_f32, size); \
         return 0; \
     }
     

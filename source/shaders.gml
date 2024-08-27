@@ -19,20 +19,22 @@
     shader_pixel_set(__gm82dx9_default_ps)
 
 
-#define __gm82dx9_vertex_uniform
+#define shader_vertex_uniform_get_address
+    ///shader_vertex_uniform_get_address(uniform)
     var __addr;
     if (is_string(argument0)) {
-        __addr=shader_vertex_uniform_get_address(argument0)
+        __addr=__gm82dx9_get_vconst(argument0)
         if (__addr==noone) show_error("Uniform "+argument0+" doesn't exist in the set vertex shader.",0)
         return __addr
     }
     return argument0
 
 
-#define __gm82dx9_pixel_uniform
+#define shader_pixel_uniform_get_address
+    ///shader_pixel_uniform_get_address(uniform)
     var __addr;
     if (is_string(argument0)) {
-        __addr=shader_pixel_uniform_get_address(argument0)
+        __addr=__gm82dx9_get_pconst(argument0)
         if (__addr==noone) show_error("Uniform "+argument0+" doesn't exist in the set pixel shader.",0)
         return __addr
     }
@@ -42,7 +44,7 @@
 #define shader_vertex_uniform_f
     ///shader_vertex_uniform_f(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_vertex_uniform(argument0)
+    __uni=shader_vertex_uniform_get_address(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4f(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -57,7 +59,7 @@
 #define shader_pixel_uniform_f
     ///shader_pixel_uniform_f(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_pixel_uniform(argument0)
+    __uni=shader_pixel_uniform_get_address(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4f(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -72,7 +74,7 @@
 #define shader_vertex_uniform_i
     ///shader_vertex_uniform_i(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_vertex_uniform(argument0)
+    __uni=shader_vertex_uniform_get_address(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_vertex_uniform_4i(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -87,7 +89,7 @@
 #define shader_pixel_uniform_i
     ///shader_pixel_uniform_i(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_pixel_uniform(argument0)
+    __uni=shader_pixel_uniform_get_address(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: __gm82dx9_shader_pixel_uniform_4i(__uni+(__i div 4),argument[1+__i],0,0,0) exit
@@ -102,7 +104,7 @@
 #define shader_vertex_uniform_b
     ///shader_vertex_uniform_b(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_vertex_uniform(argument0)
+    __uni=shader_vertex_uniform_get_address(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: case 3: case 4: __gm82dx9_shader_vertex_uniform_b(__uni+__i,argument[1+__i]) __i+=1 continue
@@ -115,7 +117,7 @@
 #define shader_pixel_uniform_b
     ///shader_pixel_uniform_b(uniform,...)
     var __i,__uni; __i=0
-    __uni=__gm82dx9_pixel_uniform(argument0)
+    __uni=shader_pixel_uniform_get_address(argument0)
     do switch (argument_count-__i) {
         case 0: case 1: exit
         case 2: case 3: case 4: __gm82dx9_shader_pixel_uniform_b(__uni+__i,argument[1+__i]) __i+=1 continue
@@ -126,13 +128,45 @@
 
 
 #define shader_vertex_uniform_matrix
-    //shader_vertex_uniform_matrix(uniform,mtx_type)
-    __gm82dx9_shader_vertex_uniform_matrix(__gm82dx9_vertex_uniform(argument0),argument1)
+    ///shader_vertex_uniform_matrix(uniform,mtx_type,[size])
+    var __address,__size;
+    if (argument_count<=1 || argument_count>=3) {
+        show_error("Error in function shader_vertex_uniform_matrix: wrong number of arguments.",0)
+        exit
+    }    
+    if (argument_count==3) {
+        __address=shader_vertex_uniform_get_address(argument[0])
+        __size=argument[2]
+    } else {
+        if (!is_string(argument[0])) {
+            show_error("Error in function shader_vertex_uniform_matrix: 'uniform' must be passed as a string when 'size' is unspecified.",0)
+            exit
+        }
+        __address=shader_vertex_uniform_get_address(argument[0])
+        __size=shader_vertex_uniform_get_size(argument[0])
+    }
+    __gm82dx9_shader_vertex_uniform_matrix(__address,argument[1],__size)
 
 
 #define shader_pixel_uniform_matrix
-    //shader_pixel_uniform_matrix(uniform,mtx_type)
-    __gm82dx9_shader_pixel_uniform_matrix(__gm82dx9_pixel_uniform(argument0),argument1)
+    ///shader_pixel_uniform_matrix(uniform,mtx_type,[size])
+    var __address,__size;
+    if (argument_count<=1 || argument_count>=3) {
+        show_error("Error in function shader_pixel_uniform_matrix: wrong number of arguments.",0)
+        exit
+    }    
+    if (argument_count==3) {
+        __address=shader_pixel_uniform_get_address(argument[0])
+        __size=argument[2]
+    } else {
+        if (!is_string(argument[0])) {
+            show_error("Error in function shader_pixel_uniform_matrix: 'uniform' must be passed as a string when 'size' is unspecified.",0)
+            exit
+        }
+        __address=shader_pixel_uniform_get_address(argument[0])
+        __size=shader_pixel_uniform_get_size(argument[0])
+    }
+    __gm82dx9_shader_pixel_uniform_matrix(__address,argument[1],__size)
 
 
 #define shader_vertex_uniform_color
@@ -153,32 +187,32 @@
 
 #define shader_vertex_uniform_f_buffer
     ///shader_vertex_uniform_f_buffer(uniform,buffer)
-    __gm82dx9_shader_vertex_uniform_f_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_vertex_uniform_f_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
 
 
 #define shader_pixel_uniform_f_buffer
     ///shader_pixel_uniform_f_buffer(uniform,buffer)
-    __gm82dx9_shader_pixel_uniform_f_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_pixel_uniform_f_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
 
 
 #define shader_vertex_uniform_i_buffer
     ///shader_vertex_uniform_i_buffer(uniform,buffer)
-    __gm82dx9_shader_vertex_uniform_i_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_vertex_uniform_i_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
 
 
 #define shader_pixel_uniform_i_buffer
     ///shader_pixel_uniform_i_buffer(uniform,buffer)
-    __gm82dx9_shader_pixel_uniform_i_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_pixel_uniform_i_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
 
 
 #define shader_vertex_uniform_b_buffer
     ///shader_vertex_uniform_b_buffer(uniform,buffer)
-    __gm82dx9_shader_vertex_uniform_b_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_vertex_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
 
 
 #define shader_pixel_uniform_b_buffer
     ///shader_pixel_uniform_b_buffer(uniform,buffer)
-    __gm82dx9_shader_pixel_uniform_b_buffer(__gm82dx9_vertex_uniform(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_pixel_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
 
 #define shader_pixel_create_base64
     ///shader_pixel_create_base64(string)
@@ -209,32 +243,32 @@
 
 #define texture_set_stage
     ///texture_set_stage(sampler,texture)
-    __gm82dx9_texture_stage_set(__gm82dx9_pixel_uniform(argument0),argument1)
+    __gm82dx9_texture_stage_set(shader_pixel_uniform_get_address(argument0),argument1)
 
 
 #define texture_set_stage_interpolation
     ///texture_set_stage_interpolation(sampler,texture)
-    __gm82dx9_texture_set_stage_interpolation(__gm82dx9_pixel_uniform(argument0),argument1)
+    __gm82dx9_texture_set_stage_interpolation(shader_pixel_uniform_get_address(argument0),argument1)
 
 
 #define texture_set_stage_repeat
     ///texture_set_stage_repeat(sampler,hrepeat,vrepeat,bordercolor)
-    __gm82dx9_texture_set_stage_repeat(__gm82dx9_pixel_uniform(argument0),argument1,argument2,argument3)
+    __gm82dx9_texture_set_stage_repeat(shader_pixel_uniform_get_address(argument0),argument1,argument2,argument3)
 
 
 #define texture_set_stage_vertex
     ///texture_set_stage_vertex(sampler,texture)
-    __gm82dx9_texture_stage_vertex_set(__gm82dx9_vertex_uniform(argument0),argument1)
+    __gm82dx9_texture_stage_vertex_set(shader_vertex_uniform_get_address(argument0),argument1)
 
 
 #define texture_set_stage_vertex_interpolation
     ///texture_set_stage_vertex_interpolation(sampler,texture)
-    __gm82dx9_texture_set_stage_vertex_interpolation(__gm82dx9_vertex_uniform(argument0),argument1)
+    __gm82dx9_texture_set_stage_vertex_interpolation(shader_vertex_uniform_get_address(argument0),argument1)
 
 
 #define texture_set_stage_vertex_repeat
     ///texture_set_stage_vertex_repeat(sampler,hrepeat,vrepeat,bordercolor)
-    __gm82dx9_texture_set_stage_vertex_repeat(__gm82dx9_vertex_uniform(argument0),argument1,argument2,argument3)
+    __gm82dx9_texture_set_stage_vertex_repeat(shader_vertex_uniform_get_address(argument0),argument1,argument2,argument3)
 
 
 #define shader_draw_shadertoy
