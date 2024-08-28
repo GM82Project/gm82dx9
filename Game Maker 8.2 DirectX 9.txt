@@ -236,9 +236,9 @@ d3d_set_cull_mode(mode)
     Sets the backface culling method.
     Valid methods include:
     cull_clockwise
-        Draw faces with clockwise pixel definition.
+        Hides faces with clockwise vertex winding order.
     cull_counterclockwise
-        Draw faces with counterclockwise vertex definition.
+        Hides faces with counterclockwise vertex winding order.
     cull_none
         Draw both faces.
 d3d_set_depth_scale(near,far)
