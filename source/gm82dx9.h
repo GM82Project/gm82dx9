@@ -50,6 +50,7 @@ extern XMVECTOR vertex;
 
 HRESULT WINAPI SetVertexShader(IDirect3DDevice9 *dev, DWORD fvf);
 DWORD gm_col_to_dx9(double color);
+double dx9_col_to_gm(DWORD color);
     
 bool __vibe_check(const wchar_t* file, int line, HRESULT hr);
 void __show_error(const wchar_t* file, int line, const char* message);

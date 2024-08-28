@@ -172,7 +172,7 @@ GMREAL __gm82dx9_buffer_get_lights(double buffer) {
 GMREAL d3d_light_get_ambient() {
     DWORD color;
     Device->GetRenderState(D3DRS_AMBIENT,&color);
-    return (double)(((color&0xff)<<16) + (color&0xff00) + ((color&0xff0000)>>16));
+    return dx9_col_to_gm(color);
 }
 GMREAL __gm82dx9_set_light(
     double index, double type,
@@ -285,6 +285,28 @@ GMREAL __gm82dx9_setrangefog(double type,double color,double start,double end) {
         Device->SetRenderState(D3DRS_RANGEFOGENABLE,(type==2));
     }
     return 0;
+}
+GMREAL d3d_get_fog_enabled() {
+    DWORD enable;    
+    Device->GetRenderState(D3DRS_FOGENABLE,&enable);    
+    return enable?1:0;
+}
+GMREAL d3d_get_fog_color() {    
+    DWORD color;
+    Device->GetRenderState(D3DRS_FOGCOLOR,&color);
+    return dx9_col_to_gm(color);
+}
+GMREAL d3d_get_fog_start() {
+    DWORD d_start;
+    Device->GetRenderState(D3DRS_FOGSTART,&d_start);
+    float f_start=*(float *)(&d_start);
+    return (double)f_start;
+}
+GMREAL d3d_get_fog_end() {
+    DWORD d_end;
+    Device->GetRenderState(D3DRS_FOGEND,&d_end);
+    float f_end=*(float *)(&d_end);
+    return (double)f_end;
 }
 GMREAL __gm82dx9_surface_set_depth(double id) {
     ///surface_set_depth(id)

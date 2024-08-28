@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "27/08/2024",
+	"date": "28/08/2024",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -71,6 +71,42 @@
 					"extname": "__gm82dx9_cleardepth",
 					"calltype": 12,
 					"helpline": "d3d_clear_depth_buffer()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_get_fog_color",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_get_fog_color()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_get_fog_enabled",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_get_fog_enabled()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_get_fog_end",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_get_fog_end()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_get_fog_start",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "d3d_get_fog_start()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2

@@ -30,9 +30,12 @@ extern void __show_error(const wchar_t* file, int line, const char* message) {
     exit(1);
 }
 
-extern DWORD gm_col_to_dx9(double color) {
+extern inline DWORD gm_col_to_dx9(double color) {
     int col=(int)round(color);
     return 0xff000000|((col & 0xff)<<16) + (col & 0xff00) + ((col & 0xff0000)>>16);
+}
+extern inline double dx9_col_to_gm(DWORD color) {
+    return (double)(((color & 0xff)<<16) + (color & 0xff00) + ((color & 0xff0000)>>16));
 }
 
 GMSurface** gm_surfaces = (GMSurface**)(0x84527c);
