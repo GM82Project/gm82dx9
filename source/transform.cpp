@@ -37,6 +37,12 @@ GMREAL d3d_transform_get_determinant() {
     return XMVectorGetX(XMMatrixDeterminant(world_matrix));
 }
 
+GMREAL d3d_projection_get_determinant() {
+    XMMATRIX M;
+    Device->GetTransform(D3DTS_PROJECTION,reinterpret_cast<D3DMATRIX*>(&M));
+    return XMVectorGetX(XMMatrixDeterminant(M));
+}
+
 // Glossary:
 //   C: rotation component (either x, y or z)
 //   CC: 2 rotation components (different components in any order)

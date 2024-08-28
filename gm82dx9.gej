@@ -211,6 +211,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "d3d_projection_get_determinant",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_projection_get_determinant()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "d3d_set_alphatest",
 					"extname": "__gm82dx9_set_alphatest",
 					"calltype": 12,
