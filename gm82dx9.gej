@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "28/08/2024",
+	"date": "21/09/2024",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -2536,6 +2536,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_pixel_uniform_exists",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_uniform_exists(name)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_pixel_uniform_f",
 					"extname": "",
 					"calltype": 2,
@@ -2656,6 +2667,17 @@
 					"helpline": "shader_vertex_uniform_color(uniform,color,[alpha])",
 					"hidden": false,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_uniform_exists",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_uniform_exists(name)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				},
 				{

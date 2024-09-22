@@ -19,6 +19,16 @@
     shader_pixel_set(__gm82dx9_default_ps)
 
 
+#define shader_vertex_uniform_exists
+    ///shader_vertex_uniform_exists(name)
+    return (__gm82dx9_get_vconst(argument0)!=noone) 
+
+
+#define shader_pixel_uniform_exists
+    ///shader_pixel_uniform_exists(name)
+    return (__gm82dx9_get_pconst(argument0)!=noone) 
+
+
 #define shader_vertex_uniform_get_address
     ///shader_vertex_uniform_get_address(uniform)
     var __addr;
@@ -277,11 +287,11 @@
     shader_vertex_set_passthrough()
 
     shader_pixel_set(argument0)
-    shader_pixel_uniform_f(shader_pixel_uniform_get_address("_iGlobalTime"),argument5)
-    shader_pixel_uniform_f(shader_pixel_uniform_get_address("_iTime"),argument5)
-    shader_pixel_uniform_f(shader_pixel_uniform_get_address("_iResolution"),argument3,argument4,0)
-    shader_pixel_uniform_f(shader_pixel_uniform_get_address("_iMouse"),x,y,0,0)
-    shader_pixel_uniform_f(shader_pixel_uniform_get_address("_iFrameRate"),room_speed)
+    if (shader_pixel_uniform_exists("_iGlobalTime")) shader_pixel_uniform_f("_iGlobalTime",argument5)
+    if (shader_pixel_uniform_exists("_iTime")) shader_pixel_uniform_f("_iTime",argument5)
+    if (shader_pixel_uniform_exists("_iResolution")) shader_pixel_uniform_f("_iResolution",argument3,argument4,0)
+    if (shader_pixel_uniform_exists("_iMouse")) shader_pixel_uniform_f("_iMouse",x,y,0,0)
+    if (shader_pixel_uniform_exists("_iFrameRate")) shader_pixel_uniform_f("_iFrameRate",room_speed)
 
     draw_primitive_begin_texture(pr_trianglestrip,-1)
     draw_vertex_texture(argument1,argument2,0,1)

@@ -183,7 +183,7 @@ GMREAL __gm82dx9_set_light(
     double specular, double specular_factor
 ) {
     ///d3d_light_define_ext(index,type,x,y,z,dx,dy,dz,range,inner_rad,outer_rad,color_diffuse,diffuse_factor,color_specular,specular_factor)
-    //index: light number (use small integers)
+    //index: light number 0-7
     //type: one of lt_point, lt_spotlight, or lt_sun
     //x,y,z: light position (unused for sun lights)
     //dx,dy,dz: direction vector (unused for point lights)
