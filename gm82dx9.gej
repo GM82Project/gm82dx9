@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "21/09/2024",
+	"date": "27/11/2024",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -1809,6 +1809,33 @@
 						2
 					],
 					"returntype": 2
+				},
+				{
+					"name": "draw_set_alpha_test",
+					"extname": "__gm82dx9_set_alphatest",
+					"calltype": 12,
+					"helpline": "draw_set_alpha_test(enable,value,cm_comparison)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "draw_set_color_write_enable",
+					"extname": "__gm82dx9_set_color_mask",
+					"calltype": 12,
+					"helpline": "draw_set_color_write_enable(red,green,blue,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
 				}
 			],
 			"constants": [
@@ -2350,6 +2377,17 @@
 					"helpline": "",
 					"hidden": true,
 					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "draw_enable_alphablend",
+					"extname": "d3d_set_alphablend",
+					"calltype": 2,
+					"helpline": "draw_enable_alphablend(enable)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
 					"returntype": 2
 				}
 			],
