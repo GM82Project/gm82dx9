@@ -8,7 +8,7 @@
 #define surface_reset
     ///surface_reset()
     if (__gm82dx9_appsurfcompose!=noone) {
-        application_surface=surface_get("application_surface",__gm82dx9_resw,__gm82dx9_resh)
+        application_surface=surface_set("application_surface",__gm82dx9_resw,__gm82dx9_resh)
     } else {
         surface_reset_target()
         d3d_set_projection_default()
