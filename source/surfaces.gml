@@ -35,6 +35,11 @@
     __w=argument1
     __h=argument2
     
+    if (string_pos("__gm82dx9_texture_id",__name)) {
+        if (debug_mode) show_error("WHY are you naming your surfaces '__gm82dx9_texture_id'? Are you out of your mind??? NO!!!!!",0)
+        return noone
+    }
+    
     __gm82dx9_surface_was_new=false
 
     __s=ds_map_find_value(__gm82dx9_surfmap,__name)
@@ -48,6 +53,14 @@
     if (!__s) {
         //create surf
         __s=surface_create(__w,__h)+1
+        if (!surface_exists(__s-1)) {
+            if (d3d_get_free_video_memory()<(__w*__h*4*2)) {
+                if (debug_mode) show_error("Error in function surface_get: couldn't create a surface of dimensions "+string(argument1)+"x"+string(argument2)+". Reason: Out of memory!",0)
+                else show_message("Out of memory!")
+            } else
+                if (debug_mode) show_error("Error in function surface_get: couldn't create a surface of dimensions "+string(argument1)+"x"+string(argument2)+". Reason: Possibly too big!",0)
+            return noone
+        }
         ds_map_add(__gm82dx9_surfmap,__name,__s)
         __gm82dx9_surface_was_new=true
     }
@@ -66,6 +79,15 @@
     __old=ds_map_find_value(__gm82dx9_surfmap,argument0)-1
     
     __new=surface_create(argument1,argument2)
+    
+    if (!surface_exists(__new-1)) {
+        if (d3d_get_free_video_memory()<(__w*__h*4*2)) {
+                if (debug_mode) show_error("Error in function surface_get: couldn't create a surface of dimensions "+string(argument1)+"x"+string(argument2)+". Reason: Out of memory!",0)
+                else show_message("Out of memory!")
+        } else
+            show_error("Error in function surface_resize: couldn't create a surface of dimensions "+string(argument1)+"x"+string(argument2)+". Reason: Possibly too big!",0)
+        return noone
+    }
     
     if (argument3) {
         surface_set_target(__new)
@@ -263,5 +285,17 @@
     
     __gm82dx9_surface_to_buffer(buffer_get_address(__buf,0),__surf,surface_get_width(__surf),surface_get_height(__surf))
     return 1
+
+
+#define surface_get_address
+    ///surface_get_address(surface)
+    //surface: surface id
+    //returns: 32 bit address of the IDirect3DSurface9 structure associated with the surface.
+    
+    if (surface_exists(argument0)) {
+        return __gm82dx9_surface_ptr(argument0)
+    }
+    return noone
+
 //
 //

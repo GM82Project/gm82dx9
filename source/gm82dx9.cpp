@@ -500,7 +500,9 @@ GMREAL __gm82dx9_setzscale(double znear, double zfar) {
     return 0;
 }
 GMREAL __gm82dx9_getvideomem() {
-    return (double)(Device->GetAvailableTextureMem()/1048576);
+    ///d3d_get_free_video_memory()
+    //returns: An approximate amount of bytes free in video memory.
+    return (double)(Device->GetAvailableTextureMem());
 }
 GMREAL __gm82dx9_getmaxwidth() {
     return (double)d3d_caps.MaxTextureWidth;
@@ -533,4 +535,10 @@ GMREAL __gm82dx9_getvertexy() {
 }
 GMREAL __gm82dx9_getvertexz() {
     return (double)XMVectorGetZ(vertex);
+}
+GMREAL __gm82dx9_surface_ptr(double id) {    
+    GMSurface* gm_surf = get_gm_surface(id);
+    IDirect3DSurface9* surf = nullptr;
+    if (vibe_check(get_gm_texture(gm_surf->texture)->texture->GetSurfaceLevel(0, &surf))) return -4;
+    return (double)(DWORD)surf;
 }

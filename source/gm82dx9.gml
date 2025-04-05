@@ -246,6 +246,27 @@
     d3d_model_draw(argument0,0,0,0,-1)
 
 
+#define d3d_draw_ceiling
+    ///d3d_draw_ceiling(x1,y1,z1,x2,y2,z2,texid,hrepeat,vrepeat)
+    //Draws a (slanted) ceiling in the current color with the given corners
+    //using the indicated texture. Use -1 to not use a texture.
+    //hrepeat indicates how often the texture must be repeated along
+    //the horizontal edge of each face. vrepeat does the same for the vertical edge. 
+
+    __x1=argument0
+    __y1=argument1
+    __z1=argument2
+    __x2=argument3
+    __y2=argument4
+    __z2=argument5
+    __tex=argument6
+    __hr=argument7
+    __vr=argument8
+    
+    //d3d_primitive_begin_texture(pr_trianglestrip,__tex)
+    //d3d_vertex_texture(__x1,__y1,__z1,)
+
+
 #define d3d_set_viewport
     //d3d_set_viewport(x,y,width,height)
     __gm82dx9_setviewport(argument0,argument1,argument2,argument3)
