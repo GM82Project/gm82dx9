@@ -25,6 +25,7 @@
         __key=ds_map_find_next(__gm82dx9_surfmap,__key)
     }
     ds_map_clear(__gm82dx9_surfmap)
+    ds_map_clear(__gm82dx9_surfidmap)
 
 
 #define surface_get
@@ -35,18 +36,20 @@
     __w=argument1
     __h=argument2
     
-    if (string_pos("__gm82dx9_texture_id",__name)) {
-        if (debug_mode) show_error("WHY are you naming your surfaces '__gm82dx9_texture_id'? Are you out of your mind??? NO!!!!!",0)
-        return noone
-    }
-    
     __gm82dx9_surface_was_new=false
 
     __s=ds_map_find_value(__gm82dx9_surfmap,__name)
     if (__s) {
         if (!surface_exists(__s-1)) {
+            show_debug_message("surface "+__name+" went missing")
             surface_forget_all()
             __s=0
+        } else {
+            if (surface_get_address(__s-1)!=ds_map_find_value(__gm82dx9_surfidmap,__name)) {
+                show_debug_message("surface "+__name+" changed id")
+                surface_forget_all()
+                __s=0
+            }
         }
     }
 
@@ -62,6 +65,7 @@
             return noone
         }
         ds_map_add(__gm82dx9_surfmap,__name,__s)
+        ds_map_add(__gm82dx9_surfidmap,__name,surface_get_address(__s-1))
         __gm82dx9_surface_was_new=true
     }
 
@@ -70,6 +74,12 @@
 
 #define surface_resize
     ///surface_resize(name,w,h,scale,filter)
+    //name: name of the surface to resize
+    //w,h: new dimensions to resize to
+    //scale: whether to scale the image to fit the new surface
+    //filter: whether to use a bilinear filter when scaling the image
+    //returns: id of the new surface generated for the resize operation
+    
     var __old,__new,__i;
     
     if (!ds_map_exists(__gm82dx9_surfmap,argument0)) {
@@ -89,21 +99,26 @@
         return noone
     }
     
-    if (argument3) {
-        surface_set_target(__new)
-        d3d_set_projection_ortho(0,0,argument1,argument2,0)
-        __i=texture_get_interpolation()
-        texture_set_interpolation(argument4)
-        draw_surface_stretched(__old,0,0,argument1,argument2)
-        texture_set_interpolation(__i)
-        surface_reset()
-    } else {
-        surface_copy_part(__new,0,0,__old,0,0,min(surface_get_width(__old),argument1),min(surface_get_height(__old),argument2))
+    if (surface_exists(__old)) {
+        if (argument3) {
+            surface_set_target(__new)
+            d3d_set_projection_ortho(0,0,argument1,argument2,0)
+            __i=texture_get_interpolation()
+            texture_set_interpolation(argument4)
+            draw_surface_stretched(__old,0,0,argument1,argument2)
+            texture_set_interpolation(__i)
+            surface_reset()
+        } else {
+            surface_copy_part(__new,0,0,__old,0,0,min(surface_get_width(__old),argument1),min(surface_get_height(__old),argument2))
+        }
+        
+        surface_free(__old) 
     }
     
-    surface_discard(__old) 
+    ds_map_replace(__gm82dx9_surfmap,argument0,__new+1)
+    ds_map_replace(__gm82dx9_surfidmap,argument0,surface_get_address(__new))
     
-    ds_map_replace(__gm82dx9_surfmap,argument0,__new+1)    
+    return __new    
 
 
 #define surface_is_new
@@ -133,6 +148,7 @@
     if (__s!=0) {
         if (surface_exists(__s-1)) surface_free(__s-1)
         ds_map_delete(__gm82dx9_surfmap,__name)
+        ds_map_delete(__gm82dx9_surfidmap,__name)
     }
 
 

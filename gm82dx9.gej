@@ -3260,6 +3260,11 @@
 					"name": "__gm82dx9_surfmap",
 					"value": "ds_map_create()",
 					"hidden": true
+				},
+				{
+					"name": "__gm82dx9_surfidmap",
+					"value": "ds_map_create()",
+					"hidden": true
 				}
 			]
 		},

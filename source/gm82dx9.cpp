@@ -540,5 +540,6 @@ GMREAL __gm82dx9_surface_ptr(double id) {
     GMSurface* gm_surf = get_gm_surface(id);
     IDirect3DSurface9* surf = nullptr;
     if (vibe_check(get_gm_texture(gm_surf->texture)->texture->GetSurfaceLevel(0, &surf))) return -4;
+    surf->Release();
     return (double)(DWORD)surf;
 }
