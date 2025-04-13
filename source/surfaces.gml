@@ -126,6 +126,32 @@
     return __gm82dx9_surface_was_new
 
 
+#define surface_load
+    ///surface_load(id,fname)
+    var __bg;
+    
+    if (surface_exists(argument0)) {
+        if (file_exists(argument1)) {
+            __bg=background_add(argument1,0,0)
+            if (background_exists(__bg)) {
+                surface_set_target(argument0)
+                draw_clear_alpha(0,0)
+                d3d_set_projection_ortho(0,0,surface_get_width(argument0),surface_get_height(argument0),0)
+                draw_background(__bg,0,0)
+                background_delete(__bg)
+                surface_reset()
+                return true
+            }
+            show_error("error in function surface_load: trying to load invalid image file file ("+string(argument1)+") into surface ("+string(argument0)+")",0)
+            return false
+        }
+        show_error("error in function surface_load: trying to load nonexisting file ("+string(argument1)+") into surface ("+string(argument0)+")",0)
+        return false        
+    }
+    show_error("error in function surface_load: trying to load file ("+string(argument1)+") into nonexisting surface ("+string(argument0)+")",0)
+    return false
+
+
 #define surface_set
     ///surface_set(name,width,height)
     var __s;
