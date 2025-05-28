@@ -159,6 +159,7 @@
     __s=surface_get(argument0,argument1,argument2)
 
     surface_set_target(__s)
+    d3d_set_projection_ortho(0,0,surface_get_width(__s),surface_get_height(__s),0)
 
     return __s
 
@@ -176,6 +177,15 @@
         ds_map_delete(__gm82dx9_surfmap,__name)
         ds_map_delete(__gm82dx9_surfidmap,__name)
     }
+
+
+#define surface_get_name
+    ///surface_get_name(surface)
+    var __find;
+    
+    find=ds_map_search(__gm82dx9_surfmap,argument0+1)
+    if (find==undefined) return "[UNMANAGED]"
+    return find
 
 
 #define surface_set_depth
