@@ -356,8 +356,12 @@ const uint8_t reset_patch[] = {
 
 HINSTANCE my_handle;
 
+// called when the dll is unloaded
 void WINAPI last_resort_impl(HANDLE hLibModule) {
     if (hLibModule == my_handle && Device == nullptr) {
+        // clear the surfaces early, while the dll is still loaded
+        ((void(*)(void))0x56c094)();
+        // overwrite the display reset function to not reset if we're at default
         HANDLE proc = GetCurrentProcess();
         WriteProcessMemory(proc, (void*)(0x61ede0), reset_patch, sizeof(reset_patch), nullptr);
         int ptr = 0x61ede0 - (0x561bb0 + 5);
