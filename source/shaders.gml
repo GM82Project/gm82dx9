@@ -303,30 +303,6 @@
     shader_reset()
 
 
-#define draw_quad
-    ///draw_quad(x,y,w,h,tex,[u1,v1,u2,v2])
-    
-    if (argument_count!=9 && argument_count!=5) {
-        show_error("Wrong number of arguments for draw_quad().",0)
-        exit
-    }
-    
-    texture_set_repeat(1)
-    draw_primitive_begin_texture(pr_trianglestrip,argument4)
-    if (argument_count==9) {    
-        draw_vertex_texture(argument0,argument1,argument5,argument6)
-        draw_vertex_texture(argument0+argument2,argument1,argument7,argument6)
-        draw_vertex_texture(argument0,argument1+argument3,argument5,argument8)
-        draw_vertex_texture(argument0+argument2,argument1+argument3,argument7,argument8)
-    } else {    
-        draw_vertex_texture(argument0,argument1,0,0)
-        draw_vertex_texture(argument0+argument2,argument1,1,0)
-        draw_vertex_texture(argument0,argument1+argument3,0,1)
-        draw_vertex_texture(argument0+argument2,argument1+argument3,1,1)
-    }
-    draw_primitive_end()
-
-
 #define surface_set_target_ext
     ///surface_set_target_ext(target,surface)
     var __surf;
