@@ -24,7 +24,14 @@
 
     if (__gm82dx9_checkstart()) exit
     
-    var __i; __i=0 repeat (8) {d3d_light_define_direction(__i,0,0,1,0) __i+=1}
+    //fill 8 lights with dummy data so buffer_get_lights doesn't crash
+    d3d_light_define_ambient(0)
+    var __i; __i=0 repeat (8) {
+        d3d_light_define_direction(__i,0,0,1,0)
+        d3d_light_define_point(__i,0,0,0,1,0)
+        d3d_light_enable(__i,0)
+    __i+=1}
+
     
     //set target to appsurf at end step, to catch view setup and all draw events
     object_event_add(__gm82dx9_controller,ev_step,ev_step_end,"__gm82dx9_prepare()")
