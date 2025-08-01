@@ -1,9 +1,9 @@
-build
 *.gex
 *.dll
 *.ps*
 *.vs*
-todo.txt
 .idea
+build
 cmake-build-*
 gm82gex.py
+todo.txt
