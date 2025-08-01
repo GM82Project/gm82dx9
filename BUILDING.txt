@@ -2,5 +2,3 @@ Building the extension requires the following:
 
 - CMake 3.19+
 - Python 3
-- gm82gex.py from the gm82gex repository https://github.com/GM82Project/gm82gex
-- include\D3DX9_43.dll from the June 2010 DirectX Redist

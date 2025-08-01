@@ -7,3 +7,4 @@ build
 cmake-build-*
 gm82gex.py
 todo.txt
+!include/D3DX9_43.dll
