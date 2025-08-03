@@ -216,9 +216,12 @@
 
 #define d3d_model_save_g3z
     ///d3d_model_save_g3z(model,filename)
-    var __b;
+    var __b,__str;
     d3d_model_save(argument0,argument1)
     __b=buffer_create(argument1)
+    __str=buffer_read_data(__b,buffer_get_size(__b))
+    buffer_clear(__b)
+    buffer_write_data(__b,string_replace_all(__str,",","."))
     buffer_deflate(__b)
     buffer_save(__b,argument1)
     buffer_destroy(__b)
