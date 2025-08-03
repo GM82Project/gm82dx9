@@ -1,11 +1,11 @@
 #define shader_vertex_create_buffer
     ///shader_vertex_create_buffer(buffer)
-    return __gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0))
+    return __gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0),buffer_get_size(argument0))
 
 
 #define shader_pixel_create_buffer
     ///shader_pixel_create_buffer(buffer)
-    return __gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0))
+    return __gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0),buffer_get_size(argument0))
 
 
 #define shader_vertex_set_passthrough
@@ -197,32 +197,32 @@
 
 #define shader_vertex_uniform_f_buffer
     ///shader_vertex_uniform_f_buffer(uniform,buffer)
-    __gm82dx9_shader_vertex_uniform_f_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_vertex_uniform_f_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
 
 #define shader_pixel_uniform_f_buffer
     ///shader_pixel_uniform_f_buffer(uniform,buffer)
-    __gm82dx9_shader_pixel_uniform_f_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_pixel_uniform_f_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
 
 #define shader_vertex_uniform_i_buffer
     ///shader_vertex_uniform_i_buffer(uniform,buffer)
-    __gm82dx9_shader_vertex_uniform_i_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_vertex_uniform_i_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
 
 #define shader_pixel_uniform_i_buffer
     ///shader_pixel_uniform_i_buffer(uniform,buffer)
-    __gm82dx9_shader_pixel_uniform_i_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_pixel_uniform_i_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
 
 #define shader_vertex_uniform_b_buffer
     ///shader_vertex_uniform_b_buffer(uniform,buffer)
-    __gm82dx9_shader_vertex_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_vertex_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
 
 #define shader_pixel_uniform_b_buffer
     ///shader_pixel_uniform_b_buffer(uniform,buffer)
-    __gm82dx9_shader_pixel_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1,0),buffer_get_size(argument1))
+    __gm82dx9_shader_pixel_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
 #define shader_pixel_create_base64
     ///shader_pixel_create_base64(string)
@@ -330,12 +330,12 @@
 
 #define index_buffer_create
     ///index_buffer_create(buffer,ib_format_...)
-    __gm82dx9_index_create_buffer_from_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0),argument1)
+    __gm82dx9_index_create_buffer_from_buffer(buffer_get_address(argument0),buffer_get_size(argument0),argument1)
 
 
 #define vertex_buffer_create
     ///vertex_buffer_create(buffer,format,slot)
-    __gm82dx9_vertex_create_buffer_from_buffer(buffer_get_address(argument0,0),buffer_get_size(argument0),vertex_format_get_size(argument1,argument2))
+    __gm82dx9_vertex_create_buffer_from_buffer(buffer_get_address(argument0),buffer_get_size(argument0),vertex_format_get_size(argument1,argument2))
 
 
 #define vertex_format_add_position
@@ -360,12 +360,9 @@
 
 #define buffer_write_format_default
     ///buffer_write_format_default(buffer,x,y,z,nx,ny,nz,u,v,color,alpha)
-    buffer_write_float4(argument0,argument1,argument2,argument3,0)
-    
-    buffer_write_float4(argument0,argument4,argument5,argument6,0)
-    
-    buffer_write_u32(argument0,color_to_d3dcolor(argument9,argument10))
-    
+    buffer_write_float4(argument0,argument1,argument2,argument3,0)    
+    buffer_write_float4(argument0,argument4,argument5,argument6,0)    
+    buffer_write_u32(argument0,color_to_d3dcolor(argument9,argument10))    
     buffer_write_float2(argument0,argument7,argument8)
 
 

@@ -185,7 +185,7 @@
     
     buffer_set_size(__buf,104*8)
     buffer_set_pos(__buf,0)
-    __gm82dx9_buffer_get_lights(buffer_get_address(__buf,0))
+    __gm82dx9_buffer_get_lights(buffer_get_address(__buf))
 
 
 #define draw_set_blend_alphamode
@@ -218,8 +218,7 @@
     ///d3d_model_save_g3z(model,filename)
     var __b;
     d3d_model_save(argument0,argument1)
-    __b=buffer_create()
-    buffer_load(__b,argument1)
+    __b=buffer_create(argument1)
     buffer_deflate(__b)
     buffer_save(__b,argument1)
     buffer_destroy(__b)
@@ -229,8 +228,7 @@
 #define d3d_model_load_g3z
     ///d3d_model_load_g3z(model,filename)
     var __b,__m;
-    __b=buffer_create()
-    buffer_load(__b,argument1)
+    __b=buffer_create(argument1)
     buffer_inflate(__b)
     if (argument0<0) __m=d3d_model_create() else __m=argument0
     d3d_model_load(__m,buffer_make_pipe(__b))

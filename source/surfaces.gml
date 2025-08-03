@@ -299,7 +299,7 @@
         return 0
     }        
     
-    __gm82dx9_buffer_to_surface(buffer_get_address(__buf,0),__surf,surface_get_width(__surf),surface_get_height(__surf))
+    __gm82dx9_buffer_to_surface(buffer_get_address(__buf),__surf,surface_get_width(__surf),surface_get_height(__surf))
     return 1
 
 
@@ -335,7 +335,7 @@
     buffer_set_size(__buf,surface_get_width(__surf)*surface_get_height(__surf)*4)
     buffer_set_pos(__buf,0)         
     
-    __gm82dx9_surface_to_buffer(buffer_get_address(__buf,0),__surf,surface_get_width(__surf),surface_get_height(__surf))
+    __gm82dx9_surface_to_buffer(buffer_get_address(__buf),__surf,surface_get_width(__surf),surface_get_height(__surf))
     return 1
 
 
