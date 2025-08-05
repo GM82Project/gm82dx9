@@ -228,7 +228,7 @@
     ///shader_pixel_create_base64(string)
     var __buf,__shd;
     __buf=buffer_create()
-    buffer_write_base64(__buf,argument0)
+    buffer_decode_base64(__buf,argument0)
     buffer_inflate(__buf)
     __shd=shader_pixel_create_buffer(__buf)
     buffer_destroy(__buf)
@@ -239,7 +239,7 @@
     ///shader_vertex_create_base64(string)
     var __buf,__shd;
     __buf=buffer_create()
-    buffer_write_base64(__buf,argument0)
+    buffer_decode_base64(__buf,argument0)
     buffer_inflate(__buf)
     __shd=shader_vertex_create_buffer(__buf)
     buffer_destroy(__buf)
