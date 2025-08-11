@@ -3,6 +3,8 @@
         show_error('GM8.2 DirectX9 Extension failed to link DLL. Make sure you have the latest DirectX runtimes installed: https://www.microsoft.com/en-us/download/details.aspx?id=35',1)
         exit
     }
+    
+    globalvar gm82dx9_version;gm82dx9_version=100
 
     globalvar __gm82dx9_cross_detect;
     
