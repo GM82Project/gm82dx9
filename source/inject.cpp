@@ -277,6 +277,39 @@ CW_INJ_START(power)
     __asm ret 0x10
 }}
 
+typedef D3DXMATRIX* (__stdcall *d3dx_matrix_func)(
+	D3DXMATRIX *pOut,
+	FLOAT      w,
+	FLOAT      h,
+	FLOAT      zn,
+	FLOAT      zf);
+	
+d3dx_matrix_func D3DXMatrixPerspectiveLH_ptr, D3DXMatrixOrthoLH_ptr;
+
+D3DXMATRIX* __stdcall D3DXMatrixPerspectiveLH_inj(
+	D3DXMATRIX *pOut,
+	FLOAT      w,
+	FLOAT      h,
+	FLOAT      zn,
+	FLOAT      zf
+) {
+	_asm { fldcw [old_cw] }
+	D3DXMatrixPerspectiveLH_ptr(pOut, w, h, zn, zf);
+	_asm { fldcw [new_cw] }
+}
+
+D3DXMATRIX* __stdcall D3DXMatrixOrthoLH_inj(
+	D3DXMATRIX *pOut,
+	FLOAT      w,
+	FLOAT      h,
+	FLOAT      zn,
+	FLOAT      zf
+) {
+	_asm { fldcw [old_cw] }
+	D3DXMatrixOrthoLH_ptr(pOut, w, h, zn, zf);
+	_asm { fldcw [new_cw] }
+}
+
 uint8_t white_pixel_tga[] = {
     0, 0, 2, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 1, 0, 1, 0,
@@ -837,6 +870,12 @@ BOOL WINAPI DllMain(
     PATCH(0x6342ea, arctan2_inj)
     PATCH(0x63440e, power_inj)
     PATCH(0x6344b6, logn_inj)
+	
+	// enable exceptions for projection matrices
+	D3DXMatrixPerspectiveLH_ptr = *(d3dx_matrix_func*)0x68fde0;
+	*(d3dx_matrix_func*)0x68fde0 = D3DXMatrixPerspectiveLH_inj;
+	D3DXMatrixOrthoLH_ptr = *(d3dx_matrix_func*)0x68fde4;
+	*(d3dx_matrix_func*)0x68fde4 = D3DXMatrixOrthoLH_inj;
 
     FlushInstructionCache(proc, nullptr, 0);
 
