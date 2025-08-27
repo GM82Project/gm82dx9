@@ -3,6 +3,7 @@ This extension upgrades Game Maker 8.2 to DirectX version 9.0.
 
 Shader and vertex buffer support by Floogle.
 Optimized transforms by Lovey01.
+GML helpers by renex.
 
 ## What this enables
 
@@ -17,9 +18,3 @@ Optimized transforms by Lovey01.
     - set the screen clipping region (scissor test) and other viewport utilities
     - improved default lighting with specular highlights and spheremap reflections
     - plus dozens of extra advanced graphics api functions...
-
-## Documentation
-
-Function help and best practices can be found [here](Game%20Maker%208.2%20DirectX%209.txt).
-
-Designed for the Game Maker 8.2 extension suite.
