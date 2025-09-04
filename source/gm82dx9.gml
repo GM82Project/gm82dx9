@@ -233,6 +233,12 @@
 #define d3d_model_load_g3z
     ///d3d_model_load_g3z(model,filename)
     var __b,__m;
+    
+    if (!file_exists(argument1)) {
+        show_error("Error in function d3d_model_load_g3z: file ("+string(argument1)+") doesn't exist",0)
+        return -1
+    }
+    
     __b=buffer_create(argument1)
     buffer_inflate(__b)
     if (argument0<0) __m=d3d_model_create() else __m=argument0
@@ -244,7 +250,10 @@
 #define d3d_model_create_and_load
     ///d3d_model_create_and_load(filename)
     var __m;
-    if (!string_pos("\\.\pipe\",argument0)) if (!file_exists(argument0)) return -1
+    if (!string_pos("\\.\pipe\",argument0)) if (!file_exists(argument0)) {
+        show_error("Error in function d3d_model_create_and_load: file ("+string(argument0)+") doesn't exist",0)
+        return -1
+    }
     __m=d3d_model_create()
     if (filename_ext(argument0)==".g3z") d3d_model_load_g3z(__m,argument0)
     else d3d_model_load(__m,argument0)
