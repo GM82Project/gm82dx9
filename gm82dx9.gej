@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "03/08/2025",
+	"date": "20/09/2025",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -2187,6 +2187,153 @@
 			]
 		},
 		{
+			"filename": "bundles.gml",
+			"origname": "source\\bundles.gml",
+			"kind": 2,
+			"init": "",
+			"final": "",
+			"functions": [
+				{
+					"name": "d3d_model_bundle_add",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_add(bundle,model,background)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_bundle_create",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_create()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_bundle_destroy",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_destroy(bundle)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_bundle_draw",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_draw(bundle)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_bundle_load",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_load(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_bundle_save",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_save(bundle,filename)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				}
+			],
+			"constants": []
+		},
+		{
+			"filename": "drawing.gml",
+			"origname": "source\\drawing.gml",
+			"kind": 2,
+			"init": "",
+			"final": "",
+			"functions": [
+				{
+					"name": "draw_quad",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "draw_quad(x,y,w,h,tex,[u1,v1,u2,v2])",
+					"hidden": false,
+					"argtypes": null,
+					"returntype": 2
+				},
+				{
+					"name": "draw_quad_color",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "draw_quad_color(x1,y1,c1,a1,x2,y2,c2,a2,x3,y3,c3,a3,x4,y4,c4,a4)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "draw_tri",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "draw_tri(x1,y1,u1,v1,x2,y2,u2,v2,x3,y3,u3,v3,tex,color,alpha)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				}
+			],
+			"constants": []
+		},
+		{
 			"filename": "gm82dx9.gml",
 			"origname": "source\\gm82dx9.gml",
 			"kind": 2,
@@ -3317,76 +3464,6 @@
 			"init": "",
 			"final": "",
 			"functions": [],
-			"constants": []
-		},
-		{
-			"filename": "drawing.gml",
-			"origname": "source\\drawing.gml",
-			"kind": 2,
-			"init": "",
-			"final": "",
-			"functions": [
-				{
-					"name": "draw_quad",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "draw_quad(x,y,w,h,tex,[u1,v1,u2,v2])",
-					"hidden": false,
-					"argtypes": null,
-					"returntype": 2
-				},
-				{
-					"name": "draw_quad_color",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "draw_quad_color(x1,y1,c1,a1,x2,y2,c2,a2,x3,y3,c3,a3,x4,y4,c4,a4)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "draw_tri",
-					"extname": "",
-					"calltype": 2,
-					"helpline": "draw_tri(x1,y1,u1,v1,x2,y2,u2,v2,x3,y3,u3,v3,tex,color,alpha)",
-					"hidden": false,
-					"argtypes": [
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2,
-						2
-					],
-					"returntype": 2
-				}
-			],
 			"constants": []
 		}
 	]
