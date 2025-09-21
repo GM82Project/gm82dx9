@@ -49,6 +49,8 @@
         
         if (__bg<0 or !background_exists(__bg)) __bg=noone
         
+        d3d_model_bake(__mdl)
+        
         __mesh=ds_list_create()
         ds_list_add_many(__mesh,
             //model format v1
@@ -255,6 +257,7 @@
             buffer_inflate(__tmp)
             __mdl=d3d_model_create()
             d3d_model_load(__mdl,buffer_make_pipe(__tmp))
+            d3d_model_bake(__mdl)
             
             __mesh=ds_list_create()
             ds_list_add_many(__mesh,
