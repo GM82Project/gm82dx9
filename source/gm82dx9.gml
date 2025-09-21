@@ -243,6 +243,7 @@
     buffer_inflate(__b)
     if (argument0<0) __m=d3d_model_create() else __m=argument0
     d3d_model_load(__m,buffer_make_pipe(__b))
+    d3d_model_bake(__m)
     buffer_destroy(__b)
     return __m
 
@@ -256,7 +257,7 @@
     }
     __m=d3d_model_create()
     if (filename_ext(argument0)==".g3z") d3d_model_load_g3z(__m,argument0)
-    else d3d_model_load(__m,argument0)
+    else {d3d_model_load(__m,argument0) d3d_model_bake(__m)}
     return __m
 
 
