@@ -192,7 +192,7 @@
 #define d3d_model_bundle_load
     ///d3d_model_bundle_load(filename)
     //Loads a model bundle from disk.
-    var __fn,__mdl,__bg;
+    var __fn,__b,__mdl;
 
     __fn=string(argument0)
     
@@ -200,15 +200,25 @@
         show_error("error in function d3d_model_bundle_load: file doesn't exist ("+__fn+")",0)
         return noone
     }
-
-    var __bundle,__tmpfn,__b;
-
-    __bundle=d3d_model_bundle_create()
-
-    __tmpfn=temp_directory+"\gm82\bundle_texture.png"
-
+    
     __b=buffer_create(__fn)
+    __mdl=d3d_model_bundle_load_buffer(__b)
+    buffer_destroy(__b)
+    
+    return __mdl
 
+
+#define d3d_model_bundle_load_buffer
+    ///d3d_model_bundle_load_buffer(buffer)
+    //Loads a model bundle from a buffer.
+    var __mdl,__bg,__bundle,__tmpfn,__b;
+
+    __b=argument0
+    
+    __tmpfn=temp_directory+"\gm82\bundle_texture.png"
+    
+    __bundle=d3d_model_bundle_create()
+    
     __ver=buffer_read_string(__b)
 
     if (__ver=="g3b model bundle v1") {
@@ -271,12 +281,10 @@
             buffer_destroy(__tmp)
         }
         
-        buffer_destroy(__b)
-        
         return __bundle
     }
 
-    show_error("error in function d3d_model_bundle_load: invalid bundle version ("+string(__ver)+")",0)
+    show_error("error loading bundle: invalid bundle version ("+string(__ver)+")",0)
     return noone
 
 

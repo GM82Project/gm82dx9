@@ -3,14 +3,14 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "20/09/2025",
+	"date": "25/11/2025",
 	"license": "Free to use, also for commercial games.",
 	"description": "Requires Game Maker 8.2 Network. Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
 	"hidden": false,
 	"dependencies": [
-		"Game Maker 8.2 Buffer",
-		"Game Maker 8.2 Core"
+		"Game Maker 8.2 Core",
+		"Game Maker 8.2 Buffer"
 	],
 	"files": [
 		{
@@ -2242,6 +2242,17 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "d3d_model_bundle_load(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "d3d_model_bundle_load_buffer",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "d3d_model_bundle_load_buffer(buffer)",
 					"hidden": false,
 					"argtypes": [
 						2
