@@ -154,12 +154,15 @@
 
 #define surface_set
     ///surface_set(name,width,height)
-    var __s;
+    var __s,__w,__h;
 
     __s=surface_get(argument0,argument1,argument2)
 
     surface_set_target(__s)
-    d3d_set_projection_ortho(0,0,surface_get_width(__s),surface_get_height(__s),0)
+    __w=surface_get_width(__s)
+    __h=surface_get_height(__s)
+    d3d_set_viewport(0,0,__w,__h)
+    d3d_set_projection_ortho(0,0,__w,__h,0)
 
     return __s
 
