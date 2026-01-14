@@ -108,10 +108,38 @@
 #define d3d_model_bundle_save
     ///d3d_model_bundle_save(bundle,filename)
     //Saves a model bundle to disk.
-    var __bundle,__fn,__mdl,__bg;
+    var __bundle,__fn,__b,__res;
 
     __bundle=argument0
     __fn=argument1
+    
+    __b=buffer_create()
+    
+    __res=d3d_model_bundle_save_buffer(__bundle,__b)
+    
+    if (__res) {        
+        buffer_save(__b,__fn)            
+        buffer_destroy(__b)
+        return true
+    }
+    
+    buffer_destroy(__b)
+    show_error("error in function d3d_model_bundle_save: invalid bundle id ("+string(__bundle)+")",0)
+    return false
+    
+    
+#define d3d_model_bundle_save_buffer
+    ///d3d_model_bundle_save_buffer(bundle,buffer)
+    //Saves a model bundle to a buffer.
+    var __bundle,__fn,__mdl,__bg,__i,__b,__load,__meshlist,__texlist,__tmpfn,__tmpmd,__bglist,__mesh,__index;
+
+    __bundle=argument0
+    __b=argument1
+    
+    if (!buffer_exists(__b)) {
+        show_error("error in function d3d_model_bundle_save_buffer: invalid buffer id ("+string(__b)+")",0)
+        return false
+    }
 
     __tmpfn=temp_directory+"\gm82\bundle_texture.png"
     __tmpmd=temp_directory+"\gm82\bundle_model.g3d"
@@ -120,7 +148,7 @@
         __meshlist=ds_map_find_value(__bundle,"mesh")
         __texlist=ds_map_find_value(__bundle,"texture")
 
-        __b=buffer_create()
+        buffer_clear(__b)
         buffer_write_string(__b,"g3b model bundle v1")
         
         //first we need to make a master list of all involved backgrounds
@@ -177,10 +205,6 @@
                 buffer_destroy(__load) 
             }
         __i+=1}
-        
-        buffer_save(__b,__fn)
-        
-        buffer_destroy(__b)
         
         return true
     }
