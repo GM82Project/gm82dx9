@@ -5,6 +5,22 @@
     }
 
 
+#define surface_free_all
+    ///surface_free_all()
+    //Frees all surfaces.
+    var __i,__found,__count;
+    
+    surface_forget_all()
+    
+    __count=surface_get_count()
+    __i=0 __found=0 while (__found<__count) {
+        if (surface_exists(__i)) {
+            surface_free(__i)
+            __found+=1
+        }
+    __i+=1}
+
+
 #define surface_reset
     ///surface_reset()
     if (__gm82dx9_appsurfcompose!=noone) {

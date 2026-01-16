@@ -1061,6 +1061,15 @@
 					"returntype": 2
 				},
 				{
+					"name": "surface_get_count",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "surface_get_count()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
 					"name": "texture_get_interpolation",
 					"extname": "",
 					"calltype": 12,

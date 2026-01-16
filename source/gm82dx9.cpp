@@ -16,6 +16,8 @@ XMVECTOR vertex;
 create_c_function(void,runner_display_reset,0x61f9f4);
 create_c_function(void,runner_clear_depth,0x563a8c);
 
+int* runner_surface_count = (int*)0x6869a4;
+
 //-//
 
 GMREAL __gm82dx9_dllcheck() {
@@ -32,6 +34,10 @@ GMREAL __gm82dx9_abort() {
 }
 GMREAL __gm82dx9_testfunc() {
     return 0;
+}
+
+GMREAL surface_get_count() {
+    return (double)*runner_surface_count;
 }
 
 GMREAL argb_get_color(double color) {
