@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "14/01/2026",
+	"date": "21/01/2026",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -3314,6 +3314,64 @@
 					"returntype": 2
 				},
 				{
+					"name": "surface_backup_discard",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_backup_discard()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_backup_do",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_backup_do()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_backup_exists",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_backup_exists()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_backup_load",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_backup_load(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "surface_backup_restore",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_backup_restore()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_backup_save",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_backup_save(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "surface_discard",
 					"extname": "",
 					"calltype": 2,
@@ -3340,6 +3398,15 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "surface_forget_all()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "surface_free_all",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "surface_free_all()",
 					"hidden": false,
 					"argtypes": [],
 					"returntype": 2

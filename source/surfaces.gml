@@ -1,3 +1,191 @@
+#define surface_backup_discard
+    ///surface_backup_discard()
+    //Discards the surface backup, freeing all memory used.
+    var __i;
+    
+    globalvar __gm82dx9_sb_count,__gm82dx9_sb_index,__gm82dx9_sb_buffer,__gm82dx9_sb_map,__gm82dx9_sb_idmap;
+    
+    __i=0 repeat (__gm82dx9_sb_count) {
+        buffer_destroy(__gm82dx9_sb_buffer[i])
+    __i+=1}
+    
+    __gm82dx9_sb_count=0
+    __gm82dx9_sb_map=""
+    __gm82dx9_sb_idmap=""
+
+
+#define surface_backup_do
+    ///surface_backup_do()
+    //Backs up all surfaces to memory.
+    //The backup is persistent and can be reused multiple times.
+    //The function returns the number of surfaces that have been backed.
+    var __i,__count,__b;
+    
+    //discard current backup
+    //note: this also creates the globalvars
+    surface_backup_discard()
+    
+    //save surface information
+    __gm82dx9_sb_count=0
+    __i=0 repeat (surface_get_count()) {
+        if (surface_exists(__i)) {
+            __b=buffer_create()
+            buffer_get_surface(__b,__i)
+            buffer_deflate(__b)
+            __gm82dx9_sb_index[__gm82dx9_sb_count]=__i
+            __gm82dx9_sb_buffer[__gm82dx9_sb_count]=__b
+            __gm82dx9_sb_width[__gm82dx9_sb_count]=surface_get_width(__i)
+            __gm82dx9_sb_height[__gm82dx9_sb_count]=surface_get_height(__i)
+            __gm82dx9_sb_count+=1
+        }
+    __i+=1}    
+    
+    //save maps
+    __gm82dx9_sb_map=ds_map_write(__gm82dx9_surfmap)
+    __gm82dx9_sb_idmap=ds_map_write(__gm82dx9_surfidmap)
+    
+    return __gm82dx9_sb_count
+
+
+#define surface_backup_restore
+    ///surface_backup_restore()
+    //Restores a surface backup into video memory. All surfaces are restored to their original ids.
+    //Surfaces that were not backed up are destroyed.
+    var __i,__tdc,__tdi,__b,__b2,__current,__index;
+    
+    globalvar __gm82dx9_sb_count;
+    if (__gm82dx9_sb_count==0) {
+        show_error("in function surface_backup_restore: no surface backup exists",0)
+        return 0
+    }
+    
+    surface_free_all()
+    
+    __tdc=0
+    __current=-1     
+    __scratch=buffer_create()
+    __i=0 repeat (__gm82dx9_sb_count) {
+        __index=__gm82dx9_sb_index[__i]
+        __b=__gm82dx9_sb_buffer[__i]
+        //create scaffolding surfaces to pad the ids
+        repeat (__index-__current-1) {__tdi[__tdc]=surface_create(8,8) __tdc+=1}        
+        __current=__index
+        __s=surface_create(__gm82dx9_sb_width[__i],__gm82dx9_sb_height[__i])
+        buffer_copy(__scratch,__b)
+        buffer_inflate(__scratch)
+        buffer_set_surface(__scratch,__s)
+        buffer_clear(__scratch)
+    __i+=1}
+    
+    buffer_destroy(__scratch)
+    
+    //destroy scaffolding surfaces
+    __i=0 repeat (__tdc) {
+        surface_free(__tdi[__i])
+    __i+=1}
+    
+    //restore maps
+    ds_map_read(__gm82dx9_surfmap,__gm82dx9_sb_map)
+    ds_map_read(__gm82dx9_surfidmap,__gm82dx9_sb_idmap)
+
+
+#define surface_backup_exists
+    ///surface_backup_exists()
+    //Returns the number of surfaces backed up, or 0 if none.
+    
+    globalvar __gm82dx9_sb_count;
+    return __gm82dx9_sb_count
+
+
+#define surface_backup_save
+    ///surface_backup_save(filename)
+    //Saves the surface backup to disk.
+    
+    /*
+        string "[GM82 SURFACE BACKUP]"
+        u16 surface count {
+            u16 index
+            u16 width
+            u16 height
+            u32 length {
+                deflate {
+                    ARGB * width * height
+                }
+            }
+        }
+        string dsmap surface map
+        string dsmap surface id map
+    */
+    
+    var __b,__i,__b2;
+    
+    globalvar __gm82dx9_sb_count;
+    if (__gm82dx9_sb_count==0) {
+        show_error("in function surface_backup_save: no surface backup exists",0)
+        return 0
+    }
+    
+    __b=buffer_create()
+    buffer_write_string(__b,"__gm82dx9_surfbackup_v1")
+    buffer_write_u16(__b,__gm82dx9_sb_count)
+    
+    __i=0 repeat (__gm82dx9_sb_count) {
+        buffer_write_u16(__b,__gm82dx9_sb_index[__i])
+        buffer_write_u16(__b,__gm82dx9_sb_width[__i])
+        buffer_write_u16(__b,__gm82dx9_sb_height[__i])
+        __b2=__gm82dx9_sb_buffer[__i]
+        buffer_write_u32(__b,buffer_get_size(__b2))
+        buffer_copy(__b,__b2)
+    }
+    buffer_write_string(__b,__gm82dx9_surfmap)
+    
+    buffer_save(__b,argument0)
+    buffer_destroy(__b)
+    return 1
+
+
+#define surface_backup_load
+    ///surface_backup_load(filename)
+    //Loads the surface backup from disk.
+    var __b,__i,__key;
+    
+    if (!file_exists(argument0)) {
+        show_error("in function surface_backup_load: file ("+string(argument0)+") doesn't exist",0)
+        return 0
+    }
+    
+    surface_backup_discard()
+    
+    __b=buffer_create(argument0)
+    if (buffer_read_string(__b)!="__gm82dx9_surfbackup_v1") {
+        show_error("in function surface_backup_load: file ("+string(argument0)+") isn't a valid surface backup file",0)
+        buffer_destroy(__b)
+        return 0
+    }
+    
+    __gm82dx9_sb_count=buffer_read_u16(__b)
+    __i=0 repeat (__gm82dx9_sb_count) {
+        __gm82dx9_sb_index[__i]=buffer_read_u16(__b)
+        __gm82dx9_sb_width[__i]=buffer_read_u16(__b)
+        __gm82dx9_sb_height[__i]=buffer_read_u16(__b)
+        __gm82dx9_sb_buffer[__i]=buffer_create()
+        __size=buffer_read_u32(__b)
+        buffer_copy_part(__gm82dx9_sb_buffer[__i],__b,buffer_get_pos(__p),__size)
+        buffer_set_pos(__b,buffer_get_pos(__p)+__size)
+    __i+=1}
+    
+    ds_map_read(__gm82dx9_surfmap,buffer_read_string(__b))
+    
+    buffer_destroy(__b)
+    
+    ds_map_clear(__gm82dx9_surfidmap)
+    __key=ds_map_find_first(__gm82dx9_surfmap) repeat (ds_map_size(__gm82dx9_surfmap)) {
+        ds_map_add(__gm82dx9_surfidmap,__key,surface_get_address(ds_map_find_value(__gm82dx9_surfmap,__key)-1))
+    __key=ds_map_find_next(__gm82dx9_surfmap,__key)}
+        
+    return 1
+
+
 #define surface_discard
     ///surface_discard(id)
     if (surface_exists(argument0)) {
@@ -8,16 +196,12 @@
 #define surface_free_all
     ///surface_free_all()
     //Frees all surfaces.
-    var __i,__found,__count;
+    var __i;
     
     surface_forget_all()
     
-    __count=surface_get_count()
-    __i=0 __found=0 while (__found<__count) {
-        if (surface_exists(__i)) {
-            surface_free(__i)
-            __found+=1
-        }
+    __i=0 repeat (surface_get_count()) {
+        if (surface_exists(__i)) surface_free(__i)
     __i+=1}
 
 
