@@ -360,7 +360,7 @@
 
 #define buffer_write_format_default
     ///buffer_write_format_default(buffer,x,y,z,nx,ny,nz,u,v,color,alpha)
-    buffer_write_float4(argument0,argument1,argument2,argument3,0)    
+    buffer_write_float4(argument0,argument1,argument2,argument3,1)    
     buffer_write_float4(argument0,argument4,argument5,argument6,0)    
     buffer_write_u32(argument0,color_to_d3dcolor(argument9,argument10))    
     buffer_write_float2(argument0,argument7,argument8)
@@ -368,6 +368,11 @@
 
 #define buffer_write_format_position
     ///buffer_write_format_position(buffer,x,y,z)
+    buffer_write_float4(argument0,argument1,argument2,argument3,1)
+    
+
+#define buffer_write_format_normal
+    ///buffer_write_format_normal(buffer,nx,ny,nz)
     buffer_write_float4(argument0,argument1,argument2,argument3,0)
 
 
