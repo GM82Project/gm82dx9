@@ -40,9 +40,8 @@
         }
     __i+=1}    
     
-    //save maps
+    //save map
     __gm82dx9_sb_map=ds_map_write(__gm82dx9_surfmap)
-    __gm82dx9_sb_idmap=ds_map_write(__gm82dx9_surfidmap)
     
     return __gm82dx9_sb_count
 
@@ -85,8 +84,11 @@
     __i+=1}
     
     //restore maps
+    ds_map_clear(__gm82dx9_surfidmap)
     ds_map_read(__gm82dx9_surfmap,__gm82dx9_sb_map)
-    ds_map_read(__gm82dx9_surfidmap,__gm82dx9_sb_idmap)
+    __key=ds_map_find_first(__gm82dx9_surfmap) repeat (ds_map_size(__gm82dx9_surfmap)) {
+        ds_map_add(__gm82dx9_surfidmap,__key,surface_get_address(ds_map_find_value(__gm82dx9_surfmap,__key)-1))
+    __key=ds_map_find_next(__gm82dx9_surfmap,__key)}
 
 
 #define surface_backup_exists
@@ -114,7 +116,6 @@
             }
         }
         string dsmap surface map
-        string dsmap surface id map
     */
     
     var __b,__i,__b2;
@@ -137,7 +138,7 @@
         buffer_write_u32(__b,buffer_get_size(__b2))
         buffer_copy(__b,__b2)
     }
-    buffer_write_string(__b,__gm82dx9_surfmap)
+    buffer_write_string(__b,__gm82dx9_sb_map)
     
     buffer_save(__b,argument0)
     buffer_destroy(__b)
@@ -174,14 +175,9 @@
         buffer_set_pos(__b,buffer_get_pos(__p)+__size)
     __i+=1}
     
-    ds_map_read(__gm82dx9_surfmap,buffer_read_string(__b))
+    __gm82dx9_sb_map=buffer_read_string(__b)
     
     buffer_destroy(__b)
-    
-    ds_map_clear(__gm82dx9_surfidmap)
-    __key=ds_map_find_first(__gm82dx9_surfmap) repeat (ds_map_size(__gm82dx9_surfmap)) {
-        ds_map_add(__gm82dx9_surfidmap,__key,surface_get_address(ds_map_find_value(__gm82dx9_surfmap,__key)-1))
-    __key=ds_map_find_next(__gm82dx9_surfmap,__key)}
         
     return 1
 
