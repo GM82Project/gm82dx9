@@ -444,22 +444,21 @@ GMREAL __gm82dx9_resize_backbuffer(double width, double height) {
     present_params->BackBufferHeight = (UINT)iheight;
     return 0;
 }
-GMREAL __gm82dx9_setpointscale(double size,double scaling,double minscale,double maxscale,double sprite) {
+GMREAL __gm82dx9_setpointscale(double size,double scaling,double sprite) {
     float ps = (float)size;
-    Device->SetRenderState(D3DRS_POINTSIZE,*(DWORD *)&ps);
     Device->SetRenderState(D3DRS_POINTSPRITEENABLE,(DWORD)sprite);
     Device->SetRenderState(D3DRS_POINTSCALEENABLE,(DWORD)scaling);
     if (scaling) {
-        float ps = (float)minscale;
-        Device->SetRenderState(D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
-        ps = (float)maxscale;
-        Device->SetRenderState(D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
-        ps = 1.0f;
-        Device->SetRenderState(D3DRS_POINTSCALE_B,*(DWORD *)&ps);        
-        Device->SetRenderState(D3DRS_POINTSCALE_C,*(DWORD *)&ps); 
+        ps /= 2.0f; Device->SetRenderState(D3DRS_POINTSIZE,*((DWORD *)&ps));
+        ps = 0.0f; Device->SetRenderState(D3DRS_POINTSIZE_MIN,*((DWORD *)&ps));
+        ps = 9999.0f; Device->SetRenderState(D3DRS_POINTSIZE_MAX,*((DWORD *)&ps));
+        ps = 0.0f; Device->SetRenderState(D3DRS_POINTSCALE_A,*((DWORD *)&ps));        
+        ps = 0.0f; Device->SetRenderState(D3DRS_POINTSCALE_B,*((DWORD *)&ps));        
+        ps = 1.0f; Device->SetRenderState(D3DRS_POINTSCALE_C,*((DWORD *)&ps)); 
     } else {
-        Device->SetRenderState(D3DRS_POINTSIZE_MIN,*(DWORD *)&ps);
-        Device->SetRenderState(D3DRS_POINTSIZE_MAX,*(DWORD *)&ps);
+        Device->SetRenderState(D3DRS_POINTSIZE,*((DWORD *)&ps));
+        Device->SetRenderState(D3DRS_POINTSIZE_MIN,*((DWORD *)&ps));
+        Device->SetRenderState(D3DRS_POINTSIZE_MAX,*((DWORD *)&ps));
     }
     return 0;
 }

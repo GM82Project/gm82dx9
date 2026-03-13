@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "12/02/2026",
+	"date": "12/03/2026",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -317,11 +317,9 @@
 					"name": "d3d_set_point_options",
 					"extname": "__gm82dx9_setpointscale",
 					"calltype": 12,
-					"helpline": "d3d_set_point_options(size,scaled,minscale,maxscale,spritemode)",
+					"helpline": "d3d_set_point_options(size,3dscaling,spritemode)",
 					"hidden": false,
 					"argtypes": [
-						2,
-						2,
 						2,
 						2,
 						2
