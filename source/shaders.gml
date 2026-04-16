@@ -256,6 +256,15 @@
     __gm82dx9_texture_stage_set(shader_pixel_uniform_get_address(argument0),argument1)
 
 
+#define texture_set_stage_ext
+    ///texture_set_stage_ext(sampler,texture,filter,hrepeat,vrepeat,bordercolor)
+    var __u;
+    __u=shader_pixel_uniform_get_address(argument0)
+    __gm82dx9_texture_stage_set(__u,argument1)
+    __gm82dx9_texture_set_stage_interpolation(__u,argument2)
+    __gm82dx9_texture_set_stage_repeat(__u,argument3,argument4,argument5)
+
+
 #define texture_set_stage_interpolation
     ///texture_set_stage_interpolation(sampler,texture)
     __gm82dx9_texture_set_stage_interpolation(shader_pixel_uniform_get_address(argument0),argument1)
@@ -269,6 +278,15 @@
 #define texture_set_stage_vertex
     ///texture_set_stage_vertex(sampler,texture)
     __gm82dx9_texture_stage_vertex_set(shader_vertex_uniform_get_address(argument0),argument1)
+
+
+#define texture_set_stage_vertex_ext
+    ///texture_set_stage_vertex_ext(sampler,texture,filter,hrepeat,vrepeat,bordercolor)
+    var __u;
+    __u=shader_pixel_uniform_get_address(argument0)
+    __gm82dx9_texture_stage_vertex_set(__u,argument1)
+    __gm82dx9_texture_set_stage_vertex_interpolation(__u,argument2)
+    __gm82dx9_texture_set_stage_vertex_repeat(__u,argument3,argument4,argument5)
 
 
 #define texture_set_stage_vertex_interpolation

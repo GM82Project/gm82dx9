@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "12/03/2026",
+	"date": "15/04/2026",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -2008,7 +2008,7 @@
 				},
 				{
 					"name": "tr_clamp",
-					"value": "3",
+					"value": "0",
 					"hidden": false
 				},
 				{
@@ -3027,6 +3027,22 @@
 					"returntype": 2
 				},
 				{
+					"name": "texture_set_stage_ext",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "texture_set_stage_ext(sampler,texture,filter,hrepeat,vrepeat,bordercolor)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "texture_set_stage_interpolation",
 					"extname": "",
 					"calltype": 2,
@@ -3059,6 +3075,22 @@
 					"helpline": "texture_set_stage_vertex(sampler,texture)",
 					"hidden": false,
 					"argtypes": [
+						2,
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "texture_set_stage_vertex_ext",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "texture_set_stage_vertex_ext(sampler,texture,filter,hrepeat,vrepeat,bordercolor)",
+					"hidden": false,
+					"argtypes": [
+						2,
+						2,
+						2,
+						2,
 						2,
 						2
 					],

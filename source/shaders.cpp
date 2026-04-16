@@ -483,6 +483,10 @@ GMREAL __gm82dx9_texture_set_stage_repeat(double stage, double hrepeat, double v
         return 0;
     }
     
+    //false = clamp
+    if (hrepeat==0) hrepeat=3;
+    if (vrepeat==0) vrepeat=3;
+    
     Device->SetSamplerState(stage,D3DSAMP_ADDRESSU,(DWORD)(int)hrepeat);    
     Device->SetSamplerState(stage,D3DSAMP_ADDRESSV,(DWORD)(int)vrepeat);    
     Device->SetSamplerState(stage,D3DSAMP_BORDERCOLOR,gm_col_to_dx9(bordercolor));    
@@ -493,7 +497,11 @@ GMREAL __gm82dx9_texture_set_stage_vertex_repeat(double stage, double hrepeat, d
     if (stage<0 || stage>3) {
         show_error("Trying to set repeat for out-of-bounds vertex shader sampler (0-3).");
         return 0;
-    }
+    }    
+    
+    //false = clamp
+    if (hrepeat==0) hrepeat=3;
+    if (vrepeat==0) vrepeat=3;
     
     Device->SetSamplerState(stage+257,D3DSAMP_ADDRESSU,(DWORD)(int)hrepeat);    
     Device->SetSamplerState(stage+257,D3DSAMP_ADDRESSV,(DWORD)(int)vrepeat);    
