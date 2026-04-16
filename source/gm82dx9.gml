@@ -155,12 +155,15 @@
 #define d3d_project_vertex
     ///d3d_project_vertex(x,y,z)
     //x,y,z: input coordinates in 3d space
-    //returns: array[2] with screen-space coordinates
+    //returns: array[3] with view-space coordinates
     //This function will take the 3d object-space coordinates and apply the
-    //current view-proj-matrix to it, returning a 2d coordinate.
+    //current view-proj-matrix to it, returning a 2d view-space coordinate
+    //(multiply by your resolution to get screen coordinates).
+    //The z coordinate tells you that the point is not behind the camera.
     
-    d3d_project_vertex[0]=__gm82dx9_projectvertex(argument0,argument1,argument2)
-    d3d_project_vertex[1]=__gm82dx9_getvertexy()
+    d3d_project_vertex[0]=0.5+0.5*__gm82dx9_projectvertex(argument0,argument1,argument2)
+    d3d_project_vertex[1]=0.5-0.5*__gm82dx9_getvertexy()
+    d3d_project_vertex[2]=__gm82dx9_getvertexz()<1
 
 
 #define d3d_fog_trick
