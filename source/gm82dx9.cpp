@@ -45,7 +45,9 @@ GMREAL argb_get_color(double color) {
     //color: u32 returned by buffer_get_surface().
     //returns: The color value out of a u32.
     
-    return ((unsigned int)color) & 0x00ffffff;
+    unsigned int col = (unsigned int)color & 0x00ffffff;
+    
+    return ((col & 0xff0000)>>16) + ((col & 0x0000ff)<<16) + (col & 0x00ff00);
 }
 GMREAL argb_get_alpha(double color) {
     ///argb_get_alpha(color)
@@ -60,7 +62,9 @@ GMREAL argb_make_color(double color, double alpha) {
     //alpha: gm alpha value (0-1).
     //returns: Color converted into a u32 the way surface data expects it. Useful for writing buffers for use with buffer_set_surface().
     
-    return (double)((((int)(alpha*0xff))<<24)|((unsigned int)color));
+    unsigned int col = (unsigned int)color & 0x00ffffff;
+    
+    return (double)((((int)(alpha*0xff))<<24)|(((col & 0xff0000)>>16) + ((col & 0x0000ff)<<16) + (col & 0x00ff00)));
 }
 
 GMREAL color_to_d3dcolor(double color, double alpha) {
