@@ -18,6 +18,32 @@ create_c_function(void,runner_clear_depth,0x563a8c);
 
 int* runner_surface_count = (int*)0x6869a4;
 
+static char* return_string;
+
+const char hex_table[16] = {0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46};
+
+char string_error = {0x00};
+
+union i2b {
+    char bytes[8];
+    uint32_t value;
+};
+
+union d2b {
+    char bytes[8];
+    double value;
+};
+
+union rgb2col {
+    struct {
+        uint8_t red;
+        uint8_t green;
+        uint8_t blue;
+        uint8_t alpha;
+    } color;
+    uint32_t value;
+};
+
 //-//
 
 GMREAL __gm82dx9_dllcheck() {
@@ -411,6 +437,104 @@ GMREAL __gm82dx9_surface_to_buffer(double buffer, double id, double gm_width, do
     
     return 0;    
 }
+
+inline void u32_to_string(char* string, uint32_t val) {
+    i2b converter;
+    
+    converter.value=val;
+    
+    for (int i=0;i<4;i++) {
+        char byte=converter.bytes[i];        
+        string[i*2]=hex_table[(byte&0b11110000) >> 4];
+        string[i*2+1]=hex_table[byte&0b1111];
+    }
+}
+
+inline void f64_to_string(char* string, double val) {
+    d2b converter;
+    
+    converter.value=val;
+    
+    for (int i=0;i<8;i++) {
+        char byte=converter.bytes[i];        
+        string[i*2]=hex_table[(byte&0b11110000) >> 4];
+        string[i*2+1]=hex_table[byte&0b1111];
+    }
+}
+
+GMSTR __gm82dx9_surface_to_grid(double id, double x, double y, double w, double h) {
+                    //((w*h) * (size of gmvalue) + (size of header)) * 2 bytes per hex digit + terminator
+    int output_length=((w*h)*(16) + 12) * 2 + 1;
+    
+    if (return_string) free(return_string);    
+    return_string = (char*)malloc(output_length);
+    
+    //initialize to all zeroes
+    memset(return_string,0x30,output_length);    
+    return_string[output_length-1] = 0;
+    
+    //write header
+    u32_to_string(&return_string[0],601);
+    u32_to_string(&return_string[4*2],w);
+    u32_to_string(&return_string[8*2],h);
+    
+    RECT rect = {
+        .left = (int)x, .top = (int)y, .right = (int)(x+w), .bottom = (int)(y+h)
+    };
+
+    //create scratch surface
+    IDirect3DSurface9* scratch;    
+    if (vibe_check(Device->CreateOffscreenPlainSurface(
+        w,h,
+        D3DFMT_A8R8G8B8,
+		D3DPOOL_SCRATCH,
+        &scratch,
+		nullptr
+    ))) return &string_error;
+
+    //get surface
+    GMSurface* gm_surf = get_gm_surface(id);
+    IDirect3DSurface9* surf = nullptr;
+    if (vibe_check(get_gm_texture(gm_surf->texture)->texture->GetSurfaceLevel(0, &surf)))
+        return &string_error;
+
+    //copy rectangle we're interested in
+	if (vibe_check(D3DXLoadSurfaceFromSurface(
+		scratch,nullptr,nullptr,surf,nullptr,&rect,D3DX_FILTER_NONE,0
+	))) return &string_error;
+
+    surf->Release();
+
+    //lock surface rectangle
+    D3DLOCKED_RECT pLockedRect;
+    if (vibe_check(scratch->LockRect(&pLockedRect,nullptr,D3DLOCK_NO_DIRTY_UPDATE|D3DLOCK_NOSYSLOCK|D3DLOCK_READONLY)))
+        return &string_error;
+
+    char* src=(char*)pLockedRect.pBits;
+    int pitch=pLockedRect.Pitch / 4;
+    
+    //copy colors
+    
+    rgb2col converter;
+    
+    for (int i=0;i<w*h;i++) {
+        int o=((i%pitch)*pitch+(i/pitch))*4; //transpose for grid 
+
+        converter.color.blue=src[o];
+        converter.color.green=src[o+1];
+        converter.color.red=src[o+2];
+        converter.color.alpha=src[o+3];
+        
+        f64_to_string(&return_string[(16+i*16)*2],(double)converter.value);       
+    }
+    
+    //free the lock and scratch surface
+    scratch->UnlockRect();
+    scratch->Release();    
+    
+    return return_string;
+}
+
 GMREAL __gm82dx9_cleardepth() {
     runner_clear_depth();
     return 1;

@@ -548,5 +548,58 @@
     }
     return noone
 
+
+#define ds_grid_get_surface
+    ///ds_grid_get_surface(grid,surface,[x,y,w,h])
+    //grid: grid to store the surface contents in.
+    //surface: a surface to get the contents from.
+    //This function will retrieve the surface's color data into a ds_grid.
+    //Each pixel is stored as a color value.
+    //The grid will be resized to fit the surface's contents.
+    //If 'noone' is passed as a grid, one will be created.
+    
+    var __grid,__surf;
+    
+    if (argument_count!=2 and argument_count!=6) {
+        show_error("Error in function ds_grid_get_surface: Wrong number of arguments ("+string(argument_count)+").",true)
+        return 0
+    }
+    
+    __grid=argument[0]
+    __surf=argument[1]
+    
+    if (!surface_exists(__surf)) {
+        show_error("Error in function ds_grid_get_surface: Surface ("+string(__surf)+") doesn't exist.",true)
+        return 0
+    }
+    
+    if (argument_count==6) {
+        u=argument[2]
+        v=argument[3]
+        w=argument[4]
+        h=argument[5]
+    } else {
+        u=0
+        v=0
+        w=surface_get_width(__surf)
+        h=surface_get_height(__surf)
+    }
+    
+    if (__grid<0) {
+        __grid=ds_grid_create(w,h)
+    } else {
+        ds_grid_resize(__grid,w,h)
+    }
+    
+    str=__gm82dx9_surface_to_grid(__surf,u,v,w,h)
+    
+    if (str=="") {
+        show_error("Error in function ds_grid_get_surface: Unknown surface copy error.",true)
+        return 0
+    }
+    
+    ds_grid_read(__grid,str)
+    
+    return __grid
 //
 //
