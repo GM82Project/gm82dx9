@@ -5,8 +5,6 @@
     }
     
     globalvar gm82dx9_version;gm82dx9_version=100
-
-    globalvar __gm82dx9_cross_detect;
     
     globalvar __gm82dx9_controller;
     globalvar __gm82dx9_appsurfcompose; __gm82dx9_appsurfcompose=noone
