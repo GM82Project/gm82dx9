@@ -6,7 +6,7 @@
     globalvar __gm82dx9_sb_count,__gm82dx9_sb_index,__gm82dx9_sb_buffer,__gm82dx9_sb_map,__gm82dx9_sb_idmap;
     
     __i=0 repeat (__gm82dx9_sb_count) {
-        buffer_destroy(__gm82dx9_sb_buffer[i])
+        buffer_destroy(__gm82dx9_sb_buffer[__i])
     __i+=1}
     
     __gm82dx9_sb_count=0
