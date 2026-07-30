@@ -226,6 +226,8 @@
 
 #define surface_get
     ///surface_get(name,width,height)
+    //Creates a managed surface of the specified dimensions.
+    //Managed surfaces are more stable and prevent id collisions.
     var __s,__name,__w,__h;
 
     __name=argument0
@@ -237,15 +239,17 @@
     __s=ds_map_find_value(__gm82dx9_surfmap,__name)
     if (__s) {
         if (!surface_exists(__s-1)) {
-            show_debug_message("surface "+__name+" went missing")
+            show_debug_message("Warning: surface "+__name+" went missing!")
             surface_forget_all()
             __s=0
-        } else {
-            if (surface_get_address(__s-1)!=ds_map_find_value(__gm82dx9_surfidmap,__name)) {
-                show_debug_message("surface "+__name+" changed id")
-                surface_forget_all()
-                __s=0
-            }
+        } else if (surface_get_width(__s-1)!=__w or surface_get_height(__s-1)!=__h) {
+            show_debug_message("Warning: surface "+__name+" changed dimensions!")
+            surface_forget_all()
+            __s=0
+        } else if (surface_get_address(__s-1)!=ds_map_find_value(__gm82dx9_surfidmap,__name)) {
+            show_debug_message("Warning: surface "+__name+" changed address!")
+            surface_forget_all()
+            __s=0
         }
     }
 
@@ -319,33 +323,45 @@
 
 #define surface_is_new
     ///surface_is_new()
+    //Returns whether the last call to surface_get or surface_set has created a new surface.
     return __gm82dx9_surface_was_new
 
 
 #define surface_load
     ///surface_load(id,fname)
-    var __bg;
+    //Loads a surface from an image file.
+    //Passing a negative value for id will create a surface.
+    //returns: surface id, or 'noone' if failure
+    var __bg,__surf;
     
-    if (surface_exists(argument0)) {
+    if (is_string(argument0)) __surf=ds_map_find_value(__gm82dx9_surfmap,argument0)
+    else __surf=argument0
+    
+    if (surface_exists(__surf) or __surf<0) {
         if (file_exists(argument1)) {
             __bg=background_add(argument1,0,0)
             if (background_exists(__bg)) {
-                surface_set_target(argument0)
+                if (__surf<0) __surf=surface_create(background_get_width(__bg),background_get_height(__bg))
+                if (!surface_exists(__surf)) {
+                    show_error("error in function surface_load: trying to load file ("+string(argument1)+") but could not create surface of dimensions ("+string(background_get_width(__bg))+","+string(background_get_height(__bg))+")",0)
+                    return noone
+                }
+                surface_set_target(__surf)
                 draw_clear_alpha(0,0)
-                d3d_set_projection_ortho(0,0,surface_get_width(argument0),surface_get_height(argument0),0)
+                d3d_set_projection_ortho(0,0,surface_get_width(__surf),surface_get_height(__surf),0)
                 draw_background(__bg,0,0)
                 background_delete(__bg)
                 surface_reset()
-                return true
+                return __surf
             }
             show_error("error in function surface_load: trying to load invalid image file file ("+string(argument1)+") into surface ("+string(argument0)+")",0)
-            return false
+            return noone
         }
         show_error("error in function surface_load: trying to load nonexisting file ("+string(argument1)+") into surface ("+string(argument0)+")",0)
-        return false        
+        return noone        
     }
     show_error("error in function surface_load: trying to load file ("+string(argument1)+") into nonexisting surface ("+string(argument0)+")",0)
-    return false
+    return noone
 
 
 #define surface_set
