@@ -290,7 +290,7 @@
     
     __new=surface_create(argument1,argument2)
     
-    if (!surface_exists(__new-1)) {
+    if (!surface_exists(__new)) {
         if (d3d_get_free_video_memory()<(argument1*argument2*4*2)) {
                 if (debug_mode) show_error("Error in function surface_get: couldn't create a surface of dimensions "+string(argument1)+"x"+string(argument2)+". Reason: Out of memory!",0)
                 else show_message("Out of memory!")
