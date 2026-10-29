@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "1.0",
 	"author": "Floogle && renex",
-	"date": "27/04/2026",
+	"date": "29/10/2026",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package upgrades Game Maker to DirectX version 9.0, providing extended render state control and HLSL9 shaders.",
 	"helpfile": "",
@@ -932,17 +932,6 @@
 					"returntype": 2
 				},
 				{
-					"name": "shader_pixel_create_file",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_pixel_create_file(filename)",
-					"hidden": false,
-					"argtypes": [
-						1
-					],
-					"returntype": 2
-				},
-				{
 					"name": "shader_pixel_destroy",
 					"extname": "",
 					"calltype": 12,
@@ -1002,17 +991,6 @@
 					"argtypes": [
 						2,
 						2
-					],
-					"returntype": 2
-				},
-				{
-					"name": "shader_vertex_create_file",
-					"extname": "",
-					"calltype": 12,
-					"helpline": "shader_vertex_create_file(filename)",
-					"hidden": false,
-					"argtypes": [
-						1
 					],
 					"returntype": 2
 				},
@@ -1447,6 +1425,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "__gm82dx9_shader_pixel_create_file",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						1
+					],
+					"returntype": 2
+				},
+				{
 					"name": "__gm82dx9_shader_pixel_uniform_4b",
 					"extname": "",
 					"calltype": 12,
@@ -1564,6 +1553,17 @@
 					"argtypes": [
 						2,
 						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "__gm82dx9_shader_vertex_create_file",
+					"extname": "",
+					"calltype": 12,
+					"helpline": "",
+					"hidden": true,
+					"argtypes": [
+						1
 					],
 					"returntype": 2
 				},
@@ -2748,6 +2748,17 @@
 					"returntype": 2
 				},
 				{
+					"name": "shader_pixel_create_file",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_pixel_create_file(filename)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
 					"name": "shader_pixel_set_passthrough",
 					"extname": "",
 					"calltype": 2,
@@ -2875,6 +2886,17 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "shader_vertex_create_buffer(buffer)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "shader_vertex_create_file",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "shader_vertex_create_file(filename)",
 					"hidden": false,
 					"argtypes": [
 						2

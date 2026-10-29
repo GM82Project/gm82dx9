@@ -15,6 +15,8 @@
     globalvar __gm82dx9_surface_was_new;
     
     globalvar d3d_transform_vertex,d3d_project_vertex,d3d_get_projection_origin;
+    
+    globalvar __gm82dx9_create_noerror;
 
     //load default shaders
     __gm82dx9_default_vs=shader_vertex_create_file(temp_directory+"\gm82\vs_pass.vs3")

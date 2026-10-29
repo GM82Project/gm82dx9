@@ -54,6 +54,7 @@ double dx9_col_to_gm(DWORD color);
     
 bool __vibe_check(const wchar_t* file, int line, HRESULT hr);
 void __show_error(const wchar_t* file, int line, const char* message);
+wchar_t* make_wstr(const char* input);
 #define WIDE2(x) L##x
 #define WIDE1(x) WIDE2(x)
 #define WFILE WIDE1(__FILE__)

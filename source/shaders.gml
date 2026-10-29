@@ -1,11 +1,141 @@
 #define shader_vertex_create_buffer
     ///shader_vertex_create_buffer(buffer)
-    return __gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0),buffer_get_size(argument0))
+    
+    var __size,__shd;
+    
+    if (!buffer_exists(argument0)) {
+        if (!__gm82dx9_create_noerror) show_error("Error creating vertex shader from buffer ("+string(argument0)+"): Buffer doesn't exist.",0)
+        return -1
+    }
+    
+    __size=buffer_get_size(argument0)
+    if (!__size) {
+        if (!__gm82dx9_create_noerror) show_error("Error creating vertex shader from buffer ("+string(argument0)+"): Buffer is empty.",0)
+        return -2
+    }
+    
+    __shd=__gm82dx9_shader_vertex_create_buffer(buffer_get_address(argument0),__size)
+    
+    if (__shd==-3) {
+        if (!__gm82dx9_create_noerror) show_error("Error creating vertex shader from buffer ("+string(argument0)+"): Data in the buffer is not a vertex shader.",0)
+        return -3
+    }
+    
+    return __shd
 
 
 #define shader_pixel_create_buffer
     ///shader_pixel_create_buffer(buffer)
-    return __gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0),buffer_get_size(argument0))
+        
+    var __size,__shd;
+    
+    if (!buffer_exists(argument0)) {
+        if (!__gm82dx9_create_noerror) show_error("Error creating pixel shader from buffer ("+string(argument0)+"): Buffer doesn't exist.",0)
+        return -1
+    }
+    
+    __size=buffer_get_size(argument0)
+    if (!__size) {
+        if (!__gm82dx9_create_noerror) show_error("Error creating pixel shader from buffer ("+string(argument0)+"): Buffer is empty.",0)
+        return -2
+    }
+    
+    __shd=__gm82dx9_shader_pixel_create_buffer(buffer_get_address(argument0),__size)
+    
+    if (__shd==-3) {
+        if (!__gm82dx9_create_noerror) show_error("Error creating pixel shader from buffer ("+string(argument0)+"): Data in the buffer is not a pixel shader.",0)
+        return -3
+    }
+    
+    return __shd
+
+
+#define shader_pixel_create_base64
+    ///shader_pixel_create_base64(string)
+    var __buf,__shd;
+    __buf=buffer_create()
+    buffer_decode_base64(__buf,argument0)
+    buffer_inflate(__buf)
+    __gm82dx9_create_noerror=true
+    __shd=shader_pixel_create_buffer(__buf)
+    __gm82dx9_create_noerror=false
+    buffer_destroy(__buf)
+    if (__shd==-2) {
+        show_error("Error creating pixel shader from base64 string that starts with:"+chr_crlf+string_copy(argument0,1,64)+chr_crlf+"Not enough data.",0)
+        return -1
+    }
+    if (__shd==-3) {
+        show_error("Error creating pixel shader from base64 string that starts with:"+chr_crlf+string_copy(argument0,1,64)+chr_crlf+"Data is not a pixel shader.",0)
+        return -1
+    }
+    return __shd
+
+
+#define shader_vertex_create_base64
+    ///shader_vertex_create_base64(string)
+    var __buf,__shd;
+    __buf=buffer_create()
+    buffer_decode_base64(__buf,argument0)
+    buffer_inflate(__buf)
+    __gm82dx9_create_noerror=true
+    __shd=shader_vertex_create_buffer(__buf)
+    __gm82dx9_create_noerror=false
+    buffer_destroy(__buf)
+    if (__shd==-2) {
+        show_error("Error creating vertex shader from base64 string that starts with:"+chr_crlf+string_copy(argument0,1,64)+chr_crlf+"Not enough data.",0)
+        return -1
+    }
+    if (__shd==-3) {
+        show_error("Error creating vertex shader from base64 string that starts with:"+chr_crlf+string_copy(argument0,1,64)+chr_crlf+"Data is not a vertex shader.",0)
+        return -1
+    }
+    return __shd
+
+
+#define shader_pixel_create_file
+    ///shader_pixel_create_file(filename)
+    var __shd;
+    
+    if (!file_exists(argument0)) {
+        show_error("Error creating pixel shader from file ("+string(argument0)+"): File doesn't exist.",0)
+        return -1
+    }
+    
+    __shd=__gm82dx9_shader_pixel_create_file(argument0)
+    
+    if (__shd==-2) {
+        show_error("Error creating pixel shader from file ("+string(argument0)+"): Could not acccess file contents.",0)
+        return -1
+    }
+    if (__shd==-3) {
+        show_error("Error creating pixel shader from file ("+string(argument0)+"): Data in the file is not a pixel shader.",0)
+        return -1
+    }
+    
+    return __shd
+
+
+#define shader_vertex_create_file
+    ///shader_vertex_create_file(filename)
+    var __shd;
+    
+    if (!file_exists(argument0)) {
+        show_error("Error creating vertex shader from file ("+string(argument0)+"): File doesn't exist.",0)
+        return -1
+    }
+    
+    __shd=__gm82dx9_shader_vertex_create_file(argument0)
+    
+    if (__shd==-2) {
+        show_error("Error creating vertex shader from file ("+string(argument0)+"): Could not acccess file contents.",0)
+        return -1
+    }
+    if (__shd==-3) {
+        show_error("Error creating vertex shader from file ("+string(argument0)+"): Data in the file is not a vertex shader.",0)
+        return -1
+    }
+    
+    return __shd
 
 
 #define shader_vertex_set_passthrough
@@ -224,27 +354,6 @@
     ///shader_pixel_uniform_b_buffer(uniform,buffer)
     __gm82dx9_shader_pixel_uniform_b_buffer(shader_vertex_uniform_get_address(argument0),buffer_get_address(argument1),buffer_get_size(argument1))
 
-#define shader_pixel_create_base64
-    ///shader_pixel_create_base64(string)
-    var __buf,__shd;
-    __buf=buffer_create()
-    buffer_decode_base64(__buf,argument0)
-    buffer_inflate(__buf)
-    __shd=shader_pixel_create_buffer(__buf)
-    buffer_destroy(__buf)
-    return __shd
-
-
-#define shader_vertex_create_base64
-    ///shader_vertex_create_base64(string)
-    var __buf,__shd;
-    __buf=buffer_create()
-    buffer_decode_base64(__buf,argument0)
-    buffer_inflate(__buf)
-    __shd=shader_vertex_create_buffer(__buf)
-    buffer_destroy(__buf)
-    return __shd
-
 
 #define texture_set_repeat_ext
     ///texture_set_repeat_ext(hrepeat,vrepeat,bordercolor)
@@ -451,6 +560,7 @@
     __gm82dx9_vertex_set_instances_per_vertex(1,1)
     
     vertex_buffer_bind(argument0,argument2)
+
 
 //
 //

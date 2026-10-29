@@ -1,5 +1,12 @@
 #include "gm82dx9.h"
 
+#define TYP_VS2 1
+#define TYP_VS3 2
+#define TYP_PS2 3
+#define TYP_PS3 4
+#define TYP_VS 5
+#define TYP_PS 6
+
 VShaderWithTable current_vshader;
 PShaderWithTable current_pshader;
 
@@ -97,9 +104,26 @@ static DWORD* load_shader_data(const char* filename) {
     return data;
 }
 
-GMREAL shader_vertex_create_file(const char* filename) {
+bool check_shader_type(DWORD* data, int type) {
+    WORD* datau16 = (WORD*)data;
+    switch (type) {
+        case TYP_VS:  return (datau16[1]==65534);
+        case TYP_PS:  return (datau16[1]==65535);
+        case TYP_VS2: return (datau16[0]==513 && datau16[1]==65534);
+        case TYP_VS3: return (datau16[0]==768 && datau16[1]==65534);
+        case TYP_PS2: return (datau16[0]==513 && datau16[1]==65535);
+        case TYP_PS3: return (datau16[0]==768 && datau16[1]==65535);
+        default: return false;
+    }
+}
+
+GMREAL __gm82dx9_shader_vertex_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
-    if (data == nullptr) return -1;
+    if (data == nullptr) return -2;
+    if (!check_shader_type(data,TYP_VS)) {
+        free(data);
+        return -3;
+    }
     IDirect3DVertexShader9 *shader;
     if (vibe_check(Device->CreateVertexShader(data, &shader))) {
         free(data);
@@ -124,7 +148,14 @@ GMREAL shader_vertex_create_file(const char* filename) {
 GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer, double length) {
     DWORD* data = (DWORD*)(int)buffer;
     if (data == nullptr) return -1;
-    if (!shader_bounds_check(data, int(length))) return -1;
+    if (!check_shader_type(data,TYP_VS)) {
+        free(data);
+        return -3;
+    }
+    if (!shader_bounds_check(data, int(length))) {
+        free(data);
+        return -3;
+    }
     IDirect3DVertexShader9* shader;
     if (vibe_check(Device->CreateVertexShader(data, &shader))) {
         free(data);
@@ -145,9 +176,13 @@ GMREAL __gm82dx9_shader_vertex_create_buffer(double buffer, double length) {
     return dx_data.idcounter_vertex;
 }
 
-GMREAL shader_pixel_create_file(const char* filename) {
+GMREAL __gm82dx9_shader_pixel_create_file(const char* filename) {
     DWORD* data = load_shader_data(filename);
-    if (data == nullptr) return -1;
+    if (data == nullptr) return -2;
+    if (!check_shader_type(data,TYP_PS)) {
+        free(data);
+        return -3;
+    }
     IDirect3DPixelShader9 *shader;
     if (vibe_check(Device->CreatePixelShader(data, &shader))) {
         free(data);
@@ -172,7 +207,14 @@ GMREAL shader_pixel_create_file(const char* filename) {
 GMREAL __gm82dx9_shader_pixel_create_buffer(double buffer, double length) {
     DWORD* data = (DWORD*)(int)buffer;
     if (data == nullptr) return -1;
-    if (!shader_bounds_check(data, int(length))) return -1;
+    if (!check_shader_type(data,TYP_PS)) {
+        free(data);
+        return -3;
+    }
+    if (!shader_bounds_check(data, int(length))) {
+        free(data);
+        return -3;
+    }
     IDirect3DPixelShader9 *shader;
     if (vibe_check(Device->CreatePixelShader(data, &shader))) {
         free(data);

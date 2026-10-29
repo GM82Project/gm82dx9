@@ -14,7 +14,7 @@ extern bool __vibe_check(const wchar_t* file, int line, HRESULT hr) {
     return true;
 }
 
-wchar_t* make_wstr(const char* input) {
+extern wchar_t* make_wstr(const char* input) {
     int len = MultiByteToWideChar(CP_UTF8, 0, input, -1, NULL, 0);
     wchar_t* output = (wchar_t*)malloc(len*2);
     MultiByteToWideChar(CP_UTF8, 0, input, -1, output, len);
