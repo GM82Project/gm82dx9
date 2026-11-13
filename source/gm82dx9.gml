@@ -142,6 +142,8 @@
     d3d_transform_vertex[1]=__gm82dx9_getvertexy()
     d3d_transform_vertex[2]=__gm82dx9_getvertexz()
     
+    return d3d_transform_vertex[0]
+    
 
 #define d3d_get_projection_origin
     ///d3d_get_projection_origin()
@@ -150,6 +152,8 @@
     d3d_get_projection_origin[0]=__gm82dx9_geteyepos()
     d3d_get_projection_origin[1]=__gm82dx9_getvertexy()
     d3d_get_projection_origin[2]=__gm82dx9_getvertexz()
+    
+    return d3d_get_projection_origin[0]
 
 
 #define d3d_project_vertex
@@ -164,6 +168,8 @@
     d3d_project_vertex[0]=0.5+0.5*__gm82dx9_projectvertex(argument0,argument1,argument2)
     d3d_project_vertex[1]=0.5-0.5*__gm82dx9_getvertexy()
     d3d_project_vertex[2]=__gm82dx9_getvertexz()<1
+    
+    return d3d_project_vertex[0]
 
 
 #define d3d_fog_trick
