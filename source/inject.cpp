@@ -2,6 +2,7 @@
 
 extern IDirect3DTexture9 *white_pixel = nullptr;
 extern D3DPRESENT_PARAMETERS* present_params;
+IDirect3D9* Direct3D9;
 
 D3DCAPS9 d3d_caps;
 D3DPRESENT_PARAMETERS d3d_parameters = {
@@ -137,6 +138,8 @@ HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceTyp
         new_cw = old_cw | 0x3f;
         _asm fldcw [new_cw];
     }
+    
+    Direct3D9 = d3d9;
     
     present_params = pPresentationParameters;
 	

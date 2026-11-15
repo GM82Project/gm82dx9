@@ -32,6 +32,7 @@ typedef struct {
 
 extern int has_started;
 
+extern IDirect3D9* Direct3D9;
 extern IDirect3DDevice9** d3d9_device;
 #define Device (*d3d9_device)
 

@@ -3,6 +3,7 @@
 int has_started = 0;
 
 D3DPRESENT_PARAMETERS* present_params;
+extern IDirect3D9* Direct3D9;
 
 DXData dx_data;
 
@@ -636,6 +637,29 @@ GMREAL __gm82dx9_getvideomem() {
     ///d3d_get_free_video_memory()
     //returns: An approximate amount of bytes free in video memory.
     return (double)(Device->GetAvailableTextureMem());
+}
+GMREAL __gm82dx9_getvendor() {
+    ///d3d_get_vendor()
+    //returns: one of the vendor_ constants, or 0 for an error.
+    D3DADAPTER_IDENTIFIER9 adid;
+    
+    HRESULT hr = Direct3D9->GetAdapterIdentifier(D3DADAPTER_DEFAULT,0,&adid);
+    
+    if (SUCCEEDED(hr)) switch (adid.VendorId) {
+        case 0x1002:
+        case 0x1022:
+            return 1;
+        case 0x163c:
+        case 0x8086:
+        case 0x8087:
+            return 2;
+        case 0x10de:
+        case 0x12d2:
+        case 0x104a:
+            return 3;
+    }
+    
+    return 0;
 }
 GMREAL __gm82dx9_getmaxwidth() {
     return (double)d3d_caps.MaxTextureWidth;
