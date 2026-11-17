@@ -169,6 +169,10 @@ HRESULT WINAPI CreateDevice(IDirect3D9 *d3d9, UINT Adapter, D3DDEVTYPE DeviceTyp
 	}
     
     auto res = d3d9->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
+    
+    // clear fp exceptions after creating the device since dx9 can clobber those
+    _asm fnclex
+    
     return res;
 }
 
