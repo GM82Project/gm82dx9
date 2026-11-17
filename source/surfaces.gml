@@ -410,7 +410,7 @@
 #define application_surface_enable
     ///application_surface_enable(postdraw script id)
     //Enables the automatic use and management of an application surface.
-    //The postdraw script will be called when the screen is being composed, so any post-processing effects can be applied to it.
+    //The postdraw script will be called with the application surface id when the screen is being composed, so any post-processing effects can be applied to it.
     
     //envelope engine v5
     //renex 2023
@@ -481,7 +481,7 @@
         surface_reset_target()        
         application_surface=surface_get("application_surface",__gm82dx9_resw,__gm82dx9_resh)        
         d3d_set_projection_ortho(0,0,__gm82dx9_resw,__gm82dx9_resh,0)
-        script_execute(__gm82dx9_appsurfcompose)
+        script_execute(__gm82dx9_appsurfcompose,application_surface)
     }
 
 
