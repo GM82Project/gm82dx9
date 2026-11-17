@@ -421,6 +421,7 @@
         show_error("application_surface_enable() was given a nonexisting script id",1)
     } else {
         __gm82dx9_appsurfcompose=argument0
+        __gm82dx9_appsurfcomposearg=string_pos("argument",script_get_text(argument0))
         __gm82dx9_resw=window_get_region_width()
         __gm82dx9_resh=window_get_region_height()
         globalvar application_surface;
@@ -481,7 +482,10 @@
         surface_reset_target()        
         application_surface=surface_get("application_surface",__gm82dx9_resw,__gm82dx9_resh)        
         d3d_set_projection_ortho(0,0,__gm82dx9_resw,__gm82dx9_resh,0)
-        script_execute(__gm82dx9_appsurfcompose,application_surface)
+        if (__gm82dx9_appsurfcomposearg)
+            script_execute(__gm82dx9_appsurfcompose,application_surface)
+        else
+            script_execute(__gm82dx9_appsurfcompose)
     }
 
 

@@ -8,6 +8,7 @@
     
     globalvar __gm82dx9_controller;
     globalvar __gm82dx9_appsurfcompose; __gm82dx9_appsurfcompose=noone
+    globalvar __gm82dx9_appsurfcomposearg; __gm82dx9_appsurfcomposearg=false
 
     globalvar __gm82dx9_resw,__gm82dx9_resh;
     globalvar __gm82dx9_default_vs,__gm82dx9_default_ps;
